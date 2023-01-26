@@ -18,6 +18,7 @@
   "license": "ISC",
   "homepage": "https://github.com/stockfundamentalanalysis/stock-comparator-front-end#readme",
   "dependencies": {
+    "@tanstack/react-table": "^8.7.8",
     "next": "^13.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

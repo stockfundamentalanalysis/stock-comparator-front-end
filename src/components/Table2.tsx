@@ -4,15 +4,8 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-
-type Person = {
-  firstName: string
-  lastName: string
-  age: number
-  visits: number
-  status: string
-  progress: number
-}
+import React, { useMemo } from 'react'
+import json from '../data/sfa_easy.json'
 
 function pickHex(color_bad, color_good, color_intermediate, weight) {
   if (weight > 0.5) {
@@ -44,71 +37,78 @@ const green = [0, 255, 0]
 const white = [255, 255, 255]
 const red = [255, 0, 0]
 
-const data: Person[] = [
-  {
-    firstName: 'tanner',
-    lastName: 'linsley',
-    age: 24,
-    visits: 100,
-    status: 'In Relationship',
-    progress: 50,
-  },
-  {
-    firstName: 'tandy',
-    lastName: 'miller',
-    age: 40,
-    visits: 40,
-    status: 'Single',
-    progress: 80,
-  },
-  {
-    firstName: 'joe',
-    lastName: 'dirte',
-    age: 45,
-    visits: 20,
-    status: 'Complicated',
-    progress: 10,
-  },
-]
+type Company = {
+  Ticker: string
+  CompanyName: string
+  Potential: number
+  TargetPrice: number
+  DebtQualityScore: number
+  EarningsScore: number
+  GrowthScore: number
+  Sector: string
+}
 
-const columnHelper = createColumnHelper<Person>()
+const data: Company[] = Object.values(json)
+
+const columnHelper = createColumnHelper<Company>()
 
 const columns = [
-  columnHelper.accessor('firstName', {
-    cell: (info) => info.getValue(),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor((row) => row.lastName, {
-    id: 'lastName',
+  columnHelper.accessor((row) => row.Ticker, {
+    id: 'Ticker',
     cell: (info) => <i>{info.getValue()}</i>,
-    header: () => <span>Last Name</span>,
+    header: () => <span>Ticker</span>,
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('age', {
-    header: () => 'Age',
-    cell: (info) => info.renderValue(),
+  columnHelper.accessor((row) => row.CompanyName, {
+    id: 'CompanyName',
+    cell: (info) => <i>{info.getValue()}</i>,
+    header: () => <span>CompanyName</span>,
     footer: (info) => info.column.id,
   }),
-  columnHelper.accessor('visits', {
-    header: () => <span>Visits</span>,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor('status', {
-    header: 'Status',
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor('progress', {
-    header: 'Profile Progress',
-    cell(info) {
-      const weight = calculateWeight(info.getValue(), 0, 100)
-      const color = pickHex(red, green, white, weight)
-      const backgroundColor = `rgb(${color[0]},${color[1]},${color[2]})`
+  columnHelper.accessor((row) => row.Potential, {
+    id: 'Potential',
+    cell: (info) => {
+      const value = info.getValue()
+      const weight = calculateWeight(value, -1, 1.5)
+      const rgb = pickHex(red, green, white, weight)
+      const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
       return (
-        <div style={{ width: '100%', height: '100%', backgroundColor }}>
-          {info.renderValue()}
-        </div>
+        <span style={{ backgroundColor: color }}>
+          {Math.round(value * 100)} %
+        </span>
       )
     },
+    header: () => <span>Potential</span>,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor((row) => row.TargetPrice, {
+    id: 'TargetPrice',
+    cell: (cell) => <p>{Math.round(cell.getValue() * 100) / 100} </p>,
+    header: () => <span>TargetPrice</span>,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor((row) => row.DebtQualityScore, {
+    id: 'DebtQualityScore',
+    cell: (info) => <i>{info.getValue()}</i>,
+    header: () => <span>DebtQualityScore</span>,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor((row) => row.EarningsScore, {
+    id: 'EarningsScore',
+    cell: (info) => <i>{info.getValue()}</i>,
+    header: () => <span>EarningsScore</span>,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor((row) => row.GrowthScore, {
+    id: 'GrowthScore',
+    cell: (info) => <i>{info.getValue()}</i>,
+    header: () => <span>GrowthScore</span>,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor((row) => row.Sector, {
+    id: 'Sector',
+    cell: (info) => <i>{info.getValue()}</i>,
+    header: () => <span>Sector</span>,
     footer: (info) => info.column.id,
   }),
 ]

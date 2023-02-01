@@ -44,6 +44,7 @@ type Company = {
   TargetPrice: number
   DebtQualityScore: number
   EarningsScore: number
+  ProfitabilityScore: number
   GrowthScore: number
   Sector: string
 }
@@ -73,9 +74,9 @@ const columns = [
       const rgb = pickHex(red, green, white, weight)
       const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
       return (
-        <span style={{ backgroundColor: color }}>
+        <div style={{ backgroundColor: color }}>
           {Math.round(value * 100)} %
-        </span>
+        </div>
       )
     },
     header: () => <span>Potential</span>,
@@ -83,25 +84,72 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.TargetPrice, {
     id: 'TargetPrice',
-    cell: (cell) => <p>{Math.round(cell.getValue() * 100) / 100} </p>,
+    cell: (cell) => <div>{Math.round(cell.getValue() * 100) / 100} </div>,
     header: () => <span>TargetPrice</span>,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor((row) => row.DebtQualityScore, {
     id: 'DebtQualityScore',
-    cell: (info) => <i>{info.getValue()}</i>,
+    cell: (info) => {
+      const value = info.getValue()
+      const weight = calculateWeight(value, 0, 1)
+      const rgb = pickHex(red, green, white, weight)
+      const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+      return (
+        <div style={{ backgroundColor: color }}>
+          {Math.round(value * 100)} %
+        </div>
+      )
+    },
     header: () => <span>DebtQualityScore</span>,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor((row) => row.EarningsScore, {
     id: 'EarningsScore',
-    cell: (info) => <i>{info.getValue()}</i>,
+    cell: (info) => {
+      const value = info.getValue()
+      const weight = calculateWeight(value, 0, 1)
+      const rgb = pickHex(red, green, white, weight)
+      const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+      return (
+        <div style={{ backgroundColor: color }}>
+          {Math.round(value * 100)} %
+        </div>
+      )
+    },
     header: () => <span>EarningsScore</span>,
+    footer: (info) => info.column.id,
+  }),
+  columnHelper.accessor((row) => row.ProfitabilityScore, {
+    id: 'ProfitabilityScore',
+    cell: (info) => {
+      const value = info.getValue()
+      const weight = calculateWeight(value, 0, 1)
+      const rgb = pickHex(red, green, white, weight)
+      const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+      return (
+        <div style={{ backgroundColor: color }}>
+          {Math.round(value * 100)} %
+        </div>
+      )
+    },
+
+    header: () => <span>ProfitabilityScore</span>,
     footer: (info) => info.column.id,
   }),
   columnHelper.accessor((row) => row.GrowthScore, {
     id: 'GrowthScore',
-    cell: (info) => <i>{info.getValue()}</i>,
+    cell: (info) => {
+      const value = info.getValue()
+      const weight = calculateWeight(value, 0, 1)
+      const rgb = pickHex(red, green, white, weight)
+      const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+      return (
+        <div style={{ backgroundColor: color }}>
+          {Math.round(value * 100)} %
+        </div>
+      )
+    },
     header: () => <span>GrowthScore</span>,
     footer: (info) => info.column.id,
   }),

@@ -3,6 +3,20 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  SortingState,
+  Column,
+  ColumnFiltersState,
+  getFilteredRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getFacetedMinMaxValues,
+  getPaginationRowModel,
+  sortingFns,
+  getSortedRowModel,
+  FilterFn,
+  SortingFn,
+  ColumnDef,
+  FilterFns,
 } from '@tanstack/react-table'
 import React, { useMemo } from 'react'
 import json from '../data/sfa_easy.json'
@@ -162,10 +176,19 @@ const columns = [
 ]
 
 const Table = (): JSX.Element => {
+  const [sorting, setSorting] = React.useState<SortingState>([])
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    enableFilters: true,
+    enableSorting: true,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    debugTable: true,
   })
 
   return (
@@ -179,12 +202,25 @@ const Table = (): JSX.Element => {
                   key={header.id}
                   className="border-b border-r border-gray-200 px-0.5 py-1"
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
+                  {header.isPlaceholder ? null : (
+                    <div
+                      {...{
+                        className: header.column.getCanSort()
+                          ? 'cursor-pointer select-none'
+                          : '',
+                        onClick: header.column.getToggleSortingHandler(),
+                      }}
+                    >
+                      {flexRender(
                         header.column.columnDef.header,
                         header.getContext()
                       )}
+                      {{
+                        asc: ' 🔼',
+                        desc: ' 🔽',
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </div>
+                  )}
                 </th>
               ))}
             </tr>

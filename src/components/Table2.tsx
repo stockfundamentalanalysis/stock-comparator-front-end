@@ -17,8 +17,9 @@ import {
   SortingFn,
   ColumnDef,
   FilterFns,
+  PaginationState,
 } from '@tanstack/react-table'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import json from '../data/sfa_easy.json'
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
@@ -116,7 +117,7 @@ const columns = [
       const rgb = pickHex(red, green, white, weight)
       const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
       return (
-        <div style={{ backgroundColor: color }}>
+        <div className="h-full" style={{ backgroundColor: color }}>
           {Math.round(value * 100)} %
         </div>
       )
@@ -187,7 +188,7 @@ const columns = [
       const rgb = pickHex(red, green, white, weight)
       const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
       return (
-        <div style={{ backgroundColor: color }}>
+        <div className="h-full" style={{ backgroundColor: color }}>
           {Math.round(value * 100)} %
         </div>
       )
@@ -203,12 +204,20 @@ const columns = [
   }),
 ]
 
+// HASTA AQUI OK
+
 const Table = (): JSX.Element => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
   const [globalFilter, setGlobalFilter] = React.useState('')
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 500,
+    pageCount: undefined, // allows the table to calculate the page count for us via instance.getPageCount()
+    // If we wanted to control the pageCount, we could provide it here (eg. if we were doing server-side pagination)
+  })
 
   const table = useReactTable({
     data,
@@ -229,6 +238,7 @@ const Table = (): JSX.Element => {
       sorting,
       columnFilters,
       globalFilter,
+      pagination,
     },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -238,74 +248,99 @@ const Table = (): JSX.Element => {
   })
 
   return (
-    <div className="p-2">
-      <table className="border border-gray-200">
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
-                  <th key={header.id} colSpan={header.colSpan}>
-                    {header.isPlaceholder ? null : (
-                      <>
-                        <div
-                          {...{
-                            className: header.column.getCanSort()
-                              ? 'cursor-pointer select-none'
-                              : '',
-                            onClick: header.column.getToggleSortingHandler(),
-                          }}
+    <div className="flex flex-col">
+      <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+        <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+          <div className="overflow-hidden">
+            <table className="min-w-full">
+              <thead className="border-b bg-gray-200">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <th
+                          className="px-6 py-4 text-center text-sm font-medium text-gray-900"
+                          key={header.id}
+                          colSpan={header.colSpan}
                         >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
+                          {header.isPlaceholder ? null : (
+                            <>
+                              <div
+                                {...{
+                                  className: header.column.getCanSort()
+                                    ? 'cursor-pointer select-none'
+                                    : '',
+                                  onClick:
+                                    header.column.getToggleSortingHandler(),
+                                }}
+                              >
+                                {flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                                {{
+                                  asc: ' 🔼',
+                                  desc: ' 🔽',
+                                }[header.column.getIsSorted() as string] ??
+                                  null}
+                              </div>
+                              {header.column.getCanFilter() ? (
+                                <div>
+                                  <Filter
+                                    column={header.column}
+                                    table={table}
+                                  />
+                                </div>
+                              ) : null}
+                            </>
                           )}
-                          {{
-                            asc: ' 🔼',
-                            desc: ' 🔽',
-                          }[header.column.getIsSorted() as string] ?? null}
-                        </div>
-                        {header.column.getCanFilter() ? (
-                          <div>
-                            <Filter column={header.column} table={table} />
-                          </div>
-                        ) : null}
-                      </>
-                    )}
-                  </th>
-                )
-              })}
-            </tr>
-          ))}
-        </thead>
-        <tbody className="border-b border-gray-200">
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-        <tfoot className="text-gray-400">
-          {table.getFooterGroups().map((footerGroup) => (
-            <tr key={footerGroup.id}>
-              {footerGroup.headers.map((header) => (
-                <th key={header.id} className="font-normal">
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.footer,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </tfoot>
-      </table>
+                        </th>
+                      )
+                    })}
+                  </tr>
+                ))}
+              </thead>
+              <tbody className="border-b">
+                {table.getRowModel().rows.map((row) => (
+                  <tr
+                    className="border-b transition duration-300 ease-in-out hover:bg-gray-100"
+                    key={row.id}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      // IF NUMERIC BACKGROUND COLOR
+                      <td
+                        className="h-full text-center text-sm font-light text-gray-900"
+                        key={cell.id}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+              {/* <tfoot className="text-gray-400">
+                {table.getFooterGroups().map((footerGroup) => (
+                  <tr key={footerGroup.id}>
+                    {footerGroup.headers.map((header) => (
+                      <th key={header.id} className="font-normal">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.footer,
+                              header.getContext()
+                            )}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </tfoot> */}
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
@@ -332,41 +367,7 @@ function Filter({
   )
 
   return typeof firstValue === 'number' ? (
-    <div>
-      <div className="flex space-x-2">
-        <DebouncedInput
-          type="number"
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-          value={(columnFilterValue as [number, number])?.[0] ?? ''}
-          onChange={(value) =>
-            column.setFilterValue((old: [number, number]) => [value, old?.[1]])
-          }
-          placeholder={`Min ${
-            column.getFacetedMinMaxValues()?.[0]
-              ? `(${column.getFacetedMinMaxValues()?.[0]})`
-              : ''
-          }`}
-          className="w-24 rounded border shadow"
-        />
-        <DebouncedInput
-          type="number"
-          min={Number(column.getFacetedMinMaxValues()?.[0] ?? '')}
-          max={Number(column.getFacetedMinMaxValues()?.[1] ?? '')}
-          value={(columnFilterValue as [number, number])?.[1] ?? ''}
-          onChange={(value) =>
-            column.setFilterValue((old: [number, number]) => [old?.[0], value])
-          }
-          placeholder={`Max ${
-            column.getFacetedMinMaxValues()?.[1]
-              ? `(${column.getFacetedMinMaxValues()?.[1]})`
-              : ''
-          }`}
-          className="w-24 rounded border shadow"
-        />
-      </div>
-      <div className="h-1" />
-    </div>
+    <></>
   ) : (
     <>
       <datalist id={column.id + 'list'}>

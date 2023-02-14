@@ -18,10 +18,15 @@
   "license": "ISC",
   "homepage": "https://github.com/stockfundamentalanalysis/stock-comparator-front-end#readme",
   "dependencies": {
+    "@mui/material": "^5.11.8",
+    "@mui/styled-engine-sc": "^5.11.0",
+    "@tanstack/match-sorter-utils": "^8.7.6",
     "@tanstack/react-table": "^8.7.8",
     "next": "^13.1.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-svg-radar-chart": "^1.4.0",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Table from '@/components/Table2'
+import Radar from '@/components/radar'
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       <main>
         {/* <h1 className="font-extra-bold text-7xl underline">Hello, World!</h1> */}
         <div className="mt-4">
-          <Table />
+          <Radar />
         </div>
       </main>
     </>

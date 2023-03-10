@@ -22,6 +22,7 @@ import {
 import React, { useMemo, useState } from 'react'
 import json from '../data/sfa_easy.json'
 
+
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   // Rank the item
   const itemRank = rankItem(row.getValue(columnId), value)

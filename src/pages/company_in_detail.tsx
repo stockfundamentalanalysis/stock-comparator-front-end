@@ -1,19 +1,17 @@
 import * as React from 'react'
-import { Link } from 'gatsby'
 import { useMemo } from 'react'
-import type { HeadFC } from 'gatsby'
-// import data from '../data/sfa_easy.json'
-import { useTable } from 'react-table'
+import data from '../data/sfa_easy.json'
 import Radar from '../components/radar'
-import '../styles/global.css'
+import json from '../data/sfa_easy.json'
+//import '../styles/global.css'
 
 const RadarPage = () => {
+  const data = Object.values(json)
+  const company = data.filter((item) => item.Ticker === 'AAPL')[0]
   return (
     <>
-      <Radar />
+      <Radar company={company}></Radar>
     </>
   )
 }
 export default RadarPage
-
-export const Head: HeadFC = () => <title>Home Page</title>

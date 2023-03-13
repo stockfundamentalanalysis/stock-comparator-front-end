@@ -8,6 +8,7 @@ import { red } from '@mui/material/colors'
 import { Box } from '@mui/material'
 import { palette } from '@mui/system'
 import NavBar from '../components/navbar'
+import Link from 'next/link'
 //import '../styles/global.css'
 
 //nested data is ok, see accessorKeys in ColumnDef below
@@ -53,7 +54,8 @@ const Example = () => {
         accessorKey: 'Ticker',
         size: 50,
         Cell: ({ cell }) => {
-          return <a>{cell.getValue()}</a>
+          const route = '/detail/' + cell.getValue().toLowerCase()
+          return <Link href={route}>{cell.getValue()}</Link>
         },
       },
       {

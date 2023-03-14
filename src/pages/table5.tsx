@@ -15,19 +15,23 @@ import { AlignVerticalBottom } from '@mui/icons-material'
 const data = Object.values(json)
 
 const Example = () => {
-  function pickHex(color_bad, color_good, color_intermediate, weight) {
+  function pickHex(
+    color_bad: number[],
+    color_good: number[],
+    color_intermediate: number[],
+    weight: number
+  ) {
+    let color1 = color_intermediate
+    let color2 = color_bad
+    let w1 = weight * 2
+    let w2 = 1 - w1
     if (weight > 0.5) {
-      var color2 = color_intermediate
-      var color1 = color_good
-      var w1 = (weight - 0.5) * 2
-      var w2 = 1 - w1
-    } else {
-      var color1 = color_intermediate
-      var color2 = color_bad
-      var w1 = weight * 2
-      var w2 = 1 - w1
+      color2 = color_intermediate
+      color1 = color_good
+      w1 = (weight - 0.5) * 2
+      w2 = 1 - w1
     }
-    var rgb = [
+    const rgb = [
       Math.round(color1[0] * w1 + color2[0] * w2),
       Math.round(color1[1] * w1 + color2[1] * w2),
       Math.round(color1[2] * w1 + color2[2] * w2),
@@ -35,7 +39,7 @@ const Example = () => {
     return rgb
   }
 
-  function calculateWeight(value, min, max) {
+  function calculateWeight(value: number, min: number, max: number) {
     const weight = Math.max(0, Math.min((value - min) / (max - min), 1))
     return weight
   }
@@ -46,14 +50,65 @@ const Example = () => {
   const black = [0, 0, 0]
   const grey = [128, 128, 128]
 
+  interface Company {
+    Ticker: any
+    CompanyName: any
+    CurrentPrice: any
+    Country: any
+    Sector: any
+    LastReportDate: any
+    StockCurrency: any
+    ReportCurrency: any
+    CurrentPER: any
+    MeanPER: any
+    CurrentPricetoBook: any
+    MeanPricetoBook: any
+    CurrentEVEBITDA: any
+    MeanEVEBITDA: any
+    CurrentEVEBIT: any
+    CurrentPricetoFreeCashFlowRate: any
+    MeanPricetoFreeCashFlowRate: any
+    ROE: any
+    ROCE: any
+    ROA: any
+    ROIC: any
+    MeanROIC: any
+    Beta: any
+    WACC: any
+    CashToTotalAssets: any
+    CashOverStockPrice: any
+    DebtQualityRatio: any
+    LiabilitiestoEquityRatio: any
+    NetDebttoEBITDA: any
+    MeanNetDebttoEBITDA: any
+    InterestExpensetoEBIT: any
+    EntrepriseValueUSD: any
+    DCFPotential: any
+    DCFWorstPotential: any
+    EBITDATendency: any
+    FreeCashFlowTendency: any
+    OperatingCashFlowTendency: any
+    ROICTendency: any
+    NetIncomeTendency: any
+    EquityTendency: any
+    DividendYield: any
+    NetIncomeMargin: any
+    EBITDAMargin: any
+    TargetPrice: any
+    PFFO: any
+    MeanPFFO: any
+    LastUpdate: any
+    FirstYearReport: any
+  }
+
   //should be memoized or stable
-  const columns = useMemo(
+  const columns = useMemo<MRT_ColumnDef<Company>[]>(
     () => [
       {
         header: 'Ticker',
         accessorKey: 'Ticker',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           return <a>{cell.getValue()}</a>
         },
         /* muiTableHeadCellProps: {
@@ -72,7 +127,7 @@ const Example = () => {
         header: 'Potential',
         accessorKey: 'DCFPotential',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1.5)
           const rgb = pickHex(red, green, white, weight)
@@ -86,24 +141,23 @@ const Example = () => {
                 p: '0.25rem',
                 fontWeight: 'bold',
                 textAlign: 'center',
-                color: white,
               }}
             >
-              {Math.round(cell.getValue<number>() * 100)} %
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
-        // muiTableBodyCellProps: ({ cell }) => ({
+        // muiTableBodyCellProps: ({ cell }: { cell: any }) => ({
         //   styleOverrides: {
         //     backgroundColor: "red",
         //   }
         // sx: {
         //   backgroundColor:
-        //     cell.getValue<number>() > 0.5
+        //     cell.getValue() > 0.5
         //       ? 'rgba(22, 184, 44, 0.5)'
         //       : 'rgba(255, 0, 0, 0.5)',
         //   fontWeight:
-        //     cell.column.id === 'age' && cell.getValue<number>() > 40
+        //     cell.column.id === 'age' && cell.getValue() > 40
         //       ? '700'
         //       : '400'
         // },
@@ -113,7 +167,7 @@ const Example = () => {
         header: 'DCFWorstPotential',
         accessorKey: 'DCFWorstPotential',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           return (
             <Box
               sx={{
@@ -129,7 +183,7 @@ const Example = () => {
         header: 'CurrentPrice',
         accessorKey: 'CurrentPrice',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           return (
             <Box
               sx={{
@@ -162,7 +216,7 @@ const Example = () => {
         header: 'CurrentPER',
         accessorKey: 'CurrentPER',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
           const rgb = pickHex(green, red, white, weight)
@@ -188,7 +242,7 @@ const Example = () => {
         header: 'MeanPER',
         accessorKey: 'MeanPER',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
           const rgb = pickHex(green, red, white, weight)
@@ -214,7 +268,7 @@ const Example = () => {
         header: 'CurrentEVEBITDA',
         accessorKey: 'CurrentEVEBITDA',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
           const rgb = pickHex(green, red, white, weight)
@@ -240,7 +294,7 @@ const Example = () => {
         header: 'MeanEVEBITDA',
         accessorKey: 'MeanEVEBITDA',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
           const rgb = pickHex(green, red, white, weight)
@@ -266,7 +320,7 @@ const Example = () => {
         header: 'CurrentEVEBIT',
         accessorKey: 'CurrentEVEBIT',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
           const rgb = pickHex(green, red, white, weight)
@@ -292,7 +346,7 @@ const Example = () => {
         header: 'CurrentPricetoBook',
         accessorKey: 'CurrentPricetoBook',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0.5, 3)
           const rgb = pickHex(green, red, white, weight)
@@ -318,7 +372,7 @@ const Example = () => {
         header: 'MeanPricetoBook',
         accessorKey: 'MeanPricetoBook',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0.5, 3)
           const rgb = pickHex(green, red, white, weight)
@@ -344,7 +398,7 @@ const Example = () => {
         header: 'CurrentPricetoFreeCashFlowRate',
         accessorKey: 'CurrentPricetoFreeCashFlowRate',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(green, red, white, weight)
@@ -370,7 +424,7 @@ const Example = () => {
         header: 'MeanPricetoFreeCashFlowRate',
         accessorKey: 'MeanPricetoFreeCashFlowRate',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(green, red, white, weight)
@@ -396,7 +450,7 @@ const Example = () => {
         header: 'ROE',
         accessorKey: 'ROE',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(green, red, white, weight)
@@ -422,7 +476,7 @@ const Example = () => {
         header: 'ROIC',
         accessorKey: 'ROIC',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(green, red, white, weight)
@@ -448,7 +502,7 @@ const Example = () => {
         header: 'MeanROIC',
         accessorKey: 'MeanROIC',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(green, red, white, weight)
@@ -474,7 +528,7 @@ const Example = () => {
         header: 'ROCE',
         accessorKey: 'ROCE',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(green, red, white, weight)
@@ -500,7 +554,7 @@ const Example = () => {
         header: 'ROA',
         accessorKey: 'ROA',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(green, red, white, weight)
@@ -527,7 +581,7 @@ const Example = () => {
         header: 'Beta',
         accessorKey: 'Beta',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -553,7 +607,7 @@ const Example = () => {
         header: 'CashToTotalAssets',
         accessorKey: 'CashToTotalAssets',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(green, red, white, weight)
@@ -579,7 +633,7 @@ const Example = () => {
         header: 'CashOverStockPrice',
         accessorKey: 'CashOverStockPrice',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(green, red, white, weight)
@@ -605,7 +659,7 @@ const Example = () => {
         header: 'LiabilitiestoEquityRatio',
         accessorKey: 'LiabilitiestoEquityRatio',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -631,7 +685,7 @@ const Example = () => {
         header: 'NetDebttoEBITDA',
         accessorKey: 'NetDebttoEBITDA',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -657,7 +711,7 @@ const Example = () => {
         header: 'MeanNetDebttoEBITDA',
         accessorKey: 'MeanNetDebttoEBITDA',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -683,7 +737,7 @@ const Example = () => {
         header: 'InterestExpensetoEBIT',
         accessorKey: 'InterestExpensetoEBIT',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -706,14 +760,14 @@ const Example = () => {
         },
       },
       {
-        header: 'EnterpriseValueUSD',
-        accessorKey: 'EnterpriseValueUSD',
+        header: 'EntrepriseValueUSD',
+        accessorKey: 'EntrepriseValueUSD',
       },
       {
         header: 'EBITDATendency',
-        accessorKey: 'EBITDA Tendency',
+        accessorKey: 'EBITDATendency',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -739,7 +793,7 @@ const Example = () => {
         header: 'FreeCashFlowTendency',
         accessorKey: 'FreeCashFlowTendency',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -764,7 +818,7 @@ const Example = () => {
         header: 'OperatingCashFlowTendency',
         accessorKey: 'OperatingCashFlowTendency',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -789,7 +843,7 @@ const Example = () => {
         header: 'NetIncomeTendency',
         accessorKey: 'NetIncomeTendency',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -814,7 +868,7 @@ const Example = () => {
         header: 'EquityTendency',
         accessorKey: 'EquityTendency',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -839,7 +893,7 @@ const Example = () => {
         header: 'ROICTendency',
         accessorKey: 'ROICTendency',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -866,7 +920,7 @@ const Example = () => {
         header: 'DividendYield',
         accessorKey: 'DividendYield',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -883,7 +937,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue<number>() * 100)} %
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -892,7 +946,7 @@ const Example = () => {
         header: 'EBITDAMargin',
         accessorKey: 'EBITDAMargin',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -918,7 +972,7 @@ const Example = () => {
         header: 'NetIncomeMargin',
         accessorKey: 'NetIncomeMargin',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -944,7 +998,7 @@ const Example = () => {
         header: 'WACC',
         accessorKey: 'WACC',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -970,7 +1024,7 @@ const Example = () => {
         header: 'PFFO',
         accessorKey: 'PFFO',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -996,7 +1050,7 @@ const Example = () => {
         header: 'MeanPFFO',
         accessorKey: 'MeanPFFO',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -1038,13 +1092,6 @@ const Example = () => {
         columns={columns}
         data={data}
         initialState={{ density: 'compact' }}
-        sx={{
-          width: '100%',
-          height: '100%',
-          overflow: 'auto',
-          display: 'flex',
-          allignItems: 'end',
-        }}
       />
     </>
   )

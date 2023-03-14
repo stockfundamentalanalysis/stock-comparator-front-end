@@ -56,7 +56,7 @@ const Header = () => {
           }}
         >
           More than 500 stocks analyzed and updated daily. Arficial Intelligence
-          analysis based on companies' financial statements and market data.
+          analysis based on companies financial statements and market data.
         </Typography>
 
         <Box>

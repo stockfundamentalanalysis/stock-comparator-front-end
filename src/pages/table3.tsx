@@ -9,25 +9,30 @@ import { Box } from '@mui/material'
 import { palette } from '@mui/system'
 import NavBar from '../components/navbar'
 import Link from 'next/link'
+
 //import '../styles/global.css'
 
 //nested data is ok, see accessorKeys in ColumnDef below
 const data = Object.values(json)
 
-const Example = () => {
-  function pickHex(color_bad, color_good, color_intermediate, weight) {
+const Example2 = () => {
+  function pickHex(
+    color_bad: number[],
+    color_good: number[],
+    color_intermediate: number[],
+    weight: number
+  ) {
+    let color1 = color_intermediate
+    let color2 = color_bad
+    let w1 = weight * 2
+    let w2 = 1 - w1
     if (weight > 0.5) {
-      var color2 = color_intermediate
-      var color1 = color_good
-      var w1 = (weight - 0.5) * 2
-      var w2 = 1 - w1
-    } else {
-      var color1 = color_intermediate
-      var color2 = color_bad
-      var w1 = weight * 2
-      var w2 = 1 - w1
+      color2 = color_intermediate
+      color1 = color_good
+      w1 = (weight - 0.5) * 2
+      w2 = 1 - w1
     }
-    var rgb = [
+    const rgb = [
       Math.round(color1[0] * w1 + color2[0] * w2),
       Math.round(color1[1] * w1 + color2[1] * w2),
       Math.round(color1[2] * w1 + color2[2] * w2),
@@ -35,7 +40,7 @@ const Example = () => {
     return rgb
   }
 
-  function calculateWeight(value, min, max) {
+  function calculateWeight(value: number, min: number, max: number) {
     const weight = Math.max(0, Math.min((value - min) / (max - min), 1))
     return weight
   }
@@ -46,14 +51,30 @@ const Example = () => {
   const black = [0, 0, 0]
   const grey = [128, 128, 128]
 
+  // TODO https://www.material-react-table.com/docs/getting-started/usage
+
+  interface Company {
+    Ticker: any
+    CompanyName: any
+    Sector: any
+    Potential: any
+    TargetPrice: any
+    DebtQualityScore: any
+    EarningsScore: any
+    GrowthScore: any
+    ProfitabilityScore: any
+  }
+
   //should be memoized or stable
-  const columns = useMemo(
+  //
+  //should be memoized or stable
+  const columns = useMemo<MRT_ColumnDef<Company>[]>(
     () => [
       {
         header: 'Ticker',
         accessorKey: 'Ticker',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const route = '/detail/' + cell.getValue().toLowerCase()
           return <Link href={route}>{cell.getValue()}</Link>
         },
@@ -70,7 +91,7 @@ const Example = () => {
         header: 'Potential',
         accessorKey: 'Potential',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1.5)
           const rgb = pickHex(red, green, white, weight)
@@ -85,14 +106,13 @@ const Example = () => {
                 p: '0.25rem',
                 fontWeight: 'bold',
                 textAlign: 'center',
-                color: white,
               }}
             >
-              {Math.round(cell.getValue<number>() * 100)} %
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
-        // muiTableBodyCellProps: ({ cell }) => ({
+        // muiTableBodyCellProps: ({ cell }: { cell: any }) => ({
         //   styleOverrides: {
         //     backgroundColor: "red",
         //   }
@@ -112,7 +132,7 @@ const Example = () => {
         header: 'TargetPrice',
         accessorKey: 'TargetPrice',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           return (
             <Box
               sx={{
@@ -128,7 +148,7 @@ const Example = () => {
         header: 'DebtQualityScore',
         accessorKey: 'DebtQualityScore',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -146,7 +166,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue<number>() * 100)} %
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -155,7 +175,7 @@ const Example = () => {
         header: 'EarningsScore',
         accessorKey: 'EarningsScore',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -172,7 +192,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue<number>() * 100)} %
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -181,7 +201,7 @@ const Example = () => {
         header: 'ProfitabilityScore',
         accessorKey: 'ProfitabilityScore',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -198,7 +218,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue<number>() * 100)} %
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -207,7 +227,7 @@ const Example = () => {
         header: 'GrowthScore',
         accessorKey: 'GrowthScore',
         size: 50,
-        Cell: ({ cell }) => {
+        Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
           const rgb = pickHex(red, green, white, weight)
@@ -224,7 +244,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue<number>() * 100)} %
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -245,4 +265,4 @@ const Example = () => {
   )
 }
 
-export default Example
+export default Example2

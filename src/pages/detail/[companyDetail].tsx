@@ -15,8 +15,10 @@ const Post = () => {
   const company = data.filter((item) => item.Ticker === company_name)[0]
   ///console.log(String(company_name))
   let color = 'text.primary'
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   if (company.Potential > 0.1) {
     color = 'success.main'
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   } else if (company.Potential < -0.1) {
     color = 'error.main'
   }
@@ -40,7 +42,7 @@ const Post = () => {
               <Box sx={{ color: 'text.secondary' }}>Potential:</Box>
               <Box
                 sx={{
-                  color: color,
+                  color: 'text.primary',
                   fontSize: 34,
                   fontWeight: 'medium',
                 }}
@@ -58,7 +60,7 @@ const Post = () => {
   )
 }
 
-Post.getInitialProps = async (ctx) => {
+Post.getInitialProps = async () => {
   const res = await import('../../data/sfa_easy.json')
   const data = Object.values(res)
   return { props: { data } }

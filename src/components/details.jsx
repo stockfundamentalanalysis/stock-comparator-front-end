@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Button, Stack, TextField } from '@mui/material'
-import Title from './title'
-import Paragraph from './paragraph'
+import Title from './components/title'
+import Paragraph from '.components/paragraph'
 
 const Details = () => {
   const handleSubmit = (event) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Grid, styled, Typography } from '@mui/material'
-import Title from './Title'
+import Title from './title'
 // img
 import imgDetail from '../images/growth_arrow.jpg'
 import imgDetail2 from '../images/growth_stack.jpg'

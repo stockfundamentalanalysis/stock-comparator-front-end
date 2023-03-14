@@ -15,10 +15,8 @@ const Post = () => {
   const company = data.filter((item) => item.Ticker === company_name)[0]
   ///console.log(String(company_name))
   let color = 'text.primary'
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   if (company.Potential > 0.1) {
     color = 'success.main'
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   } else if (company.Potential < -0.1) {
     color = 'error.main'
   }

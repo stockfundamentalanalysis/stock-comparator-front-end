@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Stack, Box, styled, Typography, Text } from '@mui/material'
-import Title from './Title'
-import Paragraph from './Paragraph'
+import Title from './title'
+import Paragraph from './paragraph'
 //import { Link } from "gatsby"
 import { useTheme } from '@mui/material/styles'
 import Link from 'next/link'

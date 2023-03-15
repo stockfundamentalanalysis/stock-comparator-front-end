@@ -11,9 +11,7 @@ import {
   ListItemText,
 } from '@mui/material'
 // menu
-import DrawerItem from './draweritem';
-// rotas
-//import { Link } from "gatsby";
+import DrawerItem from './draweritem'
 import Link from 'next/link'
 
 const StyledToolbar = styled(Toolbar)({
@@ -64,7 +62,7 @@ const Navbar = () => {
           Stock Comparator
         </Typography>
         <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
-          <DrawerItem /> 
+          <DrawerItem />
         </Box>
         <ListMenu>
           {itemList.map((item) => {

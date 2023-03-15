@@ -11,7 +11,7 @@ import {
   ListItemText,
 } from '@mui/material'
 // menu
-//import DrawerItem from './draweritem';
+import DrawerItem from './draweritem';
 // rotas
 //import { Link } from "gatsby";
 import Link from 'next/link'
@@ -63,7 +63,9 @@ const Navbar = () => {
         <Typography variant="h6" component="h2">
           Stock Comparator
         </Typography>
-        <Box sx={{ display: { xs: 'flex', sm: 'none' } }}></Box>
+        <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
+          <DrawerItem /> 
+        </Box>
         <ListMenu>
           {itemList.map((item) => {
             const { text } = item

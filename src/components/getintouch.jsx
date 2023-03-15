@@ -1,8 +1,6 @@
 import React from 'react'
 import { Button, Stack, Box, styled, Typography, Text } from '@mui/material'
 import Title from './title'
-import Paragraph from './paragraph'
-//import { Link } from "gatsby"
 import { useTheme } from '@mui/material/styles'
 import Link from 'next/link'
 
@@ -62,7 +60,7 @@ const GetInTouch = () => {
           mt: 3,
           mb: 2,
           borderRadius: 0,
-          backgroundColor: '#3c3c3c',
+          backgroundColor: '#343a55',
           '&&:focus': {
             backgroundColor: '#343a55',
           },

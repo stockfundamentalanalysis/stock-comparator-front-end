@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Button, Stack, TextField } from '@mui/material'
-import Title from './components/title'
-import Paragraph from '.components/paragraph'
+import Title from './title'
+import Paragraph from './paragraph'
 
 const Details = () => {
   const handleSubmit = (event) => {
@@ -67,14 +67,18 @@ const Details = () => {
           size="medium"
           sx={{
             fontSize: '0.9rem',
+            color: '#3c3c3c',
             textTransform: 'capitalize',
             py: 2,
             mt: 3,
             mb: 2,
             borderRadius: 0,
-            backgroundColor: '#14192d',
-            '&:hover': {
-              backgroundColor: '#1e2a5a',
+            backgroundColor: '#343a55',
+            '&&:focus': {
+              backgroundColor: '#343a55',
+            },
+            '&&:hover': {
+              backgroundColor: '#dedede',
             },
           }}
         >

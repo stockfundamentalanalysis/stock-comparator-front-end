@@ -20,6 +20,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/navbar.jsx",
+    "src/components/draweritem.jsx"
+  ],
   "exclude": ["node_modules"]
 }

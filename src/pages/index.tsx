@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 // import data from '../data/sfa_easy.json'
 import Header from '../components/header'
 import NavBar from '../components/navbar'
+import Footer from '../components/Footer/footer'
 import GetStarted from '../components/getstarted'
 import GetInTouch from '../components/getintouch'
 //import '../styles/global.css'
@@ -16,6 +17,7 @@ const IndexPage = () => {
       <Header />
       <GetStarted />
       <GetInTouch />
+      <Footer />
     </>
   )
 }

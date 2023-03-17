@@ -49,23 +49,22 @@ const GetInTouch = () => {
         component={Link}
         href={'/contact'}
         variant="contained"
-        type="submit"
         size="medium"
         sx={{
           fontSize: '0.9rem',
-          color: '#3c3c3c',
           textTransform: 'capitalize',
           py: 2,
           px: 4,
           mt: 3,
           mb: 2,
           borderRadius: 0,
-          backgroundColor: '#343a55',
-          '&&:focus': {
+          color: '#fff',
+          backgroundColor: 'orange',
+          '&&:hover': {
             backgroundColor: '#343a55',
           },
-          '&&:hover': {
-            backgroundColor: '#dedede',
+          '&&:focus': {
+            backgroundColor: '#343a55',
           },
         }}
       >

@@ -2,6 +2,8 @@ import React from 'react'
 import { Box, Button, Stack, TextField } from '@mui/material'
 import Title from './title'
 import Paragraph from './paragraph'
+import { Send } from '@mui/icons-material'
+import SendIcon from '@mui/icons-material/Send'
 
 const Details = () => {
   const handleSubmit = (event) => {
@@ -62,23 +64,24 @@ const Details = () => {
         />
         <Button
           variant="contained"
+          endIcon={<SendIcon />}
           fullWidth
-          type="submit"
           size="medium"
           sx={{
             fontSize: '0.9rem',
-            color: '#3c3c3c',
             textTransform: 'capitalize',
             py: 2,
+            px: 4,
             mt: 3,
             mb: 2,
             borderRadius: 0,
-            backgroundColor: '#343a55',
-            '&&:focus': {
-              backgroundColor: '#343a55',
-            },
+            color: 'black',
+            backgroundColor: '#14192d',
             '&&:hover': {
-              backgroundColor: '#dedede',
+              backgroundColor: 'orange',
+            },
+            '&&:focus': {
+              backgroundColor: 'orange',
             },
           }}
         >

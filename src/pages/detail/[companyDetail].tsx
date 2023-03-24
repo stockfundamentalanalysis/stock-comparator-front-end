@@ -62,7 +62,6 @@ const Post = () => {
       <Grid container spacing={3}>
         <Grid item md>
           <Stack spacing={2} sx={{ alignItems: 'center' }}>
-            <h1> Company: {company.CompanyName}</h1>
             <Box
               sx={{
                 bgcolor: 'background.paper',
@@ -70,6 +69,70 @@ const Post = () => {
                 borderRadius: 2,
                 p: 2,
                 minWidth: 300,
+                maxWidth: 300,
+              }}
+            >
+              <Box sx={{ color: 'text.secondary' }}>Company:</Box>
+              <Box
+                sx={{
+                  color: 'black',
+                  fontSize: 24,
+                  fontWeight: 'medium',
+                }}
+              >
+                {company.CompanyName}
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                bgcolor: 'background.paper',
+                boxShadow: 1,
+                borderRadius: 2,
+                p: 2,
+                minWidth: 300,
+                maxWidth: 300,
+              }}
+            >
+              <Box sx={{ color: 'text.secondary' }}>Sector:</Box>
+              <Box
+                sx={{
+                  color: 'black',
+                  fontSize: 18,
+                  fontWeight: 'medium',
+                }}
+              >
+                {company.Sector}
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                bgcolor: 'background.paper',
+                boxShadow: 1,
+                borderRadius: 2,
+                p: 2,
+                minWidth: 300,
+                maxWidth: 300,
+              }}
+            >
+              <Box sx={{ color: 'text.secondary' }}>TargetPrice:</Box>
+              <Box
+                sx={{
+                  color: 'black',
+                  fontSize: 24,
+                  fontWeight: 'medium',
+                }}
+              >
+                {Math.round(company.TargetPrice * 10) / 10}
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                bgcolor: 'background.paper',
+                boxShadow: 1,
+                borderRadius: 2,
+                p: 2,
+                minWidth: 300,
+                maxWidth: 300,
               }}
             >
               <Box sx={{ color: 'text.secondary' }}>Potential:</Box>

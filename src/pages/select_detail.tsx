@@ -85,33 +85,6 @@ const Post = () => {
         <Grid item md>
           <Stack spacing={2} sx={{ alignItems: 'center' }}>
             <FormControl sx={{ m: 1, width: 300 }}>
-              <InputLabel id="demo-multiple-name-label">Company</InputLabel>
-              <Select
-                labelId="demo-multiple-chip-label"
-                id="demo-multiple-chip"
-                multiple
-                value={tickerName}
-                onChange={handleChangeTicker}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip key={value} label={value} />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-              >
-                {filteredTickers.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Stack>
-          <Stack spacing={2} sx={{ alignItems: 'center' }}>
-            <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="demo-multiple-name-label">Sector</InputLabel>
               <Select
                 labelId="demo-multiple-chip-label"
@@ -130,6 +103,31 @@ const Post = () => {
                 MenuProps={MenuProps}
               >
                 {sectors.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, width: 300 }}>
+              <InputLabel id="demo-multiple-name-label">Company</InputLabel>
+              <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                multiple
+                value={tickerName}
+                onChange={handleChangeTicker}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
+              >
+                {filteredTickers.map((name) => (
                   <MenuItem key={name} value={name}>
                     {name}
                   </MenuItem>

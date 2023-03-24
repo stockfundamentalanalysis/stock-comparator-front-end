@@ -73,7 +73,7 @@ const Details = () => {
             mt: 3,
             mb: 2,
             borderRadius: 0,
-            color: 'black',
+            color: 'white',
             backgroundColor: 'orange',
             '&&:hover': {
               backgroundColor: '#343a55',

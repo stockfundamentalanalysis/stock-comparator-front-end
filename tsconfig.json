@@ -25,7 +25,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/components/navbar.jsx",
-    "src/components/draweritem.jsx"
+    "src/components/draweritem.jsx",
+    "src/pages/detail/[companyDetail].jsx"
   ],
   "exclude": ["node_modules"]
 }

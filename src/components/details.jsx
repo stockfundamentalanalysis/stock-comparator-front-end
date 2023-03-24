@@ -2,7 +2,6 @@ import React from 'react'
 import { Box, Button, Stack, TextField } from '@mui/material'
 import Title from './title'
 import Paragraph from './paragraph'
-import { Send } from '@mui/icons-material'
 import SendIcon from '@mui/icons-material/Send'
 
 const Details = () => {

@@ -16,7 +16,9 @@ import {
   SelectChangeEvent,
   Stack,
   Chip,
+  Button,
 } from '@mui/material'
+import Link from 'next/link'
 //import '../styles/global.css'
 
 const Post = () => {
@@ -67,6 +69,14 @@ const Post = () => {
     }
     return tickers
   }, [sectorName])
+
+  const companyDetailLink = (ticker: string) => {
+    if (ticker !== undefined) {
+      return `/detail/${ticker}`
+    } else {
+      return `/select_detail/`
+    }
+  }
 
   return (
     <>
@@ -126,6 +136,31 @@ const Post = () => {
                 ))}
               </Select>
             </FormControl>
+            <Button
+              component={Link}
+              href={companyDetailLink(tickerName[0])}
+              variant="contained"
+              size="medium"
+              sx={{
+                fontSize: '0.9rem',
+                textTransform: 'capitalize',
+                py: 2,
+                px: 4,
+                mt: 3,
+                mb: 2,
+                borderRadius: 0,
+                color: '#fff',
+                backgroundColor: 'orange',
+                '&&:hover': {
+                  backgroundColor: '#343a55',
+                },
+                '&&:focus': {
+                  backgroundColor: '#343a55',
+                },
+              }}
+            >
+              Details
+            </Button>
           </Stack>
         </Grid>
       </Grid>

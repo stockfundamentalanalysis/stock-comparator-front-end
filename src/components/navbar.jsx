@@ -33,6 +33,10 @@ const itemList = [
     to: '/',
   },
   {
+    text: 'CompanyDetails',
+    to: '/select_detail',
+  },
+  {
     text: 'EasyMode',
     to: '/table3',
   },

@@ -63,31 +63,6 @@ const Post = () => {
         <Grid item md>
           <Stack spacing={2} sx={{ alignItems: 'center' }}>
             <h1> Company: {company.CompanyName}</h1>
-            <FormControl sx={{ m: 1, width: 300 }}>
-              <InputLabel id="demo-multiple-name-label">Name</InputLabel>
-              <Select
-                labelId="demo-multiple-chip-label"
-                id="demo-multiple-chip"
-                multiple
-                value={personName}
-                onChange={handleChange}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip key={value} label={value} />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-              >
-                {tickers.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
             <Box
               sx={{
                 bgcolor: 'background.paper',
@@ -100,7 +75,12 @@ const Post = () => {
               <Box sx={{ color: 'text.secondary' }}>Potential:</Box>
               <Box
                 sx={{
-                  color: 'text.primary',
+                  color:
+                    company.Potential > 0.3
+                      ? 'green'
+                      : company.Potential >= -0.1
+                      ? 'black'
+                      : 'red',
                   fontSize: 34,
                   fontWeight: 'medium',
                 }}

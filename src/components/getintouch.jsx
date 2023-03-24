@@ -48,7 +48,6 @@ const GetInTouch = () => {
       <Button
         component={Link}
         href={'/contact'}
-        variant="contained"
         size="medium"
         sx={{
           fontSize: '0.9rem',

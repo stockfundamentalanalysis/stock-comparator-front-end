@@ -62,7 +62,6 @@ const Details = () => {
           autoComplete="current-phone"
         />
         <Button
-          variant="contained"
           endIcon={<SendIcon />}
           fullWidth
           size="medium"
@@ -75,16 +74,16 @@ const Details = () => {
             mb: 2,
             borderRadius: 0,
             color: 'black',
-            backgroundColor: '#14192d',
+            backgroundColor: 'orange',
             '&&:hover': {
-              backgroundColor: 'orange',
+              backgroundColor: '#343a55',
             },
             '&&:focus': {
-              backgroundColor: 'orange',
+              backgroundColor: '#343a55',
             },
           }}
         >
-          send
+          Send
         </Button>
       </Box>
     </Stack>

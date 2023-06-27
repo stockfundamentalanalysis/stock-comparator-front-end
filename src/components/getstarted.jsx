@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Grid, styled, Typography } from '@mui/material'
 import Title from './title'
-// img
 import imgDetail from '../images/growth_arrow.jpg'
 import imgDetail2 from '../images/growth_stack.jpg'
 import Image from 'next/image'
@@ -37,27 +36,49 @@ const GetStarted = () => {
             px: 4,
           }}
         >
-          <Title
+          {/* <Title
             text={'Obtain the target price of any stock'}
             textAlign={'start'}
-          />
-          <CustomTypography>
-            Target prices are calculated based on companies
+          /> */}
+          <Typography
+            variant="h4"
+            textAlign="start"
+            sx={{ fontWeight: 'bold' }}
+            gutterBottom
+            //sx={{ fontStyle: 'italic' }}
+          >
+            Obtain the target price of any stock
+          </Typography>
+          <Typography
+            variant="h6"
+            textAlign="start"
+            sx={{ fontWeight: 'light' }}
+          >
+            Target prices are calculated based on companies'
             <br />
             annual reports using fundamental analysis
             <br />
-            and artificaial intelligence. <br />
-          </CustomTypography>
+            and artificial intelligence.
+            <br />
+          </Typography>
         </Box>
       </CustomGridItem>
 
-      <Grid item xs={12} sm={4} md={6}>
+      <Grid
+        item
+        xs={12}
+        sm={4}
+        md={6}
+        container
+        justifyContent="center" // Center the content horizontally
+        alignItems="center" // Center the content vertically
+      >
         <Image
           src={imgDetail}
           alt=""
-          style={{
-            width: '100%',
-          }}
+          layout="responsive"
+          width={400}
+          height={300}
         />
       </Grid>
 
@@ -69,13 +90,16 @@ const GetStarted = () => {
         sx={{
           order: { xs: 4, sm: 4, md: 3 },
         }}
+        container
+        justifyContent="center" // Center the content horizontally
+        alignItems="center" // Center the content vertically
       >
         <Image
           src={imgDetail2}
           alt=""
-          style={{
-            width: '100%',
-          }}
+          layout="responsive"
+          width={400}
+          height={300}
         />
       </Grid>
 
@@ -94,15 +118,25 @@ const GetStarted = () => {
             px: 4,
           }}
         >
-          <Title
-            text={'Limit your risk on your investments'}
-            textAlign={'start'}
-          />
-          <CustomTypography>
+          <Typography
+            variant="h4"
+            textAlign="start"
+            sx={{ fontWeight: 'bold' }}
+            gutterBottom
+            //sx={{ fontStyle: 'italic' }}
+          >
+            Limit the risk of your investments
+          </Typography>
+
+          <Typography
+            variant="h6"
+            textAlign="start"
+            sx={{ fontWeight: 'light' }}
+          >
             The potential earnings or losses of a stock <br />
-            eare updated every day based on stock price <br />
+            are updated every day based on stock price <br />
             and company financial report updates. <br />
-          </CustomTypography>
+          </Typography>
         </Box>
       </CustomGridItem>
     </Grid>

@@ -12,11 +12,14 @@ import {
 } from '@mui/material'
 // menu
 import DrawerItem from './draweritem'
+import TrendingUpIcon from '@mui/icons-material/TrendingUp'
+
 import Link from 'next/link'
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center', // Add this line to vertically align the items
 })
 
 const ListMenu = styled(List)(({ theme }) => ({
@@ -26,7 +29,7 @@ const ListMenu = styled(List)(({ theme }) => ({
   },
 }))
 
-//rotas
+// rotas
 const itemList = [
   {
     text: 'Home',
@@ -62,9 +65,12 @@ const Navbar = () => {
       elevation={0}
     >
       <StyledToolbar>
-        <Typography variant="h6" component="h2">
-          Stock Comparator
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <TrendingUpIcon sx={{ marginRight: '5px' }} />
+          <Typography variant="h6" component="h2">
+            Stock Comparator
+          </Typography>
+        </Box>
         <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
           <DrawerItem />
         </Box>

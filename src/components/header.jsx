@@ -1,9 +1,8 @@
 import React from 'react'
 import { Box, Button, styled, Typography } from '@mui/material'
-//import { Link } from "gatsby";
 import Link from 'next/link'
-//img
-//import headerImg from '../assets/pexels-binyamin-mellish-186078.png'
+import Image from 'next/image'
+import robotImage from '../images/robot.png'
 
 const Header = () => {
   const CustomBox = styled(Box)(({ theme }) => ({
@@ -31,9 +30,20 @@ const Header = () => {
     },
   }))
 
+  const ImageBox = styled(Box)(({ theme }) => ({
+    flex: '2',
+    alignSelf: 'flex-end',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    paddingRight: theme.spacing(8),
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'center',
+    },
+  }))
+
   return (
     <CustomBox component="header">
-      {/*  Box text  */}
+      {/* Box text */}
       <BoxText component="section">
         <Typography
           variant="h2"
@@ -43,7 +53,7 @@ const Header = () => {
             color: '#fff',
           }}
         >
-          Get the fair price of your stock
+          Find the best stock across every sector
         </Typography>
 
         <Typography
@@ -55,12 +65,15 @@ const Header = () => {
             color: '#fff',
           }}
         >
-          More than 500 stocks analyzed and updated daily. Arficial Intelligence
-          analysis based on companies financial statements and market data.
+          More than 500 stocks analyzed and updated daily. Artificial
+          Intelligence analysis based on companies financial statements and
+          market data.
         </Typography>
 
         <Box>
           <Button
+            component={Link}
+            href={'/select_detail'}
             variant="contained"
             sx={{
               mr: 2,
@@ -80,11 +93,11 @@ const Header = () => {
               },
             }}
           >
-            buy now
+            Company Details
           </Button>
           <Button
             component={Link}
-            href={'/about'}
+            href={'/table5'}
             variant="outlined"
             sx={{
               px: 4,
@@ -105,24 +118,14 @@ const Header = () => {
               },
             }}
           >
-            explore
+            Easy Comparator
           </Button>
         </Box>
       </BoxText>
 
-      <Box
-        sx={(theme) => ({
-          [theme.breakpoints.down('md')]: {
-            flex: '1',
-            paddingTop: '30px',
-            alignSelf: 'center',
-          },
-          [theme.breakpoints.up('md')]: {
-            flex: '2',
-            alignSelf: 'flex-end',
-          },
-        })}
-      ></Box>
+      <ImageBox>
+        <Image src={robotImage} alt="Image" width={500} height={400} />
+      </ImageBox>
     </CustomBox>
   )
 }

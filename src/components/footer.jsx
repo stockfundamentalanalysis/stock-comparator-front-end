@@ -3,7 +3,7 @@ import { Box, Stack, styled, Typography } from '@mui/material'
 import Link from '@mui/material/Link'
 import FooterTitle from './footertitle'
 import FooterLink from './footerlink'
-import FacebookIcon from '@mui/icons-material/Facebook'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import InstagramIcon from '@mui/icons-material/Instagram'
 
 const Footer = () => {
@@ -36,28 +36,7 @@ const Footer = () => {
       }}
     >
       <StackColumn>
-        <FooterTitle text={'address'} />
-        <FooterLink text={'15th Louis St, london 92382, eng'} />
-        <FooterLink text={'25 999-345-10800'} />
-        <FooterLink text={'info@housesales.com'} />
-      </StackColumn>
-
-      <StackColumn>
-        <FooterTitle text={'our services'} />
-        <FooterLink text={'buy house'} />
-        <FooterLink text={'sell house'} />
-        <FooterLink text={'rent house'} />
-        <FooterLink text={'build house'} />
-      </StackColumn>
-      <StackColumn>
-        <FooterTitle text={'our company'} />
-        <FooterLink text={'reporting'} />
-        <FooterLink text={'get in touch'} />
-        <FooterLink text={'management'} />
-      </StackColumn>
-
-      <StackColumn>
-        <FooterTitle text={'hBSales'} />
+        <FooterTitle text={'Stock Comparator'} />
         <Stack
           direction="row"
           width="70px"
@@ -86,12 +65,22 @@ const Footer = () => {
               },
             }}
           >
-            <FacebookIcon />
+            <LinkedInIcon />
           </Link>
         </Stack>
         <Typography variant="caption" component="p">
-          &copy; 2022 HBSales Inc.
+          &copy; 2023 StockComparator Inc.
         </Typography>
+      </StackColumn>
+      <StackColumn>
+        <FooterTitle text={'Contact'} />
+        <FooterLink text={'+41 762369679'} />
+        <FooterLink text={'info@stockcomparator.com'} />
+      </StackColumn>
+      <StackColumn>
+        <FooterTitle text={'Headquarters'} />
+        <FooterLink text={'Lausanne'} />
+        <FooterLink text={'Switzerland'} />
       </StackColumn>
     </BoxRow>
   )

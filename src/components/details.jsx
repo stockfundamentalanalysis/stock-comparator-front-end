@@ -21,11 +21,16 @@ const Details = () => {
         px: 2,
       }}
     >
-      <Title text={'Interesting to buy property'} textAlign={'center'} />
+      <Title
+        text={
+          'Download our premium investment software'
+          // '"Good investment opportunities aren’t going to come along too often and won’t last too long. So you’ve got to be ready to act." '
+        }
+        textAlign={'center'}
+      />
       <Paragraph
         text={
-          'If you are interested to buy the property contact us we will call you. \
-                Shortly to fulfill you requirements and property.'
+          'If you are interested in our premium software version please contact us, we will let you know how to download it.'
         }
         maxWidth={'sm'}
         mx={0}

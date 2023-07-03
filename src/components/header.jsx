@@ -21,13 +21,23 @@ const Header = () => {
 
   const BoxText = styled(Box)(({ theme }) => ({
     flex: '1',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start', // Align buttons to the left
     paddingLeft: theme.spacing(8),
     [theme.breakpoints.down('md')]: {
       flex: '2',
       textAlign: 'center',
+      alignItems: 'center', // Align buttons to the center on smaller screens
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2),
     },
+  }))
+
+  const ButtonContainer = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    gap: theme.spacing(2),
+    marginTop: theme.spacing(2), // Add margin between the text and buttons
   }))
 
   const ImageBox = styled(Box)(({ theme }) => ({
@@ -70,7 +80,7 @@ const Header = () => {
           market data.
         </Typography>
 
-        <Box>
+        <ButtonContainer>
           <Button
             component={Link}
             href={'/select_detail'}
@@ -85,6 +95,7 @@ const Header = () => {
               borderColor: '#14192d',
               color: '#fff',
               backgroundColor: '#14192d',
+              whiteSpace: 'nowrap', // Ensure text stays on a single line
               '&&:hover': {
                 backgroundColor: '#343a55',
               },
@@ -108,6 +119,7 @@ const Header = () => {
               color: '#fff',
               backgroundColor: 'transparent',
               borderColor: '#fff',
+              whiteSpace: 'nowrap', // Ensure text stays on a single line
               '&&:hover': {
                 color: '#343a55',
                 borderColor: '#343a55',
@@ -120,7 +132,7 @@ const Header = () => {
           >
             Easy Comparator
           </Button>
-        </Box>
+        </ButtonContainer>
       </BoxText>
 
       <ImageBox>

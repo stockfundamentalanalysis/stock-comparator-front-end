@@ -59,6 +59,7 @@ const Example2 = () => {
     Sector: any
     Potential: any
     TargetPrice: any
+    Currency: any
     DebtQualityScore: any
     EarningsScore: any
     GrowthScore: any
@@ -143,6 +144,11 @@ const Example2 = () => {
             </Box>
           )
         },
+      },
+      {
+        header: 'Currency',
+        accessorKey: 'Currency',
+        size: 50,
       },
       {
         header: 'DebtQualityScore',

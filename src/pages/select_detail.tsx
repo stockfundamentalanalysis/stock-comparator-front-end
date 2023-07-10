@@ -19,16 +19,24 @@ import {
   Button,
 } from '@mui/material'
 import Link from 'next/link'
+//import '../styles/global.css'
+
 const Post = () => {
-  // Filter the json data to get the company detail
+  //Filter the json data to get the company detail
   const jsonData = Object.values(json)
   const tickers = jsonData.map((item) => item.Ticker)
-  const companies = jsonData.map((item) => item.CompanyName)
-  const sectors = Array.from(new Set(jsonData.map((item) => item.Sector)))
+  let companies = jsonData.map((item) => item.CompanyName)
+  let sectors = Array.from(new Set(jsonData.map((item) => item.Sector)))
   const tickerDictionary: { [key: string]: string } = {}
   jsonData.forEach((item) => {
     tickerDictionary[item.CompanyName] = item.Ticker
   })
+
+  // Sort companies alphabetically
+  companies = companies.sort((a, b) => a.localeCompare(b))
+
+  // Sort sectors alphabetically
+  sectors = sectors.sort((a, b) => a.localeCompare(b))
 
   const ITEM_HEIGHT = 48
   const ITEM_PADDING_TOP = 8
@@ -41,31 +49,40 @@ const Post = () => {
     },
   }
 
-  const [tickerName, setTickerName] = React.useState<string[]>([])
-  const [sectorName, setSectorName] = React.useState<string[]>([])
+  const [tickerName, settickerName] = React.useState<string[]>([])
+  const [sectorName, setsectorName] = React.useState<string[]>([])
   const [companyName, setCompanyName] = React.useState<string[]>([])
-  const [searchQuery, setSearchQuery] = React.useState('')
-  const [selectedCompanies, setSelectedCompanies] = React.useState<string[]>([])
+
+  const handleChangeCompany = (
+    event: SelectChangeEvent<typeof companyName>
+  ) => {
+    const {
+      target: { value },
+    } = event
+    setCompanyName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value
+    )
+  }
 
   const handleChangeTicker = (event: SelectChangeEvent<typeof tickerName>) => {
     const {
       target: { value },
     } = event
-    setTickerName(typeof value === 'string' ? value.split(',') : value)
-    setCompanyName(typeof value === 'string' ? value.split(',') : value)
+    settickerName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value
+    )
   }
 
   const handleChangeSector = (event: SelectChangeEvent<typeof sectorName>) => {
     const {
       target: { value },
     } = event
-    setSectorName(typeof value === 'string' ? value.split(',') : value)
-  }
-
-  const handleChangeSearchQuery = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setSearchQuery(event.target.value)
+    setsectorName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value
+    )
   }
 
   const filteredTickers = useMemo(() => {
@@ -86,11 +103,8 @@ const Post = () => {
     return companies
   }, [sectorName])
 
-  const companyDetailLink = (
-    companies: string[],
-    tickerDictionary: { [key: string]: string }
-  ) => {
-    const company = companies[0]
+  const companyDetailLink = (tickerDictionary: { [key: string]: string }) => {
+    const company = companyName[0]
     if (company !== undefined) {
       return `/detail/${tickerDictionary[company]}`
     } else {
@@ -100,7 +114,7 @@ const Post = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar></Navbar>
       <Grid container spacing={3}>
         <Grid item md>
           <Stack spacing={2} sx={{ alignItems: 'center' }}>
@@ -108,6 +122,7 @@ const Post = () => {
               <InputLabel id="demo-multiple-name-label">Sector</InputLabel>
               <Select
                 labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
                 multiple
                 value={sectorName}
                 onChange={handleChangeSector}
@@ -135,15 +150,8 @@ const Post = () => {
                 id="demo-multiple-chip"
                 multiple
                 value={companyName}
-                onChange={handleChangeTicker}
-                input={
-                  <OutlinedInput
-                    id="select-multiple-chip"
-                    label="Chip"
-                    onChange={handleChangeSearchQuery}
-                    value={searchQuery}
-                  />
-                }
+                onChange={handleChangeCompany}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                 renderValue={(selected) => (
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                     {selected.map((value) => (
@@ -153,20 +161,16 @@ const Post = () => {
                 )}
                 MenuProps={MenuProps}
               >
-                {filteredCompanies
-                  .filter((name) =>
-                    name.toLowerCase().includes(searchQuery.toLowerCase())
-                  )
-                  .map((name) => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
+                {filteredCompanies.map((name) => (
+                  <MenuItem key={name} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <Button
               component={Link}
-              href={companyDetailLink(companies, tickerDictionary)}
+              href={companyDetailLink(tickerDictionary)}
               variant="contained"
               size="medium"
               sx={{
@@ -197,3 +201,10 @@ const Post = () => {
 }
 
 export default Post
+function onlyUnique(
+  value: string,
+  index: number,
+  array: string[]
+): value is string {
+  throw new Error('Function not implemented.')
+}

@@ -44,6 +44,12 @@ const Example = () => {
     return weight
   }
 
+  function calculateWeightReverse(value: number, min: number, max: number) {
+    //The higher the better
+    const weight = Math.max(0, 1 - Math.min((value - min) / (max - min), 1))
+    return weight
+  }
+
   const green = [0, 255, 0]
   const white = [255, 255, 255]
   const red = [255, 0, 0]
@@ -270,7 +276,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 5, 30)
+          const weight = calculateWeight(value, 2, 15)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -296,7 +302,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 5, 30)
+          const weight = calculateWeight(value, 2, 15)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -322,7 +328,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 5, 30)
+          const weight = calculateWeight(value, 3, 20)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -400,7 +406,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeight(value, 5, 30)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -426,7 +432,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeight(value, 5, 30)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -452,7 +458,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeightReverse(value, 0, 0.2)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -467,7 +473,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -478,7 +484,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeightReverse(value, 0, 0.2)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -493,7 +499,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -504,7 +510,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeightReverse(value, 0, 0.2)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -519,7 +525,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -530,7 +536,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeightReverse(value, 0, 0.2)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -545,7 +551,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -556,7 +562,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeightReverse(value, 0, 0.2)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -571,7 +577,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -582,14 +588,9 @@ const Example = () => {
         accessorKey: 'Beta',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
             <Box
               sx={{
-                backgroundColor: color,
                 borderRadius: '0.25rem',
                 color: 'rgba(0, 0, 0, 0.87)',
 
@@ -609,7 +610,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeightReverse(value, 0, 0.3)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -624,7 +625,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -635,7 +636,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeightReverse(value, 0, 0.3)
           const rgb = pickHex(green, red, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -687,7 +688,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeight(value, 0, 4)
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -713,7 +714,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeight(value, 0, 4)
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -739,7 +740,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeight(value, 0, 0.6)
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -754,7 +755,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -784,7 +785,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -809,7 +810,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -834,7 +835,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -859,7 +860,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -884,7 +885,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -911,7 +912,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -922,7 +923,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeight(value, 0, 0.1)
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -948,7 +949,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeight(value, 0, 0.5)
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -963,7 +964,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },
@@ -974,7 +975,7 @@ const Example = () => {
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
+          const weight = calculateWeight(value, 0, 0.3)
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -989,7 +990,7 @@ const Example = () => {
                 fontWeight: 'light',
               }}
             >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(cell.getValue() * 100)} %
             </Box>
           )
         },

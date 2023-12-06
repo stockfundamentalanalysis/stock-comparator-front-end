@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import MaterialReactTable, {
   MRT_ColumnDef,
   MRT_Cell,
 } from 'material-react-table'
-import json from '../data/sfa_easy.json'
+//import json from '../data/sfa_easy.json'
 import { red } from '@mui/material/colors'
 import { Box } from '@mui/material'
 import { palette } from '@mui/system'
@@ -13,9 +13,29 @@ import Link from 'next/link'
 //import '../styles/global.css'
 
 //nested data is ok, see accessorKeys in ColumnDef below
-const data = Object.values(json)
 
-const Example2 = () => {
+const EasyTable = () => {
+  const [simpleAnalysis, setSimpleAnalysis] = useState([])
+
+  useEffect(() => {
+    async function fetchCarData() {
+      try {
+        const carResponse = await fetch('/api/simpleAnalysis')
+        if (!carResponse.ok) {
+          throw new Error('Failed to fetch car data')
+        }
+        const carData = await carResponse.json()
+        setSimpleAnalysis(carData)
+      } catch (error) {
+        console.error('Error fetching car data:', error)
+      }
+    }
+
+    fetchCarData()
+  }, [])
+
+  const data = Object.values(simpleAnalysis)
+
   function pickHex(
     color_bad: number[],
     color_good: number[],
@@ -50,8 +70,6 @@ const Example2 = () => {
   const red = [255, 0, 0]
   const black = [0, 0, 0]
   const grey = [128, 128, 128]
-
-  // TODO https://www.material-react-table.com/docs/getting-started/usage
 
   interface Company {
     Ticker: any
@@ -113,21 +131,6 @@ const Example2 = () => {
             </Box>
           )
         },
-        // muiTableBodyCellProps: ({ cell }: { cell: any }) => ({
-        //   styleOverrides: {
-        //     backgroundColor: "red",
-        //   }
-        // sx: {
-        //   backgroundColor:
-        //     cell.getValue<number>() > 0.5
-        //       ? 'rgba(22, 184, 44, 0.5)'
-        //       : 'rgba(255, 0, 0, 0.5)',
-        //   fontWeight:
-        //     cell.column.id === 'age' && cell.getValue<number>() > 40
-        //       ? '700'
-        //       : '400'
-        // },
-        // }),
       },
       {
         header: 'TargetPrice',
@@ -271,4 +274,4 @@ const Example2 = () => {
   )
 }
 
-export default Example2
+export default EasyTable

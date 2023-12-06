@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Radar from '../../components/radar'
 import Navbar from '@/components/navbar'

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import MaterialReactTable, {
   MRT_ColumnDef,
   MRT_Cell,
@@ -12,9 +12,28 @@ import NavBar from '../components/navbar'
 import { AlignVerticalBottom } from '@mui/icons-material'
 
 //nested data is ok, see accessorKeys in ColumnDef below
-const data = Object.values(json)
 
 const Example = () => {
+  const [fundamentalAnalysis, setfundamentalAnalysis] = useState([])
+
+  useEffect(() => {
+    async function fetchCarData() {
+      try {
+        const carResponse = await fetch('/api/fundamentalAnalysis')
+        if (!carResponse.ok) {
+          throw new Error('Failed to fetch car data')
+        }
+        const carData = await carResponse.json()
+        setfundamentalAnalysis(carData)
+      } catch (error) {
+        console.error('Error fetching car data:', error)
+      }
+    }
+
+    fetchCarData()
+  }, [])
+
+  const data = Object.values(fundamentalAnalysis)
   function pickHex(
     color_bad: number[],
     color_good: number[],

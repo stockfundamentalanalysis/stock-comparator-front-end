@@ -34,7 +34,7 @@ model Companies {
   Sector                  String? @db.VarChar(255)
   Beta                    Float?  @db.Float
   BalanceSheetDate        String? @db.VarChar(255)
-  LastYearReport          BigInt?
+  LastYearReport          String?
   DividendYield           Float?  @db.Float
   PercentInsidersHold     Float?  @db.Float
   PercentInstitutionsHold Float?  @db.Float

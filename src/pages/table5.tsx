@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import MaterialReactTable, {
-  MRT_ColumnDef,
+  type MRT_ColumnDef,
   MRT_Cell,
 } from 'material-react-table'
 import json from '../data/sfa_advanced.json'
@@ -76,6 +76,7 @@ const Example = () => {
   const grey = [128, 128, 128]
 
   interface Company {
+    id: any
     Ticker: any
     CompanyName: any
     CurrentPrice: any
@@ -127,7 +128,7 @@ const Example = () => {
   }
 
   //should be memoized or stable
-  const columns = useMemo<MRT_ColumnDef<Company>[]>(
+  const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
         header: 'Ticker',

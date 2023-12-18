@@ -1,16 +1,18 @@
 import React from 'react'
 import RadarChart from 'react-svg-radar-chart'
 import 'react-svg-radar-chart/build/css/index.css'
-import json from '../data/sfa_easy.json'
 
 //console.log(company.Ticker)
-
+const normalize = (value: any, min: any, max: any) => {
+  return Math.min(1, Math.max(0, (value - min) / (max - min)))
+}
 function App(props: {
   company: {
     GrowthScore: any
     DebtQualityScore: any
     EarningsScore: any
     ProfitabilityScore: any
+    Potential: any
   }
 }) {
   /*   const data = Object.values(json)
@@ -21,21 +23,21 @@ function App(props: {
       <RadarChart
         captions={{
           // columns
-          battery: 'Potential',
+          battery: 'Growth',
           design: 'Debt Quality',
           useful: 'Earnings',
-          speed: 'Profitability',
-          weight: 'Growth',
+          speed: 'Potential',
+          weight: 'Profitability',
         }}
         data={[
           // data
           {
             data: {
-              battery: props.company.GrowthScore,
-              design: props.company.DebtQualityScore,
-              useful: props.company.EarningsScore,
-              speed: props.company.ProfitabilityScore,
-              weight: props.company.ProfitabilityScore,
+              battery: normalize(props.company.GrowthScore, 0, 1),
+              design: normalize(props.company.DebtQualityScore, 0, 1),
+              useful: normalize(props.company.EarningsScore, 0, 1),
+              speed: normalize(props.company.Potential, -0.15, 1),
+              weight: normalize(props.company.ProfitabilityScore, 0, 1),
             },
             meta: { color: '#58FCEC' },
           },

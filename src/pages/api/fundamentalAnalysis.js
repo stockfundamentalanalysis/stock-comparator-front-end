@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     const fundamentalAnalysis = await prisma.fundamentalAnalysis.findMany()
     res.status(200).json(fundamentalAnalysis)
   } catch (error) {
-    console.error('Error fetching car data:', error)
+    console.error('Error fetching company data:', error)
     res.status(500).json({ error: 'An error occurred while fetching data' })
   } finally {
     await prisma.$disconnect()

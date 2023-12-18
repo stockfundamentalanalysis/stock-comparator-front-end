@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Radar from '../../components/radar'
 import Navbar from '@/components/navbar'
+import BasicTable from '../../components/table'
 import {
   Box,
   FormControl,
@@ -13,18 +14,33 @@ import {
   SelectChangeEvent,
   Stack,
   Chip,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   CircularProgress,
 } from '@mui/material'
+import { Text } from '@fortawesome/fontawesome-svg-core'
 
 interface CompanyData {
   CompanyName: string
   Sector: string
-  TargetPrice: number
+  TargetPrice: any
+  LongDescription: any
   Potential: number
   GrowthScore: any
   DebtQualityScore: any
   EarningsScore: any
-  ProfitabilityScore: any
+  ProfitabilityScore: number
+  Currency: string
+  Price: any
+  CurrentPER: any
+  CurrentEVEBITDA: any
+  CurrentPricetoFreeCashFlowRate: any
+  ROIC: any
+  NetDebttoEBITDA: any
+
   // Add other properties as needed
 }
 
@@ -97,7 +113,7 @@ const Post = () => {
         // Display a loading indicator while fetching data
         <CircularProgress />
       ) : (
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item md>
             <Stack spacing={2} sx={{ alignItems: 'center' }}>
               <Box
@@ -152,7 +168,7 @@ const Post = () => {
                   maxWidth: 300,
                 }}
               >
-                <Box sx={{ color: 'text.secondary' }}>TargetPrice:</Box>
+                <Box sx={{ color: 'text.secondary' }}>Target price:</Box>
                 <Box
                   sx={{
                     color: 'black',
@@ -160,7 +176,28 @@ const Post = () => {
                     fontWeight: 'medium',
                   }}
                 >
-                  {Math.round(company.TargetPrice * 10) / 10}
+                  {company.TargetPrice.toFixed(1)} {company.Currency}
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  bgcolor: 'background.paper',
+                  boxShadow: 1,
+                  borderRadius: 2,
+                  p: 2,
+                  minWidth: 300,
+                  maxWidth: 300,
+                }}
+              >
+                <Box sx={{ color: 'text.secondary' }}>Current price:</Box>
+                <Box
+                  sx={{
+                    color: 'black',
+                    fontSize: 24,
+                    fontWeight: 'medium',
+                  }}
+                >
+                  {company.Price.toFixed(1)} {company.Currency}
                 </Box>
               </Box>
               <Box
@@ -193,6 +230,45 @@ const Post = () => {
           </Grid>
           <Grid item md>
             <Radar company={company}></Radar>
+          </Grid>
+          <Grid item md>
+            <Stack spacing={2} sx={{ alignItems: 'center' }}>
+              <Box
+                sx={{
+                  bgcolor: 'background.paper',
+                  boxShadow: 1,
+                  borderRadius: 2,
+                  p: 2,
+                  minWidth: 300,
+                  maxWidth: 500,
+                }}
+              >
+                <Box sx={{ color: 'text.primary' }}>Company Details:</Box>
+                <Box
+                  sx={{
+                    color: 'black',
+                    fontSize: 12,
+                    fontWeight: 'light',
+                  }}
+                >
+                  {company.LongDescription}
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  bgcolor: 'background.paper',
+                  boxShadow: 1,
+                  borderRadius: 2,
+                  p: 2,
+                  minWidth: 300,
+                  maxWidth: 500,
+                }}
+              >
+                <Box>
+                  <BasicTable company={company}></BasicTable>
+                </Box>
+              </Box>
+            </Stack>
           </Grid>
         </Grid>
       )}

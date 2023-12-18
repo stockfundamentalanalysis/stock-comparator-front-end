@@ -22,10 +22,25 @@ export default async function handler(req, res) {
       },
     })
 
+    const companyPrice = await prisma.CurrentPrice.findFirst({
+      where: {
+        Ticker: ticker,
+      },
+    })
+
+    const companyFundamentalAnalysis =
+      await prisma.fundamentalAnalysis.findFirst({
+        where: {
+          Ticker: ticker,
+        },
+      })
+
     // Combine the values of both objects into a new object
     const companyCombinedData = {
       ...companyAnalysis,
       ...companyVariables,
+      ...companyPrice,
+      ...companyFundamentalAnalysis,
     }
 
     res.status(200).json(companyCombinedData)

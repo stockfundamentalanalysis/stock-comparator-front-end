@@ -72,6 +72,7 @@ const EasyTable = () => {
   const grey = [128, 128, 128]
 
   interface Company {
+    id: any
     Ticker: any
     CompanyName: any
     Sector: any
@@ -87,7 +88,7 @@ const EasyTable = () => {
   //should be memoized or stable
   //
   //should be memoized or stable
-  const columns = useMemo<MRT_ColumnDef<Company>[]>(
+  const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
         header: 'Ticker',

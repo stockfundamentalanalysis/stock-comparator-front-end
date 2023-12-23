@@ -10,7 +10,6 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material'
-// menu
 import DrawerItem from './draweritem'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 
@@ -19,6 +18,8 @@ import Link from 'next/link'
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
   justifyContent: 'space-between',
+  maxWidth: '100%', // Adjust the maximum width as needed
+  paddingY: '0px',
   alignItems: 'center', // Add this line to vertically align the items
 })
 
@@ -36,16 +37,16 @@ const itemList = [
     to: '/',
   },
   {
-    text: 'CompanyDetails',
+    text: 'Company Details',
     to: '/select_detail',
   },
   {
-    text: 'EasyMode',
-    to: '/table3',
+    text: 'Easy Comparator',
+    to: '/easy_table',
   },
   {
-    text: 'AdvancedMode',
-    to: '/table5',
+    text: 'Advanced Comparator',
+    to: '/advanced_table',
   },
   {
     text: 'Contact',
@@ -59,7 +60,7 @@ const Navbar = () => {
       component="nav"
       position="sticky"
       sx={{
-        backgroundColor: 'orange',
+        backgroundColor: 'rgb(0,0,0)',
         margin: 0,
       }}
       elevation={0}
@@ -84,9 +85,10 @@ const Navbar = () => {
                   href={item.to}
                   sx={{
                     color: '#fff',
+                    fontSize: '0.5rem',
                     '&:hover': {
                       backgroundColor: 'transparent',
-                      color: '#1e2a5a',
+                      color: 'rgb(100,100,100)',
                     },
                   }}
                 >

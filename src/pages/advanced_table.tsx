@@ -13,7 +13,7 @@ import { AlignVerticalBottom } from '@mui/icons-material'
 
 //nested data is ok, see accessorKeys in ColumnDef below
 
-const Example = () => {
+const AdvancedTable = () => {
   const [fundamentalAnalysis, setfundamentalAnalysis] = useState([])
 
   useEffect(() => {
@@ -142,7 +142,7 @@ const Example = () => {
         }, */
       },
       {
-        header: 'CompanyName',
+        header: 'Company Name',
         accessorKey: 'CompanyName',
       },
       {
@@ -163,7 +163,6 @@ const Example = () => {
               sx={{
                 backgroundColor: color,
                 borderRadius: '0.25rem',
-
                 p: '0.25rem',
                 fontWeight: 'bold',
                 textAlign: 'center',
@@ -173,25 +172,34 @@ const Example = () => {
             </Box>
           )
         },
-        // muiTableBodyCellProps: ({ cell }: { cell: any }) => ({
-        //   styleOverrides: {
-        //     backgroundColor: "red",
-        //   }
-        // sx: {
-        //   backgroundColor:
-        //     cell.getValue() > 0.5
-        //       ? 'rgba(22, 184, 44, 0.5)'
-        //       : 'rgba(255, 0, 0, 0.5)',
-        //   fontWeight:
-        //     cell.column.id === 'age' && cell.getValue() > 40
-        //       ? '700'
-        //       : '400'
-        // },
-        // }),
       },
       {
-        header: 'DCFWorstPotential',
+        header: 'Worst Case Potential',
         accessorKey: 'DCFWorstPotential',
+        size: 150,
+        Cell: ({ cell }: { cell: any }) => {
+          const value = cell.getValue()
+          const weight = calculateWeight(value, -1, 1.5)
+          const rgb = pickHex(red, green, white, weight)
+          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          return (
+            <Box
+              sx={{
+                backgroundColor: color,
+                borderRadius: '0.25rem',
+                p: '0.25rem',
+                fontWeight: 'bold',
+                textAlign: 'center',
+              }}
+            >
+              {Math.round(cell.getValue() * 100)} %
+            </Box>
+          )
+        },
+      },
+      {
+        header: 'Current Price',
+        accessorKey: 'CurrentPrice',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -206,8 +214,8 @@ const Example = () => {
         },
       },
       {
-        header: 'CurrentPrice',
-        accessorKey: 'CurrentPrice',
+        header: 'Target Price',
+        accessorKey: 'TargetPrice',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -227,19 +235,19 @@ const Example = () => {
         accessorKey: 'Country',
       },
       {
-        header: 'StockCurrency',
+        header: 'Stock Currency',
         accessorKey: 'StockCurrency',
       },
       {
-        header: 'ReportCurrency',
+        header: 'Report Currency',
         accessorKey: 'ReportCurrency',
       },
       {
-        header: 'LastReportDate',
+        header: 'Last Report Date',
         accessorKey: 'LastReportDate',
       },
       {
-        header: 'CurrentPER',
+        header: 'Current PER',
         accessorKey: 'CurrentPER',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -265,7 +273,7 @@ const Example = () => {
         },
       },
       {
-        header: 'MeanPER',
+        header: 'Mean PER',
         accessorKey: 'MeanPER',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -291,7 +299,7 @@ const Example = () => {
         },
       },
       {
-        header: 'CurrentEVEBITDA',
+        header: 'Current EV/EBITDA',
         accessorKey: 'CurrentEVEBITDA',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -317,7 +325,7 @@ const Example = () => {
         },
       },
       {
-        header: 'MeanEVEBITDA',
+        header: 'Mean EV/EBITDA',
         accessorKey: 'MeanEVEBITDA',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -343,7 +351,7 @@ const Example = () => {
         },
       },
       {
-        header: 'CurrentEVEBIT',
+        header: 'Current EV/EBIT',
         accessorKey: 'CurrentEVEBIT',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -369,9 +377,9 @@ const Example = () => {
         },
       },
       {
-        header: 'CurrentPricetoBook',
+        header: 'Current Price/ Book Value',
         accessorKey: 'CurrentPricetoBook',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0.5, 3)
@@ -395,9 +403,9 @@ const Example = () => {
         },
       },
       {
-        header: 'MeanPricetoBook',
+        header: 'Mean Price/ Book Value',
         accessorKey: 'MeanPricetoBook',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0.5, 3)
@@ -421,9 +429,9 @@ const Example = () => {
         },
       },
       {
-        header: 'CurrentPricetoFreeCashFlowRate',
+        header: 'Current Price / Free Cash Flow',
         accessorKey: 'CurrentPricetoFreeCashFlowRate',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
@@ -447,9 +455,9 @@ const Example = () => {
         },
       },
       {
-        header: 'MeanPricetoFreeCashFlowRate',
+        header: 'Mean Price / Free Cash Flow',
         accessorKey: 'MeanPricetoFreeCashFlowRate',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
@@ -525,7 +533,7 @@ const Example = () => {
         },
       },
       {
-        header: 'MeanROIC',
+        header: 'Mean ROIC',
         accessorKey: 'MeanROIC',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -625,9 +633,9 @@ const Example = () => {
         },
       },
       {
-        header: 'CashToTotalAssets',
+        header: 'Total Cash / Total Assets',
         accessorKey: 'CashToTotalAssets',
-        size: 50,
+        size: 150,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 0.3)
@@ -651,9 +659,9 @@ const Example = () => {
         },
       },
       {
-        header: 'CashOverStockPrice',
+        header: 'Cash / Stock Price',
         accessorKey: 'CashOverStockPrice',
-        size: 50,
+        size: 100,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 0.3)
@@ -677,9 +685,9 @@ const Example = () => {
         },
       },
       {
-        header: 'LiabilitiestoEquityRatio',
+        header: 'Liabilities / Equity',
         accessorKey: 'LiabilitiestoEquityRatio',
-        size: 50,
+        size: 100,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
@@ -703,9 +711,9 @@ const Example = () => {
         },
       },
       {
-        header: 'NetDebttoEBITDA',
+        header: 'Net Debt / EBITDA',
         accessorKey: 'NetDebttoEBITDA',
-        size: 50,
+        size: 150,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 4)
@@ -729,9 +737,9 @@ const Example = () => {
         },
       },
       {
-        header: 'MeanNetDebttoEBITDA',
+        header: 'Mean Net Debt / EBITDA',
         accessorKey: 'MeanNetDebttoEBITDA',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 4)
@@ -755,9 +763,9 @@ const Example = () => {
         },
       },
       {
-        header: 'InterestExpensetoEBIT',
+        header: 'Interest Expense / EBIT',
         accessorKey: 'InterestExpensetoEBIT',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 0.6)
@@ -781,13 +789,13 @@ const Example = () => {
         },
       },
       {
-        header: 'EntrepriseValueUSD',
+        header: 'Entreprise Value in USD',
         accessorKey: 'EntrepriseValueUSD',
       },
       {
-        header: 'EBITDATendency',
+        header: 'EBITDA Tendency',
         accessorKey: 'EBITDATendency',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
@@ -811,9 +819,9 @@ const Example = () => {
         },
       },
       {
-        header: 'FreeCashFlowTendency',
+        header: 'Free Cash Flow Tendency',
         accessorKey: 'FreeCashFlowTendency',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
@@ -836,9 +844,9 @@ const Example = () => {
         },
       },
       {
-        header: 'OperatingCashFlowTendency',
+        header: 'Operating Cash Flow Tendency',
         accessorKey: 'OperatingCashFlowTendency',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
@@ -861,9 +869,9 @@ const Example = () => {
         },
       },
       {
-        header: 'NetIncomeTendency',
+        header: 'Net Income Tendency',
         accessorKey: 'NetIncomeTendency',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
@@ -886,9 +894,9 @@ const Example = () => {
         },
       },
       {
-        header: 'EquityTendency',
+        header: 'Equity Tendency',
         accessorKey: 'EquityTendency',
-        size: 50,
+        size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
@@ -911,9 +919,9 @@ const Example = () => {
         },
       },
       {
-        header: 'ROICTendency',
+        header: 'ROIC Tendency',
         accessorKey: 'ROICTendency',
-        size: 50,
+        size: 100,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
@@ -938,9 +946,9 @@ const Example = () => {
         },
       },
       {
-        header: 'DividendYield',
+        header: 'Dividend Yield',
         accessorKey: 'DividendYield',
-        size: 50,
+        size: 100,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 0.1)
@@ -964,9 +972,9 @@ const Example = () => {
         },
       },
       {
-        header: 'EBITDAMargin',
+        header: 'EBITDA Margin',
         accessorKey: 'EBITDAMargin',
-        size: 50,
+        size: 100,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 0.5)
@@ -990,7 +998,7 @@ const Example = () => {
         },
       },
       {
-        header: 'NetIncomeMargin',
+        header: 'Net Income Margin',
         accessorKey: 'NetIncomeMargin',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -1068,7 +1076,7 @@ const Example = () => {
         },
       },
       {
-        header: 'MeanPFFO',
+        header: 'Mean PFFO',
         accessorKey: 'MeanPFFO',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -1094,12 +1102,12 @@ const Example = () => {
         },
       },
       {
-        header: 'LastUpdate',
+        header: 'Last Update',
         accessorKey: 'LastUpdate',
       },
 
       {
-        header: 'FirstYearReport',
+        header: 'First Year Report',
         accessorKey: 'FirstYearReport',
       },
     ],
@@ -1118,4 +1126,4 @@ const Example = () => {
   )
 }
 
-export default Example
+export default AdvancedTable

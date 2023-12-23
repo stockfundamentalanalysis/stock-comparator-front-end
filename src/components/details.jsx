@@ -12,7 +12,7 @@ const Details = () => {
 
   return (
     <Stack
-      component="section"
+      //component="section"
       direction="column"
       justifyContent="center"
       alignItems="center"
@@ -78,13 +78,14 @@ const Details = () => {
             mt: 3,
             mb: 2,
             borderRadius: 0,
-            color: 'white',
-            backgroundColor: 'orange',
+            borderColor: '#fff',
+            color: 'rgb(0,0,0)',
+            backgroundColor: 'rgb(130,130,130)',
             '&&:hover': {
-              backgroundColor: '#343a55',
+              backgroundColor: 'rgb(165,165,165)',
             },
             '&&:focus': {
-              backgroundColor: '#343a55',
+              backgroundColor: 'rgb(165,165,165)',
             },
           }}
         >

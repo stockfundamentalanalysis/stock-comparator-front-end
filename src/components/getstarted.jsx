@@ -54,7 +54,7 @@ const GetStarted = () => {
             textAlign="start"
             sx={{ fontWeight: 'light' }}
           >
-            Target prices are calculated based on companies'
+            Target prices are calculated based on companies
             <br />
             annual reports using fundamental analysis
             <br />

@@ -11,7 +11,7 @@ const Header = () => {
     justifyContent: 'center',
     gap: theme.spacing(2),
     paddingTop: theme.spacing(10),
-    backgroundColor: 'orange',
+    backgroundColor: 'rgb(0,0,0)',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
       alignItems: 'center',
@@ -94,13 +94,13 @@ const Header = () => {
               borderRadius: 0,
               borderColor: '#14192d',
               color: '#fff',
-              backgroundColor: '#14192d',
+              backgroundColor: 'rgb(130,130,130)',
               whiteSpace: 'nowrap', // Ensure text stays on a single line
               '&&:hover': {
-                backgroundColor: '#343a55',
+                backgroundColor: 'rgb(166,166,166)',
               },
               '&&:focus': {
-                backgroundColor: '#343a55',
+                backgroundColor: 'rgb(130,130,130)',
               },
             }}
           >
@@ -121,12 +121,12 @@ const Header = () => {
               borderColor: '#fff',
               whiteSpace: 'nowrap', // Ensure text stays on a single line
               '&&:hover': {
-                color: '#343a55',
-                borderColor: '#343a55',
+                color: 'rgb(130,130,130)',
+                borderColor: 'rgb(130,130,130)',
               },
               '&&:focus': {
-                color: '#343a55',
-                borderColor: '#343a55',
+                color: 'rgb(130,130,130)',
+                borderColor: 'rgb(130,130,130)',
               },
             }}
           >

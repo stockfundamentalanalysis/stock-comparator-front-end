@@ -43,13 +43,32 @@ const GetInTouch = () => {
         width: '100%',
         flexGrow: 1,
         display: 'flex',
-        backgroundColor: '#f5f5f5',
+        backgroundColor: 'rgb(0,0,0)',
       }}
     >
       <Box maxWidth={'md'} mx={'auto'} textAlign={'center'}>
         <Box mb={4}>
-          <Typography variant="h2">
-            Get the Premium Version of our software
+          <Typography
+            variant="h2"
+            component="h1"
+            sx={{
+              fontWeight: 700,
+              color: 'rgb(255,255,255)',
+              fontSize: 70,
+            }}
+          >
+            Stock Comparator Premium
+          </Typography>
+          <Typography
+            variant="h2"
+            component="h1"
+            sx={{
+              fontWeight: 700,
+              color: 'rgb(255,255,255)',
+              fontSize: 30,
+            }}
+          >
+            desktop version for PC and MAC
           </Typography>
         </Box>
 
@@ -72,7 +91,12 @@ const GetInTouch = () => {
             >
               <FontAwesomeIcon icon={faCalculator} size="4x" />
             </Box>
-            <Typography variant="h6" textAlign="center" gutterBottom>
+            <Typography
+              variant="h6"
+              textAlign="center"
+              gutterBottom
+              color="rgb(255,255,255)"
+            >
               Target price calculation for any stock worldwide based on their
               annual reports.
             </Typography>
@@ -96,6 +120,7 @@ const GetInTouch = () => {
               variant="h6"
               textAlign="center"
               gutterBottom
+              color="rgb(255,255,255)"
               //sx={{ fontStyle: 'italic' }}
             >
               Target price adaptation based on your company growth estimation.
@@ -116,7 +141,12 @@ const GetInTouch = () => {
             >
               <FontAwesomeIcon icon={faBomb} size="4x" />
             </Box>
-            <Typography variant="h6" textAlign="center" gutterBottom>
+            <Typography
+              variant="h6"
+              textAlign="center"
+              gutterBottom
+              color="rgb(255,255,255)"
+            >
               Target price adaptation based on factors like interest rates and
               geopolitical risks.
             </Typography>
@@ -126,22 +156,23 @@ const GetInTouch = () => {
       <Button
         component={Link}
         href={'/contact'}
-        size="medium"
         sx={{
+          mr: 3,
+          px: 5,
+          py: 2,
+          margin: 4,
           fontSize: '0.9rem',
           textTransform: 'capitalize',
-          py: 2,
-          px: 4,
-          mt: 3,
-          mb: 2,
           borderRadius: 0,
+          borderColor: '#14192d',
           color: '#fff',
-          backgroundColor: 'orange',
+          backgroundColor: 'rgb(130,130,130)',
+          whiteSpace: 'nowrap', // Ensure text stays on a single line
           '&&:hover': {
-            backgroundColor: '#343a55',
+            backgroundColor: 'rgb(166,166,166)',
           },
           '&&:focus': {
-            backgroundColor: '#343a55',
+            backgroundColor: 'rgb(130,130,130)',
           },
         }}
       >

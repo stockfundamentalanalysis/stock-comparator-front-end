@@ -182,12 +182,12 @@ const Post = () => {
                 mb: 2,
                 borderRadius: 0,
                 color: '#fff',
-                backgroundColor: 'orange',
+                backgroundColor: 'rgb(130,130,130)',
                 '&&:hover': {
-                  backgroundColor: '#343a55',
+                  backgroundColor: 'rgb(165,165,165)',
                 },
                 '&&:focus': {
-                  backgroundColor: '#343a55',
+                  backgroundColor: 'rgb(165,165,165)',
                 },
               }}
             >

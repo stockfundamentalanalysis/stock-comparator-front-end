@@ -1,12 +1,12 @@
 import React, { useMemo, useState, useEffect } from 'react'
-import MaterialReactTable, {
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
   MRT_ColumnDef,
   MRT_Cell,
 } from 'material-react-table'
-//import json from '../data/sfa_easy.json'
 import { red } from '@mui/material/colors'
 import { Box } from '@mui/material'
-import { palette } from '@mui/system'
 import NavBar from '../components/navbar'
 import Link from 'next/link'
 
@@ -134,7 +134,7 @@ const EasyTable = () => {
         },
       },
       {
-        header: 'TargetPrice',
+        header: 'Target Price',
         accessorKey: 'TargetPrice',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -155,7 +155,7 @@ const EasyTable = () => {
         size: 50,
       },
       {
-        header: 'DebtQualityScore',
+        header: 'DebtQuality Score',
         accessorKey: 'DebtQualityScore',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -182,7 +182,7 @@ const EasyTable = () => {
         },
       },
       {
-        header: 'EarningsScore',
+        header: 'Earnings Score',
         accessorKey: 'EarningsScore',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -208,7 +208,7 @@ const EasyTable = () => {
         },
       },
       {
-        header: 'ProfitabilityScore',
+        header: 'Profitability Score',
         accessorKey: 'ProfitabilityScore',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
@@ -234,7 +234,7 @@ const EasyTable = () => {
         },
       },
       {
-        header: 'GrowthScore',
+        header: 'Growth     Score',
         accessorKey: 'GrowthScore',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {

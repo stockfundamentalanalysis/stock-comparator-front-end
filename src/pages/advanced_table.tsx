@@ -1,12 +1,13 @@
 import React, { useMemo, useState, useEffect } from 'react'
-import MaterialReactTable, {
-  type MRT_ColumnDef,
+import {
+  MaterialReactTable,
+  useMaterialReactTable,
+  MRT_ColumnDef,
   MRT_Cell,
 } from 'material-react-table'
-import json from '../data/sfa_advanced.json'
+import { formatNumberUSD } from '../utils/user_table_tools'
 import { red } from '@mui/material/colors'
 import { Box, TableHead } from '@mui/material'
-import { palette } from '@mui/system'
 import NavBar from '../components/navbar'
 //import '../styles/global.css'
 import { AlignVerticalBottom } from '@mui/icons-material'
@@ -17,20 +18,20 @@ const AdvancedTable = () => {
   const [fundamentalAnalysis, setfundamentalAnalysis] = useState([])
 
   useEffect(() => {
-    async function fetchCarData() {
+    async function fetchCompanyData() {
       try {
-        const carResponse = await fetch('/api/fundamentalAnalysis')
-        if (!carResponse.ok) {
-          throw new Error('Failed to fetch car data')
+        const companyResponse = await fetch('/api/fundamentalAnalysis')
+        if (!companyResponse.ok) {
+          throw new Error('Failed to fetch company data')
         }
-        const carData = await carResponse.json()
-        setfundamentalAnalysis(carData)
+        const companyData = await companyResponse.json()
+        setfundamentalAnalysis(companyData)
       } catch (error) {
-        console.error('Error fetching car data:', error)
+        console.error('Error fetching company data:', error)
       }
     }
 
-    fetchCarData()
+    fetchCompanyData()
   }, [])
 
   const data = Object.values(fundamentalAnalysis)
@@ -791,6 +792,19 @@ const AdvancedTable = () => {
       {
         header: 'Entreprise Value in USD',
         accessorKey: 'EntrepriseValueUSD',
+        Cell: ({ cell }: { cell: any }) => {
+          return (
+            <Box
+              sx={{
+                p: '0.25rem',
+                textAlign: 'center',
+                fontWeight: 'light',
+              }}
+            >
+              {formatNumberUSD(cell.getValue())}
+            </Box>
+          )
+        },
       },
       {
         header: 'EBITDA Tendency',

@@ -85,14 +85,17 @@ const Navbar = () => {
                   href={item.to}
                   sx={{
                     color: '#fff',
-                    fontSize: '0.5rem',
+                    fontSize: '0.8rem',
                     '&:hover': {
                       backgroundColor: 'transparent',
                       color: 'rgb(100,100,100)',
                     },
                   }}
                 >
-                  <ListItemText primary={text} />
+                  <ListItemText
+                    primary={text}
+                    sx={{ whiteSpace: 'nowrap' }} // Ensure text stays on a single line
+                  />
                 </ListItemButton>
               </ListItem>
             )

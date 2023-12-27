@@ -11,7 +11,7 @@ function createData(key: string, value: number, unit: string) {
   return { key, value, unit }
 }
 
-function BasicTable(props: {
+const BasicTable = (props: {
   company: {
     CurrentPER: any
     CurrentEVEBITDA: any
@@ -19,7 +19,7 @@ function BasicTable(props: {
     ROIC: any
     NetDebttoEBITDA: any
   }
-}) {
+}) => {
   const rows = [
     createData('PER', props.company.CurrentPER, ' '),
     createData('EV/EBITDA', props.company.CurrentEVEBITDA, ' '),

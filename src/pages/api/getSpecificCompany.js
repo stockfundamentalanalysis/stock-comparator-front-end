@@ -1,8 +1,4 @@
-import { createRequire } from 'module'
 import { PrismaClient } from '@prisma/client'
-
-const require = createRequire(import.meta.url)
-
 const prisma = new PrismaClient()
 
 export default async function handler(req, res) {
@@ -10,13 +6,13 @@ export default async function handler(req, res) {
     query: { ticker },
   } = req
   try {
-    const companyAnalysis = await prisma.simpleAnalysis.findFirst({
+    const companyVariables = await prisma.Companies.findFirst({
       where: {
         Ticker: ticker,
       },
     })
 
-    const companyVariables = await prisma.Companies.findFirst({
+    const companyAnalysis = await prisma.simpleAnalysis.findFirst({
       where: {
         Ticker: ticker,
       },

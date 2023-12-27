@@ -21,6 +21,8 @@ import {
 import Link from 'next/link'
 //import '../styles/global.css'
 
+/// NEEDS TO BE CORRECTED TO REMOVE THE JSON
+
 const Post = () => {
   //Filter the json data to get the company detail
   const jsonData = Object.values(json)

@@ -1,9 +1,5 @@
-import * as React from 'react'
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
-import data from '../data/sfa_easy.json'
-import Radar from '../components/radar'
-import json from '../data/sfa_easy.json'
+import React, { useState, useEffect, useMemo } from 'react'
 import Navbar from '@/components/navbar'
 import {
   Box,
@@ -19,26 +15,50 @@ import {
   Button,
 } from '@mui/material'
 import Link from 'next/link'
-//import '../styles/global.css'
 
-/// NEEDS TO BE CORRECTED TO REMOVE THE JSON
-
+interface TickerDictionary {
+  [key: string]: string
+}
 const Post = () => {
-  //Filter the json data to get the company detail
-  const jsonData = Object.values(json)
-  const tickers = jsonData.map((item) => item.Ticker)
-  let companies = jsonData.map((item) => item.CompanyName)
-  let sectors = Array.from(new Set(jsonData.map((item) => item.Sector)))
-  const tickerDictionary: { [key: string]: string } = {}
-  jsonData.forEach((item) => {
-    tickerDictionary[item.CompanyName] = item.Ticker
-  })
+  const [simpleAnalysis, setSimpleAnalysis] = useState([])
+  const [tickerDictionary, setTickerDictionary] = useState<TickerDictionary>({}) // Provide an initial value with the correct type
+
+  useEffect(() => {
+    async function fetchCompanyData() {
+      try {
+        const dataResponse = await fetch('/api/getSectorsAndCompanies')
+        if (!dataResponse.ok) {
+          throw new Error('Failed to fetch company data')
+        }
+        const companyData = await dataResponse.json()
+        setSimpleAnalysis(companyData)
+
+        // Build a ticker dictionary for later use
+        const dictionary: TickerDictionary = {}
+        companyData.forEach((item: any) => {
+          dictionary[item.CompanyName] = item.Ticker
+        })
+        setTickerDictionary(dictionary)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+
+    fetchCompanyData()
+  }, [])
+
+  const data = Object.values(simpleAnalysis)
+
+  // Filter the json data to get the company detail
+  let companies = data.map((item) => item.CompanyName)
+  let sectors = data.map((item) => item.Sector)
+  const tickers = data.map((item) => item.Ticker)
 
   // Sort companies alphabetically
   companies = companies.sort((a, b) => a.localeCompare(b))
 
   // Sort sectors alphabetically
-  sectors = sectors.sort((a, b) => a.localeCompare(b))
+  sectors = Array.from(new Set(sectors)).sort((a, b) => a.localeCompare(b))
 
   const ITEM_HEIGHT = 48
   const ITEM_PADDING_TOP = 8
@@ -51,8 +71,8 @@ const Post = () => {
     },
   }
 
-  const [tickerName, settickerName] = React.useState<string[]>([])
-  const [sectorName, setsectorName] = React.useState<string[]>([])
+  const [tickerName, setTickerName] = React.useState<string[]>([])
+  const [sectorName, setSectorName] = React.useState<string[]>([])
   const [companyName, setCompanyName] = React.useState<string[]>([])
 
   const handleChangeCompany = (
@@ -62,7 +82,7 @@ const Post = () => {
       target: { value },
     } = event
     setCompanyName(
-      // On autofill we get a stringified value.
+      // On autofill, we get a stringified value.
       typeof value === 'string' ? value.split(',') : value
     )
   }
@@ -71,8 +91,8 @@ const Post = () => {
     const {
       target: { value },
     } = event
-    settickerName(
-      // On autofill we get a stringified value.
+    setTickerName(
+      // On autofill, we get a stringified value.
       typeof value === 'string' ? value.split(',') : value
     )
   }
@@ -81,31 +101,31 @@ const Post = () => {
     const {
       target: { value },
     } = event
-    setsectorName(
-      // On autofill we get a stringified value.
+    setSectorName(
+      // On autofill, we get a stringified value.
       typeof value === 'string' ? value.split(',') : value
     )
   }
 
   const filteredTickers = useMemo(() => {
     if (sectorName.length > 0) {
-      return jsonData
+      return data
         .filter((item) => sectorName.includes(item.Sector))
         .map((item) => item.Ticker)
     }
     return tickers
-  }, [sectorName])
+  }, [data, sectorName])
 
   const filteredCompanies = useMemo(() => {
     if (sectorName.length > 0) {
-      return jsonData
+      return data
         .filter((item) => sectorName.includes(item.Sector))
         .map((item) => item.CompanyName)
     }
     return companies
-  }, [sectorName])
+  }, [data, sectorName])
 
-  const companyDetailLink = (tickerDictionary: { [key: string]: string }) => {
+  const companyDetailLink = () => {
     const company = companyName[0]
     if (company !== undefined) {
       return `/detail/${tickerDictionary[company]}`
@@ -119,7 +139,7 @@ const Post = () => {
       <Navbar></Navbar>
       <Grid container spacing={3}>
         <Grid item md>
-          <Stack spacing={2} sx={{ alignItems: 'center' }}>
+          <Stack spacing={2} sx={{ alignItems: 'center', marginTop: '50px' }}>
             <FormControl sx={{ m: 1, width: 300 }}>
               <InputLabel id="demo-multiple-name-label">Sector</InputLabel>
               <Select
@@ -172,7 +192,7 @@ const Post = () => {
             </FormControl>
             <Button
               component={Link}
-              href={companyDetailLink(tickerDictionary)}
+              href={companyDetailLink()}
               variant="contained"
               size="medium"
               sx={{
@@ -203,10 +223,3 @@ const Post = () => {
 }
 
 export default Post
-function onlyUnique(
-  value: string,
-  index: number,
-  array: string[]
-): value is string {
-  throw new Error('Function not implemented.')
-}

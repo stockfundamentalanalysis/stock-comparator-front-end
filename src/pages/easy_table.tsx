@@ -10,10 +10,6 @@ import { Box } from '@mui/material'
 import NavBar from '../components/navbar'
 import Link from 'next/link'
 
-//import '../styles/global.css'
-
-//nested data is ok, see accessorKeys in ColumnDef below
-
 const EasyTable = () => {
   const [simpleAnalysis, setSimpleAnalysis] = useState([])
 

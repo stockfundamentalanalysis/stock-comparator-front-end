@@ -717,7 +717,7 @@ const AdvancedTable = () => {
         size: 150,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 4)
+          const weight = calculateWeightReverse(value, 0, 4)
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -743,7 +743,7 @@ const AdvancedTable = () => {
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 4)
+          const weight = calculateWeightReverse(value, 0, 4)
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
@@ -964,14 +964,9 @@ const AdvancedTable = () => {
         accessorKey: 'DividendYield',
         size: 100,
         Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 0.1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
             <Box
               sx={{
-                backgroundColor: color,
                 borderRadius: '0.25rem',
                 color: 'rgba(0, 0, 0, 0.87)',
 
@@ -1042,14 +1037,9 @@ const AdvancedTable = () => {
         accessorKey: 'WACC',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
             <Box
               sx={{
-                backgroundColor: color,
                 borderRadius: '0.25rem',
                 color: 'rgba(0, 0, 0, 0.87)',
 
@@ -1068,14 +1058,9 @@ const AdvancedTable = () => {
         accessorKey: 'PFFO',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
             <Box
               sx={{
-                backgroundColor: color,
                 borderRadius: '0.25rem',
                 color: 'rgba(0, 0, 0, 0.87)',
 
@@ -1094,14 +1079,9 @@ const AdvancedTable = () => {
         accessorKey: 'MeanPFFO',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
             <Box
               sx={{
-                backgroundColor: color,
                 borderRadius: '0.25rem',
                 color: 'rgba(0, 0, 0, 0.87)',
 
@@ -1134,7 +1114,13 @@ const AdvancedTable = () => {
       <MaterialReactTable
         columns={columns}
         data={data}
-        initialState={{ density: 'compact' }}
+        enableColumnPinning={true}
+        enableStickyHeader={true}
+        //enableRowSelection={true}
+        initialState={{
+          density: 'compact',
+          columnPinning: { left: ['CompanyName'] },
+        }}
       />
     </>
   )

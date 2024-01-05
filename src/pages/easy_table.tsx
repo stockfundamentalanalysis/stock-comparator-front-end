@@ -265,7 +265,13 @@ const EasyTable = () => {
       <MaterialReactTable
         columns={columns}
         data={data}
-        initialState={{ density: 'compact' }}
+        enableColumnPinning={true}
+        enableStickyHeader={true}
+        //enableRowSelection={true}
+        initialState={{
+          density: 'compact',
+          columnPinning: { left: ['CompanyName'] },
+        }}
       />
     </>
   )

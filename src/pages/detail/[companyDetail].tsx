@@ -21,7 +21,6 @@ import {
   TableRow,
   CircularProgress,
 } from '@mui/material'
-import { Text } from '@fortawesome/fontawesome-svg-core'
 
 interface CompanyData {
   CompanyName: string
@@ -51,7 +50,7 @@ const Post = () => {
   const company_name = cleanPath.toUpperCase()
   //Filter the json data to get the company detail
   const [isLoading, setIsLoading] = useState(true) // Add loading state
-  const [company, setCompanyData] = useState<CompanyData | null>(null)
+  const [companyData, setCompanyData] = useState<CompanyData | null>(null)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,18 +60,12 @@ const Post = () => {
         if (!response.ok) {
           throw new Error('Failed to fetch company data')
         }
-        const company = await response.json()
+        const companyData = await response.json()
         //const company = Object.values(dataJson)
         //const company = data.filter((item) => item.Ticker === company_name)[0]
-        setCompanyData(company)
+        setCompanyData(companyData)
         // const tickers = data.map((item) => item.Ticker)
         ///console.log(String(company_name))
-        let color = 'text.primary'
-        if (company.Potential > 0.1) {
-          color = 'success.main'
-        } else if (company.Potential < -0.1) {
-          color = 'error.main'
-        }
       } catch (error) {
         console.error('Error fetching company data:', error)
       } finally {
@@ -83,6 +76,8 @@ const Post = () => {
     fetchData()
   }, [])
 
+  const company = companyData ? companyData : null
+
   const ITEM_HEIGHT = 48
   const ITEM_PADDING_TOP = 8
   const MenuProps = {
@@ -92,18 +87,6 @@ const Post = () => {
         width: 250,
       },
     },
-  }
-
-  const [personName, setPersonName] = React.useState<string[]>([])
-
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    const {
-      target: { value },
-    } = event
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value
-    )
   }
 
   return (
@@ -265,7 +248,7 @@ const Post = () => {
                 }}
               >
                 <Box>
-                  <BasicTable company={company}></BasicTable>
+                  <BasicTable company={companyData}></BasicTable>
                 </Box>
               </Box>
             </Stack>

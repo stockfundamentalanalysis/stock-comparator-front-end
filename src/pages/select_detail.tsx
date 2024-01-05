@@ -13,6 +13,8 @@ import {
   Stack,
   Chip,
   Button,
+  Autocomplete,
+  TextField,
 } from '@mui/material'
 import Link from 'next/link'
 
@@ -58,7 +60,13 @@ const Post = () => {
   companies = companies.sort((a, b) => a.localeCompare(b))
 
   // Sort sectors alphabetically
-  sectors = Array.from(new Set(sectors)).sort((a, b) => a.localeCompare(b))
+  // Sort sectors alphabetically
+  sectors = Array.from(new Set(sectors)).sort((a, b) => {
+    // Provide default values for null or undefined
+    const sectorA = a || ''
+    const sectorB = b || ''
+    return sectorA.localeCompare(sectorB)
+  })
 
   const ITEM_HEIGHT = 48
   const ITEM_PADDING_TOP = 8
@@ -76,14 +84,12 @@ const Post = () => {
   const [companyName, setCompanyName] = React.useState<string[]>([])
 
   const handleChangeCompany = (
-    event: SelectChangeEvent<typeof companyName>
+    event: React.ChangeEvent<any>,
+    newValue: string | string[]
   ) => {
-    const {
-      target: { value },
-    } = event
     setCompanyName(
       // On autofill, we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value
+      typeof newValue === 'string' ? newValue.split(',') : newValue
     )
   }
 
@@ -166,29 +172,14 @@ const Post = () => {
               </Select>
             </FormControl>
             <FormControl sx={{ m: 1, width: 300 }}>
-              <InputLabel id="demo-multiple-name-label">Company</InputLabel>
-              <Select
-                labelId="demo-multiple-chip-label"
+              <Autocomplete
                 id="demo-multiple-chip"
-                multiple
-                value={companyName}
+                options={filteredCompanies}
                 onChange={handleChangeCompany}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip key={value} label={value} />
-                    ))}
-                  </Box>
+                renderInput={(params) => (
+                  <TextField {...params} label="Company" />
                 )}
-                MenuProps={MenuProps}
-              >
-                {filteredCompanies.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
+              />
             </FormControl>
             <Button
               component={Link}

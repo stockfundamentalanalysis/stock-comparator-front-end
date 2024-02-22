@@ -7,7 +7,9 @@ import Header from '../components/header'
 import NavBar from '../components/navbar'
 import Footer from '../components/footer'
 import GetStarted from '../components/getstarted'
+import BigImage from '../components/bigimage'
 import GetInTouch from '../components/getintouch'
+import ExplanationFiveGrid from '../components/fivegrid'
 //import '../styles/global.css'
 
 const IndexPage = () => {
@@ -15,9 +17,9 @@ const IndexPage = () => {
     <>
       <NavBar />
       <Header />
-      <GetStarted />
+      <ExplanationFiveGrid />
+      <BigImage />
       <GetInTouch />
-      <Footer />
     </>
   )
 }

@@ -50,7 +50,7 @@ const GetInTouch = () => {
         <Box mb={4}>
           <Typography
             variant="h2"
-            component="h1"
+            component="h2"
             sx={{
               fontWeight: 700,
               color: 'rgb(255,255,255)',
@@ -61,14 +61,14 @@ const GetInTouch = () => {
           </Typography>
           <Typography
             variant="h2"
-            component="h1"
+            component="h2"
             sx={{
               fontWeight: 700,
               color: 'rgb(255,255,255)',
-              fontSize: 30,
+              fontSize: 25,
             }}
           >
-            desktop version for PC and MAC
+            Only for registered users
           </Typography>
         </Box>
 
@@ -89,6 +89,30 @@ const GetInTouch = () => {
               borderRadius={4}
               boxShadow={1}
             >
+              <FontAwesomeIcon icon={faBriefcase} size="4x" />
+            </Box>
+            <Typography
+              variant="h6"
+              textAlign="center"
+              gutterBottom
+              color="rgb(255,255,255)"
+            >
+              Manage your ouwn real or demo portfolio. Get the overall vision of
+              its performance.
+            </Typography>
+          </Box>
+          <Box>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              mb={2}
+              width="100%"
+              height="150px"
+              bgcolor="#fff"
+              borderRadius={4}
+              boxShadow={1}
+            >
               <FontAwesomeIcon icon={faCalculator} size="4x" />
             </Box>
             <Typography
@@ -97,8 +121,8 @@ const GetInTouch = () => {
               gutterBottom
               color="rgb(255,255,255)"
             >
-              Target price calculation for any stock worldwide based on their
-              annual reports.
+              Request the target price and potential calculation of any stock
+              worldwide.
             </Typography>
           </Box>
 
@@ -123,32 +147,8 @@ const GetInTouch = () => {
               color="rgb(255,255,255)"
               //sx={{ fontStyle: 'italic' }}
             >
-              Target price adaptation based on your company growth estimation.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              mb={2}
-              width="100%"
-              height="150px"
-              bgcolor="#fff"
-              borderRadius={4}
-              boxShadow={1}
-            >
-              <FontAwesomeIcon icon={faBomb} size="4x" />
-            </Box>
-            <Typography
-              variant="h6"
-              textAlign="center"
-              gutterBottom
-              color="rgb(255,255,255)"
-            >
-              Target price adaptation based on factors like interest rates and
-              geopolitical risks.
+              Recalculate the target price of any stock based on your own
+              company growth estimation.
             </Typography>
           </Box>
         </Box>
@@ -163,7 +163,7 @@ const GetInTouch = () => {
           margin: 4,
           fontSize: '0.9rem',
           textTransform: 'capitalize',
-          borderRadius: 0,
+          borderRadius: 3,
           borderColor: '#14192d',
           color: '#fff',
           backgroundColor: 'rgb(130,130,130)',

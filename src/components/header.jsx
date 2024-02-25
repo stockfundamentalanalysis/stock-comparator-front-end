@@ -57,27 +57,44 @@ const Header = () => {
       <BoxText component="section">
         <Typography
           variant="h2"
-          component="h1"
+          component="h2"
           sx={{
             fontWeight: 700,
             color: '#fff',
           }}
         >
-          Find the best stock across every sector
+          Stock Comparator
+        </Typography>
+        <br></br>
+        <Typography
+          variant="h5"
+          component="h5"
+          sx={{
+            fontWeight: 700,
+            color: '#fff',
+          }}
+        >
+          Unlock the best stock opportunities across every sector<br></br> with
+          our comprehensive analysis.
         </Typography>
 
         <Typography
           variant="p"
+          allign="justify"
           component="p"
+          maxWidth={700}
           sx={{
             py: 3,
             lineHeight: 1.6,
             color: '#fff',
           }}
         >
-          More than 500 stocks analyzed and updated daily. Artificial
-          Intelligence analysis based on companies financial statements and
-          market data.
+          Explore over 2000 stocks analyzed and updated daily, employing
+          advanced fundamental analysis techniques. Discover the potential for
+          appreciation or depreciation in each stock, meticulously evaluated
+          based on its financial reports, sector performance, growth outlook,
+          and macroeconomic trends. Make informed investment decisions with
+          comprehensive insights at your fingertips.
         </Typography>
 
         <ButtonContainer>
@@ -91,7 +108,7 @@ const Header = () => {
               py: 1,
               fontSize: '0.9rem',
               textTransform: 'capitalize',
-              borderRadius: 0,
+              borderRadius: 3,
               borderColor: '#14192d',
               color: '#fff',
               backgroundColor: 'rgb(130,130,130)',
@@ -115,7 +132,7 @@ const Header = () => {
               py: 1,
               fontSize: '0.9rem',
               textTransform: 'capitalize',
-              borderRadius: 0,
+              borderRadius: 3,
               color: '#fff',
               backgroundColor: 'transparent',
               borderColor: '#fff',
@@ -133,11 +150,12 @@ const Header = () => {
             Easy Comparator
           </Button>
         </ButtonContainer>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
       </BoxText>
-
-      <ImageBox>
-        <Image src={robotImage} alt="Image" width={500} height={400} />
-      </ImageBox>
     </CustomBox>
   )
 }

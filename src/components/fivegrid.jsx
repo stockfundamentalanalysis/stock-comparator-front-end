@@ -84,7 +84,7 @@ const ExplanationFiveGrid = () => {
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={6} md={6}>
+        <Grid item xs={12} md={6}>
           <Box
             sx={{
               bgcolor: 'background.paper',
@@ -112,7 +112,7 @@ const ExplanationFiveGrid = () => {
             </Typography>
           </Box>
         </Grid>
-        <Grid item xs={6} md={6}>
+        <Grid item xs={12} md={6}>
           <Box
             sx={{
               bgcolor: 'background.paper',

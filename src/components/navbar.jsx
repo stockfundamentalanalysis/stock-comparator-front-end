@@ -37,16 +37,16 @@ const itemList = [
     to: '/',
   },
   {
-    text: 'Company Details',
-    to: '/select_detail',
-  },
-  {
     text: 'Easy Comparator',
     to: '/easy_table',
   },
   {
     text: 'Advanced Comparator',
     to: '/advanced_table',
+  },
+  {
+    text: 'Company Details',
+    to: '/select_detail',
   },
   {
     text: 'Contact',

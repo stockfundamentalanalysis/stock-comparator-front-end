@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import BasicTable from '../../components/table'
-import Radar from '../../components/radar'
+import BasicTable from '@/components/table'
+import Radar from '@/components/radar'
 import Navbar from '@/components/navbar'
 import {
   Box,

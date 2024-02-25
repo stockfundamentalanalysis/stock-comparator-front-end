@@ -7,36 +7,33 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 
-function createData(key: string, value: number, unit: string) {
+function createData(key, value, unit) {
   return { key, value, unit }
 }
 
-const BasicTable = (props: {
-  company: {
-    CurrentPER: any
-    CurrentEVEBITDA: any
-    CurrentPricetoFreeCashFlowRate: any
-    ROIC: any
-    NetDebttoEBITDA: any
-  }
-}) => {
+const BasicTable = (props) => {
+  const {
+    CurrentPER,
+    CurrentEVEBITDA,
+    CurrentPricetoFreeCashFlowRate,
+    ROIC,
+    NetDebttoEBITDA,
+  } = props.company
+
   const rows = [
-    createData('PER', props.company.CurrentPER, ' '),
-    createData('EV/EBITDA', props.company.CurrentEVEBITDA, ' '),
-    createData(
-      'Price/Free Cash Flow',
-      props.company.CurrentPricetoFreeCashFlowRate,
-      ' '
-    ),
-    createData('ROIC', props.company.ROIC * 100, ' %'),
-    createData('Net Debt/EBITDA', props.company.NetDebttoEBITDA, ' '),
+    createData('PER', CurrentPER, ''),
+    createData('EV/EBITDA', CurrentEVEBITDA, ''),
+    createData('Price/Free Cash Flow', CurrentPricetoFreeCashFlowRate, ''),
+    createData('ROIC', ROIC * 100, '%'),
+    createData('Net Debt/EBITDA', NetDebttoEBITDA, ''),
   ]
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ maxWidth: 600 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell> </TableCell>
+            <TableCell>Indicator</TableCell>
             <TableCell align="left">Value</TableCell>
           </TableRow>
         </TableHead>
@@ -50,7 +47,10 @@ const BasicTable = (props: {
                 {row.key}
               </TableCell>
               <TableCell align="center">
-                {row.value.toFixed(1)} {row.unit}
+                {typeof row.value === 'number'
+                  ? row.value.toFixed(1)
+                  : row.value}{' '}
+                {row.unit}
               </TableCell>
             </TableRow>
           ))}

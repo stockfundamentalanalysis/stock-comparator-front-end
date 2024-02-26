@@ -1,21 +1,28 @@
-import Head from 'next/head'
-import Table from '@/components/Table'
+import * as React from 'react'
+//import { Link } from 'gatsby'
+import { useMemo } from 'react'
+//import type { HeadFC } from 'gatsby'
+// import data from '../data/sfa_easy.json'
+import Header from '../components/header'
+import NavBar from '../components/navbar'
+import Footer from '../components/footer'
+import GetStarted from '../components/getstarted'
+import BigImage from '../components/bigimage'
+import GetInTouch from '../components/getintouch'
+import ExplanationFiveGrid from '../components/fivegrid'
+//import '../styles/global.css'
 
-export default function Home() {
+const IndexPage = () => {
   return (
     <>
-      <Head>
-        <title>Stock Comparator</title>
-        <meta name="description" content="Stock Comparator App" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main>
-        <h1 className="text-3xl font-bold underline">Hello, World!</h1>
-        <div className="mt-4">
-          <Table />
-        </div>
-      </main>
+      <NavBar />
+      <Header />
+      <ExplanationFiveGrid />
+      <BigImage />
+      <GetInTouch />
     </>
   )
 }
+export default IndexPage
+
+//export const Head: HeadFC = () => <title>Home Page</title>

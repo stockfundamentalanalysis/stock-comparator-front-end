@@ -14,11 +14,20 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "strictNullChecks": false,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "additional.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/navbar.jsx",
+    "src/components/draweritem.jsx",
+    "src/pages/detail/[companyDetail].jsx"
+  ],
   "exclude": ["node_modules"]
 }

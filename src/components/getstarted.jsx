@@ -52,7 +52,7 @@ const GetStarted = () => {
           px: 2,
         }}
       >
-        {/*ELEMENT RIGHT 1*/}
+        {/*ELEMENT RIGHT 3*/}
         <CustomGridItem item xs={12} sm={8} md={4} component="section">
           <Box></Box>
         </CustomGridItem>
@@ -75,7 +75,7 @@ const GetStarted = () => {
             }}
           >
             <Image
-              src={imgDetail}
+              src={imgSearch}
               alt="Description"
               layout="fill"
               objectFit="cover" // Ensures the image covers the box area, adjust as needed
@@ -90,9 +90,9 @@ const GetStarted = () => {
             }}
           >
             {/* <Title
-            text={'Obtain the target price of any stock'}
-            textAlign={'start'}
-          /> */}
+          text={'Obtain the target price of any stock'}
+          textAlign={'start'}
+        /> */}
             <Typography
               variant="h4"
               textAlign="start"
@@ -100,21 +100,22 @@ const GetStarted = () => {
               gutterBottom
               //sx={{ fontStyle: 'italic' }}
             >
-              Fundamental Analysis
+              Value Investing
             </Typography>
             <Typography
               variant="h6"
               textAlign="start"
               sx={{ fontWeight: 'light' }}
             >
-              A in depth analysis of a company&apos;s fundamental state involves
-              computing key historical financial metrics, including net income,
-              Total Net Debt, Free Cash Flow, EBITDA, ROIC, Liabilities, Cash
-              available, and interest expenses, among others.
+              Value investing entails choosing undervalued stocks trading below
+              their intrinsic value or target price. As value investors, we
+              purchase stocks that the market underestimates, indicating they
+              are undervalued, and sell them once they approach their target
+              price.
             </Typography>
           </Box>
         </CustomGridItem>
-        {/*END OF ELEMENT RIGHT 1*/}
+        {/*END OF ELEMENT RIGHT 3*/}
 
         {/*BLANK ESPACE*/}
         <CustomGridItem item xs={12} sm={8} md={4} component="section">
@@ -217,7 +218,7 @@ const GetStarted = () => {
         </CustomGridItem>
         {/*END OF BLANK ESPACE*/}
 
-        {/*ELEMENT RIGHT 3*/}
+        {/*ELEMENT RIGHT 1*/}
         <CustomGridItem item xs={12} sm={8} md={4} component="section">
           <Box></Box>
         </CustomGridItem>
@@ -240,7 +241,7 @@ const GetStarted = () => {
             }}
           >
             <Image
-              src={imgSearch}
+              src={imgDetail}
               alt="Description"
               layout="fill"
               objectFit="cover" // Ensures the image covers the box area, adjust as needed
@@ -265,23 +266,21 @@ const GetStarted = () => {
               gutterBottom
               //sx={{ fontStyle: 'italic' }}
             >
-              Value Investing
+              Fundamental Analysis
             </Typography>
             <Typography
               variant="h6"
               textAlign="start"
               sx={{ fontWeight: 'light' }}
             >
-              Value investing entails choosing undervalued stocks trading below
-              their intrinsic value or target price. As value investors, we
-              purchase stocks that the market underestimates, indicating they
-              are undervalued, and sell them once they approach their target
-              price.
+              A in depth analysis of a company&apos;s fundamental state involves
+              computing key historical financial metrics, including net income,
+              Total Net Debt, Free Cash Flow, EBITDA, ROIC, Liabilities, Cash
+              available, and interest expenses, among others.
             </Typography>
           </Box>
         </CustomGridItem>
-        {/*END OF ELEMENT RIGHT 3*/}
-
+        {/*END OF ELEMENT RIGHT 1*/}
         {/*BLANK ESPACE*/}
         <CustomGridItem item xs={12} sm={8} md={4} component="section">
           <Box>
@@ -299,7 +298,6 @@ const GetStarted = () => {
           </Box>
         </CustomGridItem>
         {/*END OF BLANK ESPACE*/}
-
         {/*ELEMENT LEFT 4*/}
         <CustomGridItem item xs={12} sm={8} md={4} component="section">
           <Box

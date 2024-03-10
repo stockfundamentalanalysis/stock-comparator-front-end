@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Button, styled, Typography } from '@mui/material'
 import Link from 'next/link'
 import Image from 'next/image'
-import robotImage from '../images/robot.png'
+import backgroundImage from '../images/background5.jpeg'
 
 const Header = () => {
   const CustomBox = styled(Box)(({ theme }) => ({
@@ -11,7 +11,10 @@ const Header = () => {
     justifyContent: 'center',
     gap: theme.spacing(2),
     paddingTop: theme.spacing(10),
+    //backgroundImage: `url(${backgroundImage.src})`
     backgroundColor: 'rgb(0,0,0)',
+    //backgroundSize: 'cover',
+    backgroundPosition: 'center',
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
       alignItems: 'center',
@@ -87,6 +90,7 @@ const Header = () => {
             py: 3,
             lineHeight: 1.6,
             color: '#fff',
+            fontWeight: 600,
           }}
         >
           Explore over 2000 stocks analyzed and updated daily, employing

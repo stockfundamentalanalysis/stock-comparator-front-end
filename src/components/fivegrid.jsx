@@ -1,5 +1,7 @@
 import React from 'react'
 import { Box, Grid, styled, Typography } from '@mui/material'
+import Image from 'next/image'
+import img1 from '../images/prof.jpeg'
 
 const ExplanationFiveGrid = () => {
   return (
@@ -29,6 +31,14 @@ const ExplanationFiveGrid = () => {
               Total Net Debt, Free Cash Flow, EBITDA, ROIC, Liabilities, Cash
               available, and interest expenses, among others.
             </Typography>
+            <br />
+            <Image
+              src={img1}
+              alt="Profile"
+              width={100}
+              height={100}
+              style={{ borderRadius: '0%' }}
+            />
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>

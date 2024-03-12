@@ -1,0 +1,64 @@
+import { cn } from '@/lib/classNames'
+import { DEFAULT_SEO_DESCRIPTION, SITE_NAME, WEB_URL } from '@/lib/constants'
+import type { Metadata, Viewport } from 'next'
+import { Inter } from 'next/font/google'
+
+import './globals.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+export const metadata: Metadata = {
+  metadataBase: new URL(WEB_URL),
+  title: {
+    template: `%s | ${SITE_NAME}`,
+    default: SITE_NAME,
+  },
+  description: DEFAULT_SEO_DESCRIPTION,
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: SITE_NAME,
+    description: DEFAULT_SEO_DESCRIPTION,
+    url: WEB_URL,
+    siteName: SITE_NAME,
+    locale: 'en',
+    type: 'website',
+  },
+  applicationName: SITE_NAME,
+  referrer: 'strict-origin-when-cross-origin',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
+  colorScheme: 'light',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en" className="scroll-smooth">
+      <body className={cn(inter.variable, 'font-sans antialiased')}>
+        {children}
+      </body>
+    </html>
+  )
+}

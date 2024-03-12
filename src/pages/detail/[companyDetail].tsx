@@ -1,26 +1,9 @@
-import React, { useMemo, useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
-import BasicTable from '@/components/table'
-import Radar from '@/components/radar'
 import Navbar from '@/components/navbar'
-import {
-  Box,
-  FormControl,
-  Grid,
-  InputLabel,
-  OutlinedInput,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  CircularProgress,
-} from '@mui/material'
+import Radar from '@/components/radar'
+import BasicTable from '@/components/table'
+import { Box, CircularProgress, Grid, Stack } from '@mui/material'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 interface CompanyData {
   CompanyName: string
@@ -200,8 +183,8 @@ const Post = () => {
                       company.Potential > 0.3
                         ? 'green'
                         : company.Potential >= -0.1
-                        ? 'black'
-                        : 'red',
+                          ? 'black'
+                          : 'red',
                     fontSize: 34,
                     fontWeight: 'medium',
                   }}

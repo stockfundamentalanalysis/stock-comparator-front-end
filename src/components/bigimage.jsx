@@ -1,8 +1,7 @@
-import React from 'react'
 import { Box, Grid, styled, Typography } from '@mui/material'
+import Image from 'next/image'
 import imgFundamentals from '../images/fundamentals.png'
 import imgPotential from '../images/potential.png'
-import Image from 'next/image'
 
 const BigImage = () => {
   const CustomGridItem = styled(Grid)({

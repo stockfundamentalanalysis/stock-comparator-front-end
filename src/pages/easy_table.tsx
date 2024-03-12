@@ -1,14 +1,8 @@
-import React, { useMemo, useState, useEffect } from 'react'
-import {
-  MaterialReactTable,
-  useMaterialReactTable,
-  MRT_ColumnDef,
-  MRT_Cell,
-} from 'material-react-table'
-import { red } from '@mui/material/colors'
 import { Box } from '@mui/material'
-import NavBar from '../components/navbar'
+import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
 import Link from 'next/link'
+import { useEffect, useMemo, useState } from 'react'
+import NavBar from '../components/navbar'
 
 const EasyTable = () => {
   const [simpleAnalysis, setSimpleAnalysis] = useState([])

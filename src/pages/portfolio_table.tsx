@@ -1,24 +1,7 @@
-import React, { useMemo, useState, useEffect } from 'react'
+import { Box, Grid } from '@mui/material'
 import { MaterialReactTable } from 'material-react-table'
+import { useEffect, useMemo, useState } from 'react'
 import NavBar from '../components/navbar'
-import {
-  Box,
-  FormControl,
-  Grid,
-  InputLabel,
-  OutlinedInput,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  CircularProgress,
-} from '@mui/material'
 
 const PortfolioTable = () => {
   const [portfolio, setPortfolio] = useState([])

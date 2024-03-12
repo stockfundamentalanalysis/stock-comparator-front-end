@@ -1,22 +1,21 @@
-import { useRouter } from 'next/router'
-import React, { useState, useEffect, useMemo } from 'react'
 import Navbar from '@/components/navbar'
 import {
+  Autocomplete,
   Box,
+  Button,
+  Chip,
   FormControl,
   Grid,
   InputLabel,
-  OutlinedInput,
   MenuItem,
+  OutlinedInput,
   Select,
   SelectChangeEvent,
   Stack,
-  Chip,
-  Button,
-  Autocomplete,
   TextField,
 } from '@mui/material'
 import Link from 'next/link'
+import React, { useEffect, useMemo, useState } from 'react'
 
 interface TickerDictionary {
   [key: string]: string

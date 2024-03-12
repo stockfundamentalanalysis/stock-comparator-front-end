@@ -1,13 +1,11 @@
-import React from 'react'
 import { Box, Grid, styled, Typography } from '@mui/material'
-import Title from './title'
 import imgDetail from '../images/prof.jpeg'
 
-import imgSector from '../images/sector.jpeg'
-import imgSearch from '../images/search.jpeg'
-import imgProtect from '../images/protect.jpeg'
-import imgGrowth from '../images/growth.jpeg'
 import Image from 'next/image'
+import imgGrowth from '../images/growth.jpeg'
+import imgProtect from '../images/protect.jpeg'
+import imgSearch from '../images/search.jpeg'
+import imgSector from '../images/sector.jpeg'
 
 const GetStarted = () => {
   const CustomGridItem = styled(Grid)({

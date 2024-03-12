@@ -1,8 +1,5 @@
-import React from 'react'
 import { Box, Button, styled, Typography } from '@mui/material'
 import Link from 'next/link'
-import Image from 'next/image'
-import backgroundImage from '../images/background5.jpeg'
 
 const Header = () => {
   const CustomBox = styled(Box)(({ theme }) => ({

@@ -1,19 +1,15 @@
-import React from 'react'
-import { Button, Stack, Box, styled, Typography } from '@mui/material'
-import Title from './title'
+import { Box, Button, Stack, Typography, styled } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import Link from 'next/link'
-import Image from 'next/image'
 
 // Import FontAwesome dependencies
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
-  faBriefcase,
-  faGlobe,
-  faFile,
-  faBomb,
-  faCalculator,
   faArrowUpRightDots,
+  faBriefcase,
+  faCalculator,
+  faFile,
+  faGlobe,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 

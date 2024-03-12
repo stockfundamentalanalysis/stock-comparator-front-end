@@ -1,26 +1,26 @@
-import React, { useState } from 'react'
 import {
-  styled,
-  useTheme,
-  Drawer,
   Divider,
-  List,
+  Drawer,
   IconButton,
+  List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  styled,
+  useTheme,
 } from '@mui/material'
+import { useState } from 'react'
 // rotas
 import Link from 'next/link'
 // icons
+import AutoMode from '@mui/icons-material/AutoMode'
+import BuildCircle from '@mui/icons-material/BuildCircle'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import EmailIcon from '@mui/icons-material/Email'
 import HomeIcon from '@mui/icons-material/Home'
 import InfoIcon from '@mui/icons-material/Info'
 import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import AutoMode from '@mui/icons-material/AutoMode'
-import BuildCircle from '@mui/icons-material/BuildCircle'
 
 const drawerWidth = 240
 

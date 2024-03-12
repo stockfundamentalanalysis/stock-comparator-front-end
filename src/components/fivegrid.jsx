@@ -1,5 +1,4 @@
-import React from 'react'
-import { Box, Grid, styled, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import Image from 'next/image'
 import img1 from '../images/prof.jpeg'
 

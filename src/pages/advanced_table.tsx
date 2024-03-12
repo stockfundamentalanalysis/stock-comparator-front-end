@@ -1,16 +1,9 @@
-import React, { useMemo, useState, useEffect } from 'react'
-import {
-  MaterialReactTable,
-  useMaterialReactTable,
-  MRT_ColumnDef,
-  MRT_Cell,
-} from 'material-react-table'
-import { formatNumberUSD } from '../utils/user_table_tools'
-import { red } from '@mui/material/colors'
-import { Box, TableHead } from '@mui/material'
+import { Box } from '@mui/material'
+import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
+import { useEffect, useMemo, useState } from 'react'
 import NavBar from '../components/navbar'
+import { formatNumberUSD } from '../utils/user_table_tools'
 //import '../styles/global.css'
-import { AlignVerticalBottom } from '@mui/icons-material'
 
 //nested data is ok, see accessorKeys in ColumnDef below
 

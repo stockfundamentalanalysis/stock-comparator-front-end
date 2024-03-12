@@ -1,17 +1,16 @@
-import React from 'react'
+import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import {
   AppBar,
-  Toolbar,
   Box,
   List,
   ListItem,
-  Typography,
-  styled,
   ListItemButton,
   ListItemText,
+  Toolbar,
+  Typography,
+  styled,
 } from '@mui/material'
 import DrawerItem from './draweritem'
-import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 
 import Link from 'next/link'
 

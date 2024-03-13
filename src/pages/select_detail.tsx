@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Navbar from '@/components/navbar'
 import {
   Autocomplete,
@@ -17,11 +18,16 @@ import {
 import Link from 'next/link'
 import React, { useEffect, useMemo, useState } from 'react'
 
-interface TickerDictionary {
-  [key: string]: string
-}
+type TickerDictionary = Record<string, string>
+
 const Post = () => {
-  const [simpleAnalysis, setSimpleAnalysis] = useState([])
+  const [simpleAnalysis, setSimpleAnalysis] = useState<
+    {
+      Ticker: string
+      CompanyName: string
+      Sector: string
+    }[]
+  >([])
   const [tickerDictionary, setTickerDictionary] = useState<TickerDictionary>({}) // Provide an initial value with the correct type
 
   useEffect(() => {
@@ -53,7 +59,6 @@ const Post = () => {
   // Filter the json data to get the company detail
   let companies = data.map((item) => item.CompanyName)
   let sectors = data.map((item) => item.Sector)
-  const tickers = data.map((item) => item.Ticker)
 
   // Sort companies alphabetically
   companies = companies.sort((a, b) => a.localeCompare(b))
@@ -78,29 +83,8 @@ const Post = () => {
     },
   }
 
-  const [tickerName, setTickerName] = React.useState<string[]>([])
   const [sectorName, setSectorName] = React.useState<string[]>([])
   const [companyName, setCompanyName] = React.useState<string[]>([])
-
-  const handleChangeCompany = (
-    event: React.ChangeEvent<any>,
-    newValue: string | string[]
-  ) => {
-    setCompanyName(
-      // On autofill, we get a stringified value.
-      typeof newValue === 'string' ? newValue.split(',') : newValue
-    )
-  }
-
-  const handleChangeTicker = (event: SelectChangeEvent<typeof tickerName>) => {
-    const {
-      target: { value },
-    } = event
-    setTickerName(
-      // On autofill, we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value
-    )
-  }
 
   const handleChangeSector = (event: SelectChangeEvent<typeof sectorName>) => {
     const {
@@ -112,15 +96,6 @@ const Post = () => {
     )
   }
 
-  const filteredTickers = useMemo(() => {
-    if (sectorName.length > 0) {
-      return data
-        .filter((item) => sectorName.includes(item.Sector))
-        .map((item) => item.Ticker)
-    }
-    return tickers
-  }, [data, sectorName])
-
   const filteredCompanies = useMemo(() => {
     if (sectorName.length > 0) {
       return data
@@ -128,7 +103,7 @@ const Post = () => {
         .map((item) => item.CompanyName)
     }
     return companies
-  }, [data, sectorName])
+  }, [companies, data, sectorName])
 
   const companyDetailLink = () => {
     const company = companyName[0]
@@ -174,7 +149,11 @@ const Post = () => {
               <Autocomplete
                 id="demo-multiple-chip"
                 options={filteredCompanies}
-                onChange={handleChangeCompany}
+                onChange={(_, newValue) => {
+                  setCompanyName(
+                    typeof newValue === 'string' ? newValue.split(',') : []
+                  )
+                }}
                 renderInput={(params) => (
                   <TextField {...params} label="Company" />
                 )}

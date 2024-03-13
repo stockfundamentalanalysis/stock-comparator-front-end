@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box } from '@mui/material'
 import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
 import Link from 'next/link'
@@ -55,25 +56,9 @@ const EasyTable = () => {
     return weight
   }
 
-  const green = [0, 255, 0]
-  const white = [255, 255, 255]
-  const red = [255, 0, 0]
-  const black = [0, 0, 0]
-  const grey = [128, 128, 128]
-
-  interface Company {
-    id: any
-    Ticker: any
-    CompanyName: any
-    Sector: any
-    Potential: any
-    TargetPrice: any
-    Currency: any
-    DebtQualityScore: any
-    EarningsScore: any
-    GrowthScore: any
-    ProfitabilityScore: any
-  }
+  const green = useMemo(() => [0, 255, 0], [])
+  const white = useMemo(() => [255, 255, 255], [])
+  const red = useMemo(() => [255, 0, 0], [])
 
   //should be memoized or stable
   //
@@ -250,7 +235,7 @@ const EasyTable = () => {
         },
       },
     ],
-    []
+    [green, red, white]
   )
 
   return (
@@ -261,7 +246,6 @@ const EasyTable = () => {
         data={data}
         enableColumnPinning={true}
         enableStickyHeader={true}
-        //enableRowSelection={true}
         initialState={{
           density: 'compact',
           columnPinning: { left: ['CompanyName'] },

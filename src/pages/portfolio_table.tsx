@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Grid } from '@mui/material'
 import { MaterialReactTable } from 'material-react-table'
 import { useEffect, useMemo, useState } from 'react'
@@ -49,7 +50,6 @@ const PortfolioTable = () => {
         accessorKey: 'Potential',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
           return (
             <Box
               sx={{
@@ -109,7 +109,6 @@ const PortfolioTable = () => {
         accessorKey: 'PercentualMargin',
         size: 10,
         Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
           return (
             <Box
               sx={{

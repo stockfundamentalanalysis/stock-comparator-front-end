@@ -58,12 +58,7 @@ const BigImage = () => {
               overflow: 'hidden', // Ensures the borderRadius is applied to the image
             }}
           >
-            <Image
-              src={imgFundamentals}
-              alt="Description"
-              layout="center"
-              objectFit="cover" // Ensures the image covers the box area, adjust as needed
-            />
+            <Image src={imgFundamentals} alt="Description" />
           </Box>
         </Grid>
 
@@ -86,12 +81,7 @@ const BigImage = () => {
               overflow: 'hidden', // Ensures the borderRadius is applied to the image
             }}
           >
-            <Image
-              src={imgPotential}
-              alt="Description"
-              layout="center"
-              objectFit="cover" // Ensures the image covers the box area, adjust as needed
-            />
+            <Image src={imgPotential} alt="Description" />
           </Box>
         </CustomGridItem>
         {/*END OF ELEMENT RIGHT 1*/}

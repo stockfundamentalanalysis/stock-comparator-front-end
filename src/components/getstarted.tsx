@@ -63,12 +63,7 @@ const GetStarted = () => {
               overflow: 'hidden', // Ensures the borderRadius is applied to the image
             }}
           >
-            <Image
-              src={imgSearch}
-              alt="Description"
-              layout="fill"
-              objectFit="cover" // Ensures the image covers the box area, adjust as needed
-            />
+            <Image src={imgSearch} alt="Description" fill />
           </Box>
         </Grid>
         <CustomGridItem item xs={12} sm={8} md={4}>
@@ -176,12 +171,7 @@ const GetStarted = () => {
               overflow: 'hidden', // Ensures the borderRadius is applied to the image
             }}
           >
-            <Image
-              src={imgSector}
-              alt="Description"
-              layout="fill"
-              objectFit="cover" // Ensures the image covers the box area, adjust as needed
-            />
+            <Image src={imgSector} alt="Description" fill />
           </Box>
         </Grid>
         <CustomGridItem item xs={12} sm={8} md={4}>
@@ -229,12 +219,7 @@ const GetStarted = () => {
               overflow: 'hidden', // Ensures the borderRadius is applied to the image
             }}
           >
-            <Image
-              src={imgDetail}
-              alt="Description"
-              layout="fill"
-              objectFit="cover" // Ensures the image covers the box area, adjust as needed
-            />
+            <Image src={imgDetail} alt="Description" fill />
           </Box>
         </Grid>
         <CustomGridItem item xs={12} sm={8} md={4}>
@@ -341,12 +326,7 @@ const GetStarted = () => {
               overflow: 'hidden', // Ensures the borderRadius is applied to the image
             }}
           >
-            <Image
-              src={imgGrowth}
-              alt="Description"
-              layout="fill"
-              objectFit="cover" // Ensures the image covers the box area, adjust as needed
-            />
+            <Image src={imgGrowth} alt="Description" fill />
           </Box>
         </Grid>
         <CustomGridItem item xs={12} sm={8} md={4}>
@@ -393,12 +373,7 @@ const GetStarted = () => {
               overflow: 'hidden', // Ensures the borderRadius is applied to the image
             }}
           >
-            <Image
-              src={imgProtect}
-              alt="Description"
-              layout="fill"
-              objectFit="cover" // Ensures the image covers the box area, adjust as needed
-            />
+            <Image src={imgProtect} alt="Description" fill />
           </Box>
         </Grid>
         <CustomGridItem item xs={12} sm={8} md={4}>

@@ -31,13 +31,7 @@ const ExplanationFiveGrid = () => {
               available, and interest expenses, among others.
             </Typography>
             <br />
-            <Image
-              src={img1}
-              alt="Profile"
-              width={100}
-              height={100}
-              style={{ borderRadius: '0%' }}
-            />
+            <Image src={img1} alt="Profile" width={100} height={100} />
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>

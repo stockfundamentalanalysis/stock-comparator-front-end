@@ -1,7 +1,6 @@
-export const formatNumberUSD = (number) => {
-  // Use Intl.NumberFormat to format the number
+export const formatNumberUSD = (number: number | bigint) => {
   const formatter = new Intl.NumberFormat('en-US', {
-    style: 'decimal', // Use 'scientific' for scientific notation
+    style: 'decimal',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
     notation: 'compact',

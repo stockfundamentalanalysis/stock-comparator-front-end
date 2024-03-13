@@ -1,12 +1,14 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import prisma from '@/lib/prisma/client'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(req, res) {
-  const {
-    query: { ticker },
-  } = req
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const ticker = req.query.ticker as string
+
   try {
-    const companyVariables = await prisma.Companies.findFirst({
+    const companyVariables = await prisma.companies.findFirst({
       where: {
         Ticker: ticker,
       },
@@ -18,7 +20,7 @@ export default async function handler(req, res) {
       },
     })
 
-    const companyPrice = await prisma.CurrentPrice.findFirst({
+    const companyPrice = await prisma.currentPrice.findFirst({
       where: {
         Ticker: ticker,
       },

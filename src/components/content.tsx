@@ -25,7 +25,7 @@ const Content = () => {
       }}
     >
       <Grid item xs={12} sm={12} md={5} component="section">
-        <Title text={'What we are offering?'} textAlign={'start'} />
+        <Title text={'What we are offering?'} textAlign="left" />
 
         <Typography
           variant="h6"
@@ -45,8 +45,8 @@ const Content = () => {
                     product and trust own our product.'
           }
           maxWidth={'75%'}
-          mx={0}
-          textAlign={'start'}
+          mx="0"
+          textAlign="left"
         />
       </Grid>
 

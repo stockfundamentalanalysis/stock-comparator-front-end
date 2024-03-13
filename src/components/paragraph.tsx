@@ -1,6 +1,13 @@
 import { Typography } from '@mui/material'
 
-const Paragraph = ({ text, maxWidth, mx, textAlign }) => {
+interface Props {
+  text: string
+  maxWidth?: string
+  mx?: string
+  textAlign?: 'left' | 'center' | 'right'
+}
+
+const Paragraph = ({ text, maxWidth, mx, textAlign }: Props) => {
   return (
     <Typography
       sx={{

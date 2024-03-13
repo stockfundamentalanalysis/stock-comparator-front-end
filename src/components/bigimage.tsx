@@ -1,21 +1,13 @@
+import imgFundamentals from '@/images/fundamentals.png'
+import imgPotential from '@/images/potential.png'
 import { Box, Grid, styled, Typography } from '@mui/material'
 import Image from 'next/image'
-import imgFundamentals from '../images/fundamentals.png'
-import imgPotential from '../images/potential.png'
 
 const BigImage = () => {
   const CustomGridItem = styled(Grid)({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-  })
-
-  const CustomTypography = styled(Typography)({
-    fontSize: '1.1rem',
-    textAlign: 'start',
-    lineHeight: '1.5',
-    color: '#515151',
-    marginTop: '1.5rem',
   })
 
   return (
@@ -75,7 +67,7 @@ const BigImage = () => {
           </Box>
         </Grid>
 
-        <CustomGridItem item xs={12} sm={6} md={6} component="section">
+        <CustomGridItem item xs={12} sm={6} md={6}>
           <Typography
             variant="h4"
             textAlign="center"

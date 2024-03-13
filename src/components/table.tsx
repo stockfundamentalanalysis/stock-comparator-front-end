@@ -6,18 +6,28 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-function createData(key, value, unit) {
+function createData(key: string, value: number, unit: string) {
   return { key, value, unit }
 }
 
-const BasicTable = (props) => {
+interface Props {
+  company: {
+    CurrentPER: number
+    CurrentEVEBITDA: number
+    CurrentPricetoFreeCashFlowRate: number
+    ROIC: number
+    NetDebttoEBITDA: number
+  }
+}
+
+const BasicTable = ({ company }: Props) => {
   const {
     CurrentPER,
     CurrentEVEBITDA,
     CurrentPricetoFreeCashFlowRate,
     ROIC,
     NetDebttoEBITDA,
-  } = props.company
+  } = company
 
   const rows = [
     createData('PER', CurrentPER, ''),

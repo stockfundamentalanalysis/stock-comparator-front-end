@@ -1,5 +1,4 @@
-import { Box, Button, Stack, Typography, styled } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
+import { Box, Button, Stack, Typography } from '@mui/material'
 import Link from 'next/link'
 
 // Import FontAwesome dependencies
@@ -17,16 +16,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 library.add(faBriefcase, faGlobe, faFile)
 
 const GetInTouch = () => {
-  const CustomTypography = styled(Typography)({
-    fontSize: '1.1rem',
-    textAlign: 'start',
-    lineHeight: '1.5',
-    color: '#515151',
-    marginTop: '1.5rem',
-  })
-
-  const theme = useTheme()
-
   return (
     <Stack
       component="section"

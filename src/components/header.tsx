@@ -40,17 +40,6 @@ const Header = () => {
     marginTop: theme.spacing(2), // Add margin between the text and buttons
   }))
 
-  const ImageBox = styled(Box)(({ theme }) => ({
-    flex: '2',
-    alignSelf: 'flex-end',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    paddingRight: theme.spacing(8),
-    [theme.breakpoints.down('md')]: {
-      justifyContent: 'center',
-    },
-  }))
-
   return (
     <CustomBox component="header">
       {/* Box text */}
@@ -79,8 +68,6 @@ const Header = () => {
         </Typography>
 
         <Typography
-          variant="p"
-          allign="justify"
           component="p"
           maxWidth={700}
           sx={{

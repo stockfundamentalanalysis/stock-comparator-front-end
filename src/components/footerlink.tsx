@@ -1,10 +1,13 @@
 import { Link } from '@mui/material'
 
-const FooterLink = ({ text }) => {
+interface Props {
+  text: string
+}
+
+const FooterLink = ({ text }: Props) => {
   return (
     <Link
       href="#"
-      variant="p"
       component="a"
       sx={{
         fontSize: '0.9rem',

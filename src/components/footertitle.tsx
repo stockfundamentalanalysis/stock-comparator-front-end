@@ -1,6 +1,10 @@
 import { Typography } from '@mui/material'
 
-const FooterTitle = ({ text }) => {
+interface Props {
+  text: string
+}
+
+const FooterTitle = ({ text }: Props) => {
   return (
     <Typography
       variant="h6"

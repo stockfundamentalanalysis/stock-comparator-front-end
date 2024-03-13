@@ -1,25 +1,16 @@
+import imgGrowth from '@/images/growth.jpeg'
+import imgDetail from '@/images/prof.jpeg'
+import imgProtect from '@/images/protect.jpeg'
+import imgSearch from '@/images/search.jpeg'
+import imgSector from '@/images/sector.jpeg'
 import { Box, Grid, styled, Typography } from '@mui/material'
-import imgDetail from '../images/prof.jpeg'
-
 import Image from 'next/image'
-import imgGrowth from '../images/growth.jpeg'
-import imgProtect from '../images/protect.jpeg'
-import imgSearch from '../images/search.jpeg'
-import imgSector from '../images/sector.jpeg'
 
 const GetStarted = () => {
   const CustomGridItem = styled(Grid)({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-  })
-
-  const CustomTypography = styled(Typography)({
-    fontSize: '1.1rem',
-    textAlign: 'start',
-    lineHeight: '1.5',
-    color: '#515151',
-    marginTop: '1.5rem',
   })
 
   return (
@@ -51,7 +42,7 @@ const GetStarted = () => {
         }}
       >
         {/*ELEMENT RIGHT 3*/}
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box></Box>
         </CustomGridItem>
         <Grid
@@ -80,7 +71,7 @@ const GetStarted = () => {
             />
           </Box>
         </Grid>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box
             component="article"
             sx={{
@@ -116,17 +107,17 @@ const GetStarted = () => {
         {/*END OF ELEMENT RIGHT 3*/}
 
         {/*BLANK ESPACE*/}
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
@@ -134,7 +125,7 @@ const GetStarted = () => {
         {/*END OF BLANK ESPACE*/}
 
         {/*ELEMENT LEFT 2*/}
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box
             component="article"
             sx={{
@@ -193,23 +184,23 @@ const GetStarted = () => {
             />
           </Box>
         </Grid>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box></Box>
         </CustomGridItem>
         {/*END OF END OF ELEMENT LEFT 2*/}
 
         {/*BLANK ESPACE*/}
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
@@ -217,7 +208,7 @@ const GetStarted = () => {
         {/*END OF BLANK ESPACE*/}
 
         {/*ELEMENT RIGHT 1*/}
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box></Box>
         </CustomGridItem>
         <Grid
@@ -246,7 +237,7 @@ const GetStarted = () => {
             />
           </Box>
         </Grid>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box
             component="article"
             sx={{
@@ -280,24 +271,24 @@ const GetStarted = () => {
         </CustomGridItem>
         {/*END OF ELEMENT RIGHT 1*/}
         {/*BLANK ESPACE*/}
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
         {/*END OF BLANK ESPACE*/}
         {/*ELEMENT LEFT 4*/}
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box
             component="article"
             sx={{
@@ -358,30 +349,30 @@ const GetStarted = () => {
             />
           </Box>
         </Grid>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box></Box>
         </CustomGridItem>
         {/*END OF END OF ELEMENT LEFT 4*/}
 
         {/*BLANK ESPACE*/}
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box>
             <br></br>
           </Box>
         </CustomGridItem>
         {/*END OF BLANK ESPACE*/}
         {/*ELEMENT RIGHT 5*/}
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box></Box>
         </CustomGridItem>
         <Grid
@@ -410,7 +401,7 @@ const GetStarted = () => {
             />
           </Box>
         </Grid>
-        <CustomGridItem item xs={12} sm={8} md={4} component="section">
+        <CustomGridItem item xs={12} sm={8} md={4}>
           <Box
             component="article"
             sx={{

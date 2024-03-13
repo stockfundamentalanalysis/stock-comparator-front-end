@@ -1,3 +1,4 @@
+import img2 from '@/images/prof.jpeg'
 import Timeline from '@mui/lab/Timeline'
 import TimelineConnector from '@mui/lab/TimelineConnector'
 import TimelineContent from '@mui/lab/TimelineContent'
@@ -6,7 +7,7 @@ import TimelineItem from '@mui/lab/TimelineItem'
 import TimelineSeparator from '@mui/lab/TimelineSeparator'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
-import img2 from '../images/prof.jpeg'
+import Image from 'next/image'
 
 const TimeLineComponent = () => {
   const timelineElements = [
@@ -48,11 +49,12 @@ const TimeLineComponent = () => {
         <TimelineItem key={index}>
           <TimelineSeparator>
             <TimelineDot color="secondary" sx={{ p: 0 }}>
-              {/* Uncomment and use the image if needed */}
-              <img
+              <Image
                 src={element.image}
-                alt=""
-                style={{ width: 50, height: 50, borderRadius: '50%' }}
+                alt={element.title}
+                width={50}
+                height={50}
+                style={{ borderRadius: '50%' }}
               />
             </TimelineDot>
             {index < timelineElements.length - 1 && <TimelineConnector />}

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import NavBar from '@/components/navbar'
 import { Box } from '@mui/material'
 import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
-import NavBar from '../components/navbar'
 
 const EasyTable = () => {
   const [simpleAnalysis, setSimpleAnalysis] = useState([])

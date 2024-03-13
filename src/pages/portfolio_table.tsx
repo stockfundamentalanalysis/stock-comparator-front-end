@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import NavBar from '@/components/navbar'
 import { Box, Grid } from '@mui/material'
 import { MaterialReactTable } from 'material-react-table'
 import { useEffect, useMemo, useState } from 'react'
-import NavBar from '../components/navbar'
 
 const PortfolioTable = () => {
   const [portfolio, setPortfolio] = useState([])

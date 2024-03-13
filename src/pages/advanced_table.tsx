@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import NavBar from '@/components/navbar'
+import { formatNumberUSD } from '@/utils/user_table_tools'
 import { Box } from '@mui/material'
 import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
 import { useEffect, useMemo, useState } from 'react'
-import NavBar from '../components/navbar'
-import { formatNumberUSD } from '../utils/user_table_tools'
 
 const AdvancedTable = () => {
   const [fundamentalAnalysis, setfundamentalAnalysis] = useState([])

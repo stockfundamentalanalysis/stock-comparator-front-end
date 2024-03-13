@@ -1,9 +1,9 @@
+import FooterLink from '@/components/footerlink'
+import FooterTitle from '@/components/footertitle'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import { Box, Stack, styled, Typography } from '@mui/material'
 import Link from '@mui/material/Link'
-import FooterLink from './footerlink'
-import FooterTitle from './footertitle'
 
 const Footer = () => {
   const StackColumn = styled(Stack)(() => ({

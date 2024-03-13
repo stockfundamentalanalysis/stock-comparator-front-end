@@ -1,14 +1,12 @@
-import { Card, CardContent, Grid, IconButton, Typography } from '@mui/material'
-// icons
+import Paragraph from '@/components/paragraph'
+import Title from '@/components/title'
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded'
 import FastfoodOutlinedIcon from '@mui/icons-material/FastfoodOutlined'
 import LocalParkingIcon from '@mui/icons-material/LocalParking'
 import PoolOutlinedIcon from '@mui/icons-material/PoolOutlined'
 import SportsGymnasticsIcon from '@mui/icons-material/SportsGymnastics'
 import WifiPasswordIcon from '@mui/icons-material/WifiPassword'
-// components
-import Paragraph from './paragraph'
-import Title from './title'
+import { Card, CardContent, Grid, IconButton, Typography } from '@mui/material'
 
 const Content = () => {
   return (

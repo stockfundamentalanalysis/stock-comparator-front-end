@@ -1,5 +1,5 @@
-import ContactForm from '../components/contactform'
-import NavBar from '../components/navbar'
+import ContactForm from '@/components/contactform'
+import NavBar from '@/components/navbar'
 
 const Contact = () => {
   return (

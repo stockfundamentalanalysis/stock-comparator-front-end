@@ -1,8 +1,8 @@
+import Paragraph from '@/components/paragraph'
+import Title from '@/components/title'
 import { ValidationError, useForm } from '@formspree/react'
 import SendIcon from '@mui/icons-material/Send'
 import { Box, Button, Stack, TextField } from '@mui/material'
-import Paragraph from './paragraph'
-import Title from './title'
 
 const ContactForm = () => {
   const [state, handleSubmit] = useForm('xjvnvvkp')

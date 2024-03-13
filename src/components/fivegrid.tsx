@@ -1,6 +1,6 @@
+import img1 from '@/images/prof.jpeg'
 import { Box, Grid, Typography } from '@mui/material'
 import Image from 'next/image'
-import img1 from '../images/prof.jpeg'
 
 const ExplanationFiveGrid = () => {
   return (

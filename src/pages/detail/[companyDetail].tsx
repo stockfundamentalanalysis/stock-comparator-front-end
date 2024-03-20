@@ -1,46 +1,27 @@
-import React, { useMemo, useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
-import BasicTable from '@/components/table'
-import Radar from '@/components/radar'
 import Navbar from '@/components/navbar'
-import {
-  Box,
-  FormControl,
-  Grid,
-  InputLabel,
-  OutlinedInput,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  CircularProgress,
-} from '@mui/material'
+import Radar from '@/components/radar'
+import BasicTable from '@/components/table'
+import { Box, CircularProgress, Grid, Stack } from '@mui/material'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 interface CompanyData {
   CompanyName: string
   Sector: string
-  TargetPrice: any
-  LongDescription: any
+  TargetPrice: number
+  LongDescription: string
   Potential: number
-  GrowthScore: any
-  DebtQualityScore: any
-  EarningsScore: any
+  GrowthScore: number
+  DebtQualityScore: number
+  EarningsScore: number
   ProfitabilityScore: number
   Currency: string
-  Price: any
-  CurrentPER: any
-  CurrentEVEBITDA: any
-  CurrentPricetoFreeCashFlowRate: any
-  ROIC: any
-  NetDebttoEBITDA: any
-
-  // Add other properties as needed
+  Price: number
+  CurrentPER: number
+  CurrentEVEBITDA: number
+  CurrentPricetoFreeCashFlowRate: number
+  ROIC: number
+  NetDebttoEBITDA: number
 }
 
 const Post = () => {
@@ -74,26 +55,23 @@ const Post = () => {
     }
 
     fetchData()
-  }, [])
+  }, [company_name])
 
   const company = companyData ? companyData : null
 
-  const ITEM_HEIGHT = 48
-  const ITEM_PADDING_TOP = 8
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
+  if (!company || !companyData) {
+    return (
+      <>
+        <Navbar></Navbar>
+        <h1>Company not found</h1>
+      </>
+    )
   }
 
   return (
     <>
       <Navbar></Navbar>
       {isLoading ? (
-        // Display a loading indicator while fetching data
         <CircularProgress />
       ) : (
         <Grid container spacing={2}>
@@ -200,8 +178,8 @@ const Post = () => {
                       company.Potential > 0.3
                         ? 'green'
                         : company.Potential >= -0.1
-                        ? 'black'
-                        : 'red',
+                          ? 'black'
+                          : 'red',
                     fontSize: 34,
                     fontWeight: 'medium',
                   }}
@@ -212,7 +190,7 @@ const Post = () => {
             </Stack>
           </Grid>
           <Grid item md>
-            <Radar company={company}></Radar>
+            <Radar company={company} />
           </Grid>
           <Grid item md>
             <Stack spacing={2} sx={{ alignItems: 'center' }}>

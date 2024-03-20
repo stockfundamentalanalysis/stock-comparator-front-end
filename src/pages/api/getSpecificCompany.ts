@@ -1,0 +1,51 @@
+import prisma from '@/lib/prisma/client'
+import type { NextApiRequest, NextApiResponse } from 'next'
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const ticker = req.query.ticker as string
+
+  try {
+    const companyVariables = await prisma.companies.findFirst({
+      where: {
+        Ticker: ticker,
+      },
+    })
+
+    const companyAnalysis = await prisma.simpleAnalysis.findFirst({
+      where: {
+        Ticker: ticker,
+      },
+    })
+
+    const companyPrice = await prisma.currentPrice.findFirst({
+      where: {
+        Ticker: ticker,
+      },
+    })
+
+    const companyFundamentalAnalysis =
+      await prisma.fundamentalAnalysis.findFirst({
+        where: {
+          Ticker: ticker,
+        },
+      })
+
+    // Combine the values of both objects into a new object
+    const companyCombinedData = {
+      ...companyAnalysis,
+      ...companyVariables,
+      ...companyPrice,
+      ...companyFundamentalAnalysis,
+    }
+
+    res.status(200).json(companyCombinedData)
+  } catch (error) {
+    console.error('Error fetching data:', error)
+    res.status(500).json({ error: 'An error occurred while fetching data' })
+  } finally {
+    await prisma.$disconnect()
+  }
+}

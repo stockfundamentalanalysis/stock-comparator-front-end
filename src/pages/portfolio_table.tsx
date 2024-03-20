@@ -1,24 +1,8 @@
-import React, { useMemo, useState, useEffect } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import NavBar from '@/components/navbar'
+import { Box, Grid } from '@mui/material'
 import { MaterialReactTable } from 'material-react-table'
-import NavBar from '../components/navbar'
-import {
-  Box,
-  FormControl,
-  Grid,
-  InputLabel,
-  OutlinedInput,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  CircularProgress,
-} from '@mui/material'
+import { useEffect, useMemo, useState } from 'react'
 
 const PortfolioTable = () => {
   const [portfolio, setPortfolio] = useState([])
@@ -66,7 +50,6 @@ const PortfolioTable = () => {
         accessorKey: 'Potential',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
           return (
             <Box
               sx={{
@@ -126,7 +109,6 @@ const PortfolioTable = () => {
         accessorKey: 'PercentualMargin',
         size: 10,
         Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
           return (
             <Box
               sx={{

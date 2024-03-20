@@ -1,18 +1,9 @@
-import React, { useMemo, useState, useEffect } from 'react'
-import {
-  MaterialReactTable,
-  useMaterialReactTable,
-  MRT_ColumnDef,
-  MRT_Cell,
-} from 'material-react-table'
-import { formatNumberUSD } from '../utils/user_table_tools'
-import { red } from '@mui/material/colors'
-import { Box, TableHead } from '@mui/material'
-import NavBar from '../components/navbar'
-//import '../styles/global.css'
-import { AlignVerticalBottom } from '@mui/icons-material'
-
-//nested data is ok, see accessorKeys in ColumnDef below
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import NavBar from '@/components/navbar'
+import { formatNumberUSD } from '@/utils/user_table_tools'
+import { Box } from '@mui/material'
+import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
+import { useEffect, useMemo, useState } from 'react'
 
 const AdvancedTable = () => {
   const [fundamentalAnalysis, setfundamentalAnalysis] = useState([])
@@ -70,63 +61,9 @@ const AdvancedTable = () => {
     return weight
   }
 
-  const green = [0, 255, 0]
-  const white = [255, 255, 255]
-  const red = [255, 0, 0]
-  const black = [0, 0, 0]
-  const grey = [128, 128, 128]
-
-  interface Company {
-    id: any
-    Ticker: any
-    CompanyName: any
-    CurrentPrice: any
-    Country: any
-    Sector: any
-    LastReportDate: any
-    StockCurrency: any
-    ReportCurrency: any
-    CurrentPER: any
-    MeanPER: any
-    CurrentPricetoBook: any
-    MeanPricetoBook: any
-    CurrentEVEBITDA: any
-    MeanEVEBITDA: any
-    CurrentEVEBIT: any
-    CurrentPricetoFreeCashFlowRate: any
-    MeanPricetoFreeCashFlowRate: any
-    ROE: any
-    ROCE: any
-    ROA: any
-    ROIC: any
-    MeanROIC: any
-    Beta: any
-    WACC: any
-    CashToTotalAssets: any
-    CashOverStockPrice: any
-    DebtQualityRatio: any
-    LiabilitiestoEquityRatio: any
-    NetDebttoEBITDA: any
-    MeanNetDebttoEBITDA: any
-    InterestExpensetoEBIT: any
-    EntrepriseValueUSD: any
-    DCFPotential: any
-    DCFWorstPotential: any
-    EBITDATendency: any
-    FreeCashFlowTendency: any
-    OperatingCashFlowTendency: any
-    ROICTendency: any
-    NetIncomeTendency: any
-    EquityTendency: any
-    DividendYield: any
-    NetIncomeMargin: any
-    EBITDAMargin: any
-    TargetPrice: any
-    PFFO: any
-    MeanPFFO: any
-    LastUpdate: any
-    FirstYearReport: any
-  }
+  const green = useMemo(() => [0, 255, 0], [])
+  const white = useMemo(() => [255, 255, 255], [])
+  const red = useMemo(() => [255, 0, 0], [])
 
   //should be memoized or stable
   const columns = useMemo<MRT_ColumnDef<any>[]>(
@@ -138,9 +75,6 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           return <a>{cell.getValue()}</a>
         },
-        /* muiTableHeadCellProps: {
-          align: 'bottom',
-        }, */
       },
       {
         header: 'Company Name',
@@ -1105,7 +1039,7 @@ const AdvancedTable = () => {
         accessorKey: 'FirstYearReport',
       },
     ],
-    []
+    [green, red, white]
   )
 
   return (
@@ -1116,7 +1050,6 @@ const AdvancedTable = () => {
         data={data}
         enableColumnPinning={true}
         enableStickyHeader={true}
-        //enableRowSelection={true}
         initialState={{
           density: 'compact',
           columnPinning: { left: ['CompanyName'] },

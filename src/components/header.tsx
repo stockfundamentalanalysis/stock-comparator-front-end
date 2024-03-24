@@ -88,7 +88,7 @@ const Header = () => {
         <ButtonContainer>
           <Button
             component={Link}
-            href={'/select_detail'}
+            href={'/select-detail'}
             variant="contained"
             sx={{
               mr: 2,

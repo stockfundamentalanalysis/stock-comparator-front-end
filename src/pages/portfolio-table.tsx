@@ -13,7 +13,7 @@ const PortfolioTable = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/api/getPortfolio')
+        const response = await fetch('/api/get-portfolio')
         if (!response.ok) {
           throw new Error('Failed to fetch portfolio data')
         }

@@ -42,17 +42,17 @@ const itemList = [
   {
     text: 'EasyMode',
     icon: <AutoMode />,
-    to: '/easy_table',
+    to: '/easy-table',
   },
   {
     text: 'AdvancedMode',
     icon: <BuildCircle />,
-    to: '/advanced_table',
+    to: '/advanced-table',
   },
   {
     text: 'Company Details',
     icon: <InfoIcon />,
-    to: '/select_detail',
+    to: '/select-detail',
   },
   {
     text: 'Contact',

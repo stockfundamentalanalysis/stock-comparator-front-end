@@ -11,7 +11,7 @@ const AdvancedTable = () => {
   useEffect(() => {
     async function fetchCompanyData() {
       try {
-        const companyResponse = await fetch('/api/fundamentalAnalysis')
+        const companyResponse = await fetch('/api/fundamental-analysis')
         if (!companyResponse.ok) {
           throw new Error('Failed to fetch company data')
         }

@@ -10,26 +10,26 @@ export default async function handler(
   try {
     const companyVariables = await prisma.companies.findFirst({
       where: {
-        Ticker: ticker,
+        ticker,
       },
     })
 
-    const companyAnalysis = await prisma.simpleAnalysis.findFirst({
+    const companyAnalysis = await prisma.simpleanalysis.findFirst({
       where: {
-        Ticker: ticker,
+        ticker,
       },
     })
 
-    const companyPrice = await prisma.currentPrice.findFirst({
+    const companyPrice = await prisma.currentprices.findFirst({
       where: {
-        Ticker: ticker,
+        ticker,
       },
     })
 
     const companyFundamentalAnalysis =
-      await prisma.fundamentalAnalysis.findFirst({
+      await prisma.fundamentalanalysis.findFirst({
         where: {
-          Ticker: ticker,
+          ticker,
         },
       })
 
@@ -41,11 +41,13 @@ export default async function handler(
       ...companyFundamentalAnalysis,
     }
 
-    res.status(200).json(companyCombinedData)
+    const companyCombinedDataWithoutId = { ...companyCombinedData }
+
+    delete companyCombinedDataWithoutId.id
+
+    res.status(200).json(companyCombinedDataWithoutId)
   } catch (error) {
     console.error('Error fetching data:', error)
     res.status(500).json({ error: 'An error occurred while fetching data' })
-  } finally {
-    await prisma.$disconnect()
   }
 }

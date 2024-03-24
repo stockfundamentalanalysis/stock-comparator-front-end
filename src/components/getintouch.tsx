@@ -2,18 +2,9 @@ import { Box, Button, Stack, Typography } from '@mui/material'
 import Link from 'next/link'
 
 // Import FontAwesome dependencies
-import { library } from '@fortawesome/fontawesome-svg-core'
-import {
-  faArrowUpRightDots,
-  faBriefcase,
-  faCalculator,
-  faFile,
-  faGlobe,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-// Initialize FontAwesome library with required icons
-library.add(faBriefcase, faGlobe, faFile)
+import ArrowTrendingUpIcon from '@/components/Icons/ArrowTrendingUpIcon'
+import BriefcaseIcon from '@/components/Icons/BriefcaseIcon'
+import CalculatorIcon from '@/components/Icons/CalculatorIcon'
 
 const GetInTouch = () => {
   return (
@@ -74,7 +65,7 @@ const GetInTouch = () => {
               borderRadius={4}
               boxShadow={1}
             >
-              <FontAwesomeIcon icon={faBriefcase} size="4x" />
+              <BriefcaseIcon className="h-20 w-auto text-black" />
             </Box>
             <Typography
               variant="h6"
@@ -98,7 +89,7 @@ const GetInTouch = () => {
               borderRadius={4}
               boxShadow={1}
             >
-              <FontAwesomeIcon icon={faCalculator} size="4x" />
+              <CalculatorIcon className="h-20 w-auto text-black" />
             </Box>
             <Typography
               variant="h6"
@@ -123,7 +114,7 @@ const GetInTouch = () => {
               borderRadius={4}
               boxShadow={1}
             >
-              <FontAwesomeIcon icon={faArrowUpRightDots} size="4x" />
+              <ArrowTrendingUpIcon className="h-20 w-auto text-black" />
             </Box>
             <Typography
               variant="h6"

@@ -23,9 +23,9 @@ type TickerDictionary = Record<string, string>
 const Post = () => {
   const [simpleAnalysis, setSimpleAnalysis] = useState<
     {
-      Ticker: string
-      CompanyName: string
-      Sector: string
+      ticker: string
+      companyname: string
+      sector: string
     }[]
   >([])
   const [tickerDictionary, setTickerDictionary] = useState<TickerDictionary>({}) // Provide an initial value with the correct type
@@ -43,7 +43,7 @@ const Post = () => {
         // Build a ticker dictionary for later use
         const dictionary: TickerDictionary = {}
         companyData.forEach((item: any) => {
-          dictionary[item.CompanyName] = item.Ticker
+          dictionary[item.companyname] = item.ticker
         })
         setTickerDictionary(dictionary)
       } catch (error) {
@@ -57,13 +57,12 @@ const Post = () => {
   const data = Object.values(simpleAnalysis)
 
   // Filter the json data to get the company detail
-  let companies = data.map((item) => item.CompanyName)
-  let sectors = data.map((item) => item.Sector)
+  let companies = data.map((item) => item.companyname)
+  let sectors = data.map((item) => item.sector)
 
   // Sort companies alphabetically
   companies = companies.sort((a, b) => a.localeCompare(b))
 
-  // Sort sectors alphabetically
   // Sort sectors alphabetically
   sectors = Array.from(new Set(sectors)).sort((a, b) => {
     // Provide default values for null or undefined
@@ -99,8 +98,8 @@ const Post = () => {
   const filteredCompanies = useMemo(() => {
     if (sectorName.length > 0) {
       return data
-        .filter((item) => sectorName.includes(item.Sector))
-        .map((item) => item.CompanyName)
+        .filter((item) => sectorName.includes(item.sector))
+        .map((item) => item.companyname)
     }
     return companies
   }, [companies, data, sectorName])

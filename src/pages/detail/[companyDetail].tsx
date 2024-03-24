@@ -6,22 +6,22 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 interface CompanyData {
-  CompanyName: string
-  Sector: string
-  TargetPrice: number
-  LongDescription: string
-  Potential: number
-  GrowthScore: number
-  DebtQualityScore: number
-  EarningsScore: number
-  ProfitabilityScore: number
-  Currency: string
-  Price: number
-  CurrentPER: number
-  CurrentEVEBITDA: number
-  CurrentPricetoFreeCashFlowRate: number
-  ROIC: number
-  NetDebttoEBITDA: number
+  companyname: string
+  sector: string
+  targetprice: number
+  longdescription: string
+  potential: number
+  growthscore: number
+  debtqualityscore: number
+  earningsscore: number
+  profitabilityscore: number
+  currency: string
+  price: number
+  currentper: number
+  currentevebitda: number
+  currentpricetofreecashflowrate: number
+  roic: number
+  netdebttoebitda: number
 }
 
 const Post = () => {
@@ -95,7 +95,7 @@ const Post = () => {
                     fontWeight: 'medium',
                   }}
                 >
-                  {company.CompanyName}
+                  {company.companyname}
                 </Box>
               </Box>
               <Box
@@ -116,7 +116,7 @@ const Post = () => {
                     fontWeight: 'medium',
                   }}
                 >
-                  {company.Sector}
+                  {company.sector}
                 </Box>
               </Box>
               <Box
@@ -137,7 +137,7 @@ const Post = () => {
                     fontWeight: 'medium',
                   }}
                 >
-                  {company.TargetPrice.toFixed(1)} {company.Currency}
+                  {company.targetprice?.toFixed(1)} {company.currency}
                 </Box>
               </Box>
               <Box
@@ -158,7 +158,7 @@ const Post = () => {
                     fontWeight: 'medium',
                   }}
                 >
-                  {company.Price.toFixed(1)} {company.Currency}
+                  {company.price?.toFixed(1)} {company.currency}
                 </Box>
               </Box>
               <Box
@@ -175,16 +175,16 @@ const Post = () => {
                 <Box
                   sx={{
                     color:
-                      company.Potential > 0.3
+                      company.potential > 0.3
                         ? 'green'
-                        : company.Potential >= -0.1
+                        : company.potential >= -0.1
                           ? 'black'
                           : 'red',
                     fontSize: 34,
                     fontWeight: 'medium',
                   }}
                 >
-                  {Math.round(company.Potential * 100)} %
+                  {Math.round(company.potential * 100)} %
                 </Box>
               </Box>
             </Stack>
@@ -212,7 +212,7 @@ const Post = () => {
                     fontWeight: 'light',
                   }}
                 >
-                  {company.LongDescription}
+                  {company.longdescription}
                 </Box>
               </Box>
               <Box

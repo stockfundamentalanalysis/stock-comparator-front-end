@@ -4,27 +4,27 @@ import { Prisma } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const transactionsSelect = {
-  Ticker: true,
-  Price: true,
-  NumberOfStocks: true,
-  TransactionType: true,
-} satisfies Prisma.TransactionsSelect
+  ticker: true,
+  price: true,
+  numberofstocks: true,
+  transactiontype: true,
+} satisfies Prisma.transactionsSelect
 
 const fundamentalAnalysisSelect = {
-  Ticker: true,
-  DCFPotential: true,
-  DCFWorstPotential: true,
-  CompanyName: true,
-  CurrentPrice: true,
-  StockCurrency: true,
-} satisfies Prisma.FundamentalAnalysisSelect
+  ticker: true,
+  dcfpotential: true,
+  dcfworstpotential: true,
+  companyname: true,
+  currentprice: true,
+  stockcurrency: true,
+} satisfies Prisma.fundamentalanalysisSelect
 
 const currenciesSelect = {
-  Currency: true,
-  USDConversionFactor: true,
-} satisfies Prisma.CurrenciesSelect
+  currency: true,
+  usdconversionfactor: true,
+} satisfies Prisma.currenciesSelect
 
-type FundamentalAnalysysPayload = Prisma.FundamentalAnalysisGetPayload<{
+type FundamentalAnalysysPayload = Prisma.fundamentalanalysisGetPayload<{
   select: typeof fundamentalAnalysisSelect
 }>
 
@@ -50,7 +50,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
   try {
     const transactions = await prisma.transactions.findMany({
       where: {
-        Ticker: {
+        ticker: {
           not: null,
         },
       },
@@ -58,12 +58,12 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
     })
 
     const transactionTickers = transactions.map(
-      (transaction) => transaction.Ticker!
+      (transaction) => transaction.ticker!
     )
 
-    const fundamentalAnalysis = await prisma.fundamentalAnalysis.findMany({
+    const fundamentalAnalysis = await prisma.fundamentalanalysis.findMany({
       where: {
-        Ticker: {
+        ticker: {
           in: transactionTickers,
         },
       },
@@ -72,20 +72,20 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
 
     const fundamentalAnalysisMap: FundamentalAnalysisMap =
       fundamentalAnalysis.reduce((acc, analysis) => {
-        acc[analysis.Ticker!] = analysis
+        acc[analysis.ticker!] = analysis
         return acc
       }, {} as FundamentalAnalysisMap)
 
     const stockCurrencies = fundamentalAnalysis
-      .map((analysis) => analysis.StockCurrency)
+      .map((analysis) => analysis.stockcurrency)
       .filter(isNotNull)
 
     const currencies = await prisma.currencies.findMany({
       where: {
-        Currency: {
+        currency: {
           in: stockCurrencies,
         },
-        USDConversionFactor: {
+        usdconversionfactor: {
           not: null,
         },
       },
@@ -94,7 +94,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
 
     const currencyMap = currencies.reduce(
       (acc, currency) => {
-        acc[currency.Currency!] = currency.USDConversionFactor!
+        acc[currency.currency!] = currency.usdconversionfactor!
         return acc
       },
       {} as Record<string, number>
@@ -104,25 +104,25 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
     const stockData: Record<string, Record<string, number>> = {}
     let totalCurrentPortfolioValueUSD = 0 // Initialize total value
     transactions.forEach((transaction) => {
-      const { Ticker, Price, NumberOfStocks, TransactionType } = transaction
-      if (!Ticker || !Price || !NumberOfStocks || !TransactionType) {
+      const { ticker, price, numberofstocks, transactiontype } = transaction
+      if (!ticker || !price || !numberofstocks || !transactiontype) {
         return
       }
 
-      if (!stockData[Ticker]) {
-        stockData[Ticker] = {
+      if (!stockData[ticker]) {
+        stockData[ticker] = {
           BuySum: 0,
           BuyNumberOfStocks: 0,
           SellSum: 0,
           SellNumberOfStocks: 0,
         }
       }
-      if (TransactionType === 'Buy') {
-        stockData[Ticker].BuySum += Price * NumberOfStocks
-        stockData[Ticker].BuyNumberOfStocks += NumberOfStocks
-      } else if (TransactionType === 'Sell') {
-        stockData[Ticker].SellSum += Price * NumberOfStocks
-        stockData[Ticker].SellNumberOfStocks += NumberOfStocks
+      if (transactiontype === 'Buy') {
+        stockData[ticker].BuySum += price.toNumber() * numberofstocks
+        stockData[ticker].BuyNumberOfStocks += numberofstocks
+      } else if (transactiontype === 'Sell') {
+        stockData[ticker].SellSum += price.toNumber() * numberofstocks
+        stockData[ticker].SellNumberOfStocks += numberofstocks
       }
     })
 
@@ -134,17 +134,17 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
       // Fetch fundamental analysis data for the ticker
       const fundamentalData = fundamentalAnalysisMap[Ticker]
 
-      if (!fundamentalData?.CurrentPrice || !fundamentalData.StockCurrency) {
+      if (!fundamentalData?.currentprice || !fundamentalData.stockcurrency) {
         continue
       }
 
-      const conversionFactor = currencyMap[fundamentalData.StockCurrency] || 1
+      const conversionFactor = currencyMap[fundamentalData.stockcurrency] || 1
 
       const StocksOwned = BuyNumberOfStocks - SellNumberOfStocks
       const MeanBuyPrice = BuySum / (BuyNumberOfStocks || 1)
       const MeanSellPrice = SellSum / (SellNumberOfStocks || 1)
       const StockMargin =
-        StocksOwned * fundamentalData.CurrentPrice +
+        StocksOwned * fundamentalData.currentprice +
         SellNumberOfStocks * MeanSellPrice -
         MeanBuyPrice * BuyNumberOfStocks
 
@@ -153,7 +153,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
         StockMargin / (MeanBuyPrice * BuyNumberOfStocks) || 0
       const MarginUSD = StockMargin * conversionFactor
       const CurrentPortfolioValueUSD =
-        StocksOwned * fundamentalData.CurrentPrice * conversionFactor
+        StocksOwned * fundamentalData.currentprice * conversionFactor
 
       totalCurrentPortfolioValueUSD += CurrentPortfolioValueUSD // Accumulate total value
 
@@ -167,10 +167,10 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
         PercentualMargin,
         MarginUSD,
         CurrentPortfolioValueUSD,
-        Potential: fundamentalData.DCFPotential,
-        CompanyName: fundamentalData.CompanyName,
-        CurrentPrice: fundamentalData.CurrentPrice,
-        WorstPotential: fundamentalData.DCFWorstPotential,
+        Potential: fundamentalData.dcfpotential,
+        CompanyName: fundamentalData.companyname,
+        CurrentPrice: fundamentalData.currentprice,
+        WorstPotential: fundamentalData.dcfworstpotential,
         ProportionOfPortfolio: null,
       }
 
@@ -187,7 +187,5 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
   } catch (error) {
     console.error('Error fetching portfolio data:', error)
     res.status(500).json({ error: 'An error occurred while fetching data' })
-  } finally {
-    await prisma.$disconnect()
   }
 }

@@ -70,7 +70,7 @@ const AdvancedTable = () => {
     () => [
       {
         header: 'Ticker',
-        accessorKey: 'Ticker',
+        accessorKey: 'ticker',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return <a>{cell.getValue()}</a>
@@ -78,15 +78,15 @@ const AdvancedTable = () => {
       },
       {
         header: 'Company Name',
-        accessorKey: 'CompanyName',
+        accessorKey: 'companyname',
       },
       {
         header: 'Sector',
-        accessorKey: 'Sector',
+        accessorKey: 'sector',
       },
       {
         header: 'Potential',
-        accessorKey: 'DCFPotential',
+        accessorKey: 'dcfpotential',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -110,7 +110,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Worst Case Potential',
-        accessorKey: 'DCFWorstPotential',
+        accessorKey: 'dcfworstpotential',
         size: 150,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -134,7 +134,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Current Price',
-        accessorKey: 'CurrentPrice',
+        accessorKey: 'currentprice',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -150,7 +150,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Target Price',
-        accessorKey: 'TargetPrice',
+        accessorKey: 'targetprice',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -167,23 +167,23 @@ const AdvancedTable = () => {
 
       {
         header: 'Country',
-        accessorKey: 'Country',
+        accessorKey: 'country',
       },
       {
         header: 'Stock Currency',
-        accessorKey: 'StockCurrency',
+        accessorKey: 'stockcurrency',
       },
       {
         header: 'Report Currency',
-        accessorKey: 'ReportCurrency',
+        accessorKey: 'reportcurrency',
       },
       {
         header: 'Last Report Date',
-        accessorKey: 'LastReportDate',
+        accessorKey: 'lastreportdate',
       },
       {
         header: 'Current PER',
-        accessorKey: 'CurrentPER',
+        accessorKey: 'currentper',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -209,7 +209,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Mean PER',
-        accessorKey: 'MeanPER',
+        accessorKey: 'meanper',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -235,7 +235,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Current EV/EBITDA',
-        accessorKey: 'CurrentEVEBITDA',
+        accessorKey: 'currentevebitda',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -261,7 +261,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Mean EV/EBITDA',
-        accessorKey: 'MeanEVEBITDA',
+        accessorKey: 'meanevebitda',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -287,7 +287,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Current EV/EBIT',
-        accessorKey: 'CurrentEVEBIT',
+        accessorKey: 'currentevebit',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -313,7 +313,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Current Price/ Book Value',
-        accessorKey: 'CurrentPricetoBook',
+        accessorKey: 'currentpricetobook',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -339,7 +339,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Mean Price/ Book Value',
-        accessorKey: 'MeanPricetoBook',
+        accessorKey: 'meanpricetobook',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -365,7 +365,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Current Price / Free Cash Flow',
-        accessorKey: 'CurrentPricetoFreeCashFlowRate',
+        accessorKey: 'currentpricetofreecashflowrate',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -391,7 +391,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Mean Price / Free Cash Flow',
-        accessorKey: 'MeanPricetoFreeCashFlowRate',
+        accessorKey: 'meanpricetofreecashflowrate',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -417,7 +417,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'ROE',
-        accessorKey: 'ROE',
+        accessorKey: 'roe',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -443,7 +443,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'ROIC',
-        accessorKey: 'ROIC',
+        accessorKey: 'roic',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -469,7 +469,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Mean ROIC',
-        accessorKey: 'MeanROIC',
+        accessorKey: 'meanroic',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -495,7 +495,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'ROCE',
-        accessorKey: 'ROCE',
+        accessorKey: 'roce',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -521,7 +521,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'ROA',
-        accessorKey: 'ROA',
+        accessorKey: 'roa',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -548,7 +548,7 @@ const AdvancedTable = () => {
 
       {
         header: 'Beta',
-        accessorKey: 'Beta',
+        accessorKey: 'beta',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -569,7 +569,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Total Cash / Total Assets',
-        accessorKey: 'CashToTotalAssets',
+        accessorKey: 'cashtototalassets',
         size: 150,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -595,7 +595,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Cash / Stock Price',
-        accessorKey: 'CashOverStockPrice',
+        accessorKey: 'cashoverstockprice',
         size: 100,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -621,7 +621,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Liabilities / Equity',
-        accessorKey: 'LiabilitiestoEquityRatio',
+        accessorKey: 'liabilitiestoequityratio',
         size: 100,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -647,7 +647,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Net Debt / EBITDA',
-        accessorKey: 'NetDebttoEBITDA',
+        accessorKey: 'netdebttoebitda',
         size: 150,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -673,7 +673,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Mean Net Debt / EBITDA',
-        accessorKey: 'MeanNetDebttoEBITDA',
+        accessorKey: 'meannetdebttoebitda',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -699,7 +699,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Interest Expense / EBIT',
-        accessorKey: 'InterestExpensetoEBIT',
+        accessorKey: 'interestexpensetoebit',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -725,7 +725,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Entreprise Value in USD',
-        accessorKey: 'EntrepriseValueUSD',
+        accessorKey: 'entreprisevalueusd',
         Cell: ({ cell }: { cell: any }) => {
           return (
             <Box
@@ -742,7 +742,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'EBITDA Tendency',
-        accessorKey: 'EBITDATendency',
+        accessorKey: 'ebitdatendency',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -768,7 +768,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Free Cash Flow Tendency',
-        accessorKey: 'FreeCashFlowTendency',
+        accessorKey: 'freecashflowtendency',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -793,7 +793,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Operating Cash Flow Tendency',
-        accessorKey: 'OperatingCashFlowTendency',
+        accessorKey: 'operatingcashflowtendency',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -818,7 +818,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Net Income Tendency',
-        accessorKey: 'NetIncomeTendency',
+        accessorKey: 'netincometendency',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -843,7 +843,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Equity Tendency',
-        accessorKey: 'EquityTendency',
+        accessorKey: 'equitytendency',
         size: 200,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -868,7 +868,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'ROIC Tendency',
-        accessorKey: 'ROICTendency',
+        accessorKey: 'roictendency',
         size: 100,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -895,7 +895,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Dividend Yield',
-        accessorKey: 'DividendYield',
+        accessorKey: 'dividendyield',
         size: 100,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -916,7 +916,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'EBITDA Margin',
-        accessorKey: 'EBITDAMargin',
+        accessorKey: 'ebitdamargin',
         size: 100,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -942,7 +942,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Net Income Margin',
-        accessorKey: 'NetIncomeMargin',
+        accessorKey: 'netincomemargin',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -968,7 +968,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'WACC',
-        accessorKey: 'WACC',
+        accessorKey: 'wacc',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -989,7 +989,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'PFFO',
-        accessorKey: 'PFFO',
+        accessorKey: 'pffo',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -1010,7 +1010,7 @@ const AdvancedTable = () => {
       },
       {
         header: 'Mean PFFO',
-        accessorKey: 'MeanPFFO',
+        accessorKey: 'meanpffo',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -1031,12 +1031,12 @@ const AdvancedTable = () => {
       },
       {
         header: 'Last Update',
-        accessorKey: 'LastUpdate',
+        accessorKey: 'lastupdate',
       },
 
       {
         header: 'First Year Report',
-        accessorKey: 'FirstYearReport',
+        accessorKey: 'firstyearreport',
       },
     ],
     [green, red, white]

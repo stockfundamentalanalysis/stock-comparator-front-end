@@ -67,7 +67,7 @@ const EasyTable = () => {
     () => [
       {
         header: 'Ticker',
-        accessorKey: 'Ticker',
+        accessorKey: 'ticker',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const route = '/detail/' + cell.getValue().toLowerCase()
@@ -76,15 +76,15 @@ const EasyTable = () => {
       },
       {
         header: 'CompanyName',
-        accessorKey: 'CompanyName',
+        accessorKey: 'companyname',
       },
       {
         header: 'Sector',
-        accessorKey: 'Sector',
+        accessorKey: 'sector',
       },
       {
         header: 'Potential',
-        accessorKey: 'Potential',
+        accessorKey: 'potential',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -110,7 +110,7 @@ const EasyTable = () => {
       },
       {
         header: 'Target Price',
-        accessorKey: 'TargetPrice',
+        accessorKey: 'targetprice',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           return (
@@ -126,12 +126,12 @@ const EasyTable = () => {
       },
       {
         header: 'Currency',
-        accessorKey: 'Currency',
+        accessorKey: 'currency',
         size: 50,
       },
       {
         header: 'DebtQuality Score',
-        accessorKey: 'DebtQualityScore',
+        accessorKey: 'debtqualityscore',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -158,7 +158,7 @@ const EasyTable = () => {
       },
       {
         header: 'Earnings Score',
-        accessorKey: 'EarningsScore',
+        accessorKey: 'earningsscore',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -184,7 +184,7 @@ const EasyTable = () => {
       },
       {
         header: 'Profitability Score',
-        accessorKey: 'ProfitabilityScore',
+        accessorKey: 'profitabilityscore',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
@@ -209,8 +209,8 @@ const EasyTable = () => {
         },
       },
       {
-        header: 'Growth     Score',
-        accessorKey: 'GrowthScore',
+        header: 'Growth Score',
+        accessorKey: 'growthscore',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()

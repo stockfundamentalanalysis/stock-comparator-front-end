@@ -12,29 +12,29 @@ function createData(key: string, value: number, unit: string) {
 
 interface Props {
   company: {
-    CurrentPER: number
-    CurrentEVEBITDA: number
-    CurrentPricetoFreeCashFlowRate: number
-    ROIC: number
-    NetDebttoEBITDA: number
+    currentper: number
+    currentevebitda: number
+    currentpricetofreecashflowrate: number
+    roic: number
+    netdebttoebitda: number
   }
 }
 
 const BasicTable = ({ company }: Props) => {
   const {
-    CurrentPER,
-    CurrentEVEBITDA,
-    CurrentPricetoFreeCashFlowRate,
-    ROIC,
-    NetDebttoEBITDA,
+    currentper,
+    currentevebitda,
+    currentpricetofreecashflowrate,
+    roic,
+    netdebttoebitda,
   } = company
 
   const rows = [
-    createData('PER', CurrentPER, ''),
-    createData('EV/EBITDA', CurrentEVEBITDA, ''),
-    createData('Price/Free Cash Flow', CurrentPricetoFreeCashFlowRate, ''),
-    createData('ROIC', ROIC * 100, '%'),
-    createData('Net Debt/EBITDA', NetDebttoEBITDA, ''),
+    createData('PER', currentper, ''),
+    createData('EV/EBITDA', currentevebitda, ''),
+    createData('Price/Free Cash Flow', currentpricetofreecashflowrate, ''),
+    createData('ROIC', roic * 100, '%'),
+    createData('Net Debt/EBITDA', netdebttoebitda, ''),
   ]
 
   return (

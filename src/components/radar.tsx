@@ -8,11 +8,11 @@ const normalize = (value: number, min: number, max: number) => {
 
 interface Props {
   company: {
-    GrowthScore: number
-    DebtQualityScore: number
-    EarningsScore: number
-    ProfitabilityScore: number
-    Potential: number
+    growthscore: number
+    debtqualityscore: number
+    earningsscore: number
+    profitabilityscore: number
+    potential: number
   }
 }
 
@@ -32,11 +32,11 @@ const Radar = ({ company }: Props) => {
           // data
           {
             data: {
-              battery: normalize(company.GrowthScore, 0, 1),
-              design: normalize(company.DebtQualityScore, 0, 1),
-              useful: normalize(company.EarningsScore, 0, 1),
-              speed: normalize(company.Potential, -0.15, 1),
-              weight: normalize(company.ProfitabilityScore, 0, 1),
+              battery: normalize(company.growthscore, 0, 1),
+              design: normalize(company.debtqualityscore, 0, 1),
+              useful: normalize(company.earningsscore, 0, 1),
+              speed: normalize(company.potential, -0.15, 1),
+              weight: normalize(company.profitabilityscore, 0, 1),
             },
             meta: { color: '#58FCEC' },
           },

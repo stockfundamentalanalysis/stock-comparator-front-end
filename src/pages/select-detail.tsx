@@ -33,7 +33,7 @@ const Post = () => {
   useEffect(() => {
     async function fetchCompanyData() {
       try {
-        const dataResponse = await fetch('/api/getSectorsAndCompanies')
+        const dataResponse = await fetch('/api/get-sectors-and-companies')
         if (!dataResponse.ok) {
           throw new Error('Failed to fetch company data')
         }

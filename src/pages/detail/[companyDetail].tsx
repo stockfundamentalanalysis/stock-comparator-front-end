@@ -36,7 +36,7 @@ const Post = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `/api/getSpecificCompany?ticker=${company_name}`
+          `/api/get-specific-company?ticker=${company_name}`
         )
         if (!response.ok) {
           throw new Error('Failed to fetch company data')

@@ -11,7 +11,7 @@ const EasyTable = () => {
   useEffect(() => {
     async function fetchCarData() {
       try {
-        const carResponse = await fetch('/api/simpleAnalysis')
+        const carResponse = await fetch('/api/simple-analysis')
         if (!carResponse.ok) {
           throw new Error('Failed to fetch car data')
         }

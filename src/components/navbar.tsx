@@ -37,15 +37,15 @@ const itemList = [
   },
   {
     text: 'Easy Comparator',
-    to: '/easy_table',
+    to: '/easy-table',
   },
   {
     text: 'Advanced Comparator',
-    to: '/advanced_table',
+    to: '/advanced-table',
   },
   {
     text: 'Company Details',
-    to: '/select_detail',
+    to: '/select-detail',
   },
   {
     text: 'Contact',

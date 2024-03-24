@@ -1,7 +1,6 @@
 import Paragraph from '@/components/paragraph'
 import Title from '@/components/title'
 import { ValidationError, useForm } from '@formspree/react'
-import SendIcon from '@mui/icons-material/Send'
 import { Box, Button, Stack, TextField } from '@mui/material'
 
 const ContactForm = () => {
@@ -99,7 +98,6 @@ const ContactForm = () => {
           }
         />
         <Button
-          endIcon={<SendIcon />}
           fullWidth
           size="medium"
           sx={{

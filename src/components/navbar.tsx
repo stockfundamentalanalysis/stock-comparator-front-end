@@ -1,5 +1,4 @@
 import DrawerItem from '@/components/draweritem'
-import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import {
   AppBar,
   Box,
@@ -13,6 +12,7 @@ import {
 } from '@mui/material'
 
 import Link from 'next/link'
+import ArrowTrendingUpIcon from './Icons/ArrowTrendingUpIcon'
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
@@ -66,7 +66,7 @@ const Navbar = () => {
     >
       <StyledToolbar>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <TrendingUpIcon sx={{ marginRight: '5px' }} />
+          <ArrowTrendingUpIcon className="mr-1 h-6 w-auto text-white" />
           <Typography variant="h6" component="h2">
             Stock Comparator
           </Typography>

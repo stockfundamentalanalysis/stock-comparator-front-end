@@ -1,3 +1,10 @@
+import AdjustmentsVerticalIcon from '@/components/Icons/AdjustmentsVerticalIcon'
+import Bars3Icon from '@/components/Icons/Bars3Icon'
+import BoltIcon from '@/components/Icons/BoltIcon'
+import ChevronRightIcon from '@/components/Icons/ChevronRightIcon'
+import EnvelopeIcon from '@/components/Icons/EnvelopeIcon'
+import HomeIcon from '@/components/Icons/HomeIcon'
+import InformationCircleIcon from '@/components/Icons/InformationCircleIcon'
 import {
   Divider,
   Drawer,
@@ -7,20 +14,9 @@ import {
   ListItemIcon,
   ListItemText,
   styled,
-  useTheme,
 } from '@mui/material'
-import { useState } from 'react'
-// rotas
 import Link from 'next/link'
-// icons
-import AutoMode from '@mui/icons-material/AutoMode'
-import BuildCircle from '@mui/icons-material/BuildCircle'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import EmailIcon from '@mui/icons-material/Email'
-import HomeIcon from '@mui/icons-material/Home'
-import InfoIcon from '@mui/icons-material/Info'
-import MenuIcon from '@mui/icons-material/Menu'
+import { useState } from 'react'
 
 const drawerWidth = 240
 
@@ -36,33 +32,32 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const itemList = [
   {
     text: 'Home',
-    icon: <HomeIcon />,
+    icon: <HomeIcon className="h-6 w-auto text-gray-600" />,
     to: '/',
   },
   {
     text: 'EasyMode',
-    icon: <AutoMode />,
+    icon: <BoltIcon className="h-6 w-auto text-gray-600" />,
     to: '/easy-table',
   },
   {
     text: 'AdvancedMode',
-    icon: <BuildCircle />,
+    icon: <AdjustmentsVerticalIcon className="h-6 w-auto text-gray-600" />,
     to: '/advanced-table',
   },
   {
     text: 'Company Details',
-    icon: <InfoIcon />,
+    icon: <InformationCircleIcon className="h-6 w-auto text-gray-600" />,
     to: '/select-detail',
   },
   {
     text: 'Contact',
-    icon: <EmailIcon />,
+    icon: <EnvelopeIcon className="h-6 w-auto text-gray-600" />,
     to: '/contact',
   },
 ]
 
 const DrawerItem = () => {
-  const theme = useTheme()
   const [open, setOpen] = useState(false)
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -81,9 +76,8 @@ const DrawerItem = () => {
         onClick={handleDrawerOpen}
         sx={{ ...(open && { display: 'none' }) }}
       >
-        <MenuIcon />
+        <Bars3Icon className="h-6 w-auto text-white" />
       </IconButton>
-
       <Drawer
         sx={{
           flexGrow: 1,
@@ -98,11 +92,7 @@ const DrawerItem = () => {
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            <ChevronRightIcon className="h-6 w-auto text-gray-600" />
           </IconButton>
         </DrawerHeader>
         <Divider />

@@ -1,11 +1,3 @@
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-
 function createData(key: string, value: number, unit: string) {
   return { key, value, unit }
 }
@@ -38,34 +30,43 @@ const BasicTable = ({ company }: Props) => {
   ]
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ maxWidth: 600 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Indicator</TableCell>
-            <TableCell align="left">Value</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.key}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.key}
-              </TableCell>
-              <TableCell align="center">
-                {typeof row.value === 'number'
-                  ? row.value.toFixed(1)
-                  : row.value}{' '}
-                {row.unit}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div className="flow-root">
+      <div className="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
+        <table className="min-w-full divide-y divide-gray-300">
+          <thead className="bg-gray-50">
+            <tr>
+              <th
+                scope="col"
+                className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+              >
+                Indicator
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
+                Value
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 bg-white">
+            {rows.map((row) => (
+              <tr key={row.key}>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                  {row.key}
+                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {typeof row.value === 'number'
+                    ? row.value.toFixed(1)
+                    : row.value}{' '}
+                  {row.unit}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   )
 }
 

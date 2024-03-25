@@ -1,150 +1,45 @@
-import { Box, Button, styled, Typography } from '@mui/material'
+import ContentArea from '@/components/ContentArea'
+import Heading from '@/components/Heading'
+import Paragraph from '@/components/Paragraph'
 import Link from 'next/link'
 
 const Header = () => {
-  const CustomBox = styled(Box)(({ theme }) => ({
-    minHeight: '80vh',
-    display: 'flex',
-    justifyContent: 'center',
-    gap: theme.spacing(2),
-    paddingTop: theme.spacing(10),
-    //backgroundImage: `url(${backgroundImage.src})`
-    backgroundColor: 'rgb(0,0,0)',
-    //backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      textAlign: 'center',
-    },
-  }))
-
-  const BoxText = styled(Box)(({ theme }) => ({
-    flex: '1',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start', // Align buttons to the left
-    paddingLeft: theme.spacing(8),
-    [theme.breakpoints.down('md')]: {
-      flex: '2',
-      textAlign: 'center',
-      alignItems: 'center', // Align buttons to the center on smaller screens
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-    },
-  }))
-
-  const ButtonContainer = styled(Box)(({ theme }) => ({
-    display: 'flex',
-    gap: theme.spacing(2),
-    marginTop: theme.spacing(2), // Add margin between the text and buttons
-  }))
-
   return (
-    <CustomBox component="header">
-      {/* Box text */}
-      <BoxText component="section">
-        <Typography
-          variant="h2"
-          component="h2"
-          sx={{
-            fontWeight: 700,
-            color: '#fff',
-          }}
-        >
+    <div className="min-h-[80vh] bg-black">
+      <ContentArea>
+        <Heading as="h1" color="white" size="big">
           Stock Comparator
-        </Typography>
-        <br></br>
-        <Typography
-          variant="h5"
-          component="h5"
-          sx={{
-            fontWeight: 700,
-            color: '#fff',
-          }}
-        >
-          Unlock the best stock opportunities across every sector<br></br> with
-          our comprehensive analysis.
-        </Typography>
+        </Heading>
+        <Paragraph color="white" className="mt-6 max-w-2xl text-2xl font-bold">
+          Unlock the best stock opportunities across every sector with our
+          comprehensive analysis.
+        </Paragraph>
 
-        <Typography
-          component="p"
-          maxWidth={700}
-          sx={{
-            py: 3,
-            lineHeight: 1.6,
-            color: '#fff',
-            fontWeight: 600,
-          }}
-        >
+        <Paragraph color="white" className="mt-6 max-w-2xl font-semibold">
           Explore over 2000 stocks analyzed and updated daily, employing
           advanced fundamental analysis techniques. Discover the potential for
           appreciation or depreciation in each stock, meticulously evaluated
           based on its financial reports, sector performance, growth outlook,
           and macroeconomic trends. Make informed investment decisions with
           comprehensive insights at your fingertips.
-        </Typography>
+        </Paragraph>
 
-        <ButtonContainer>
-          <Button
-            component={Link}
-            href={'/select-detail'}
-            variant="contained"
-            sx={{
-              mr: 2,
-              px: 4,
-              py: 1,
-              fontSize: '0.9rem',
-              textTransform: 'capitalize',
-              borderRadius: 3,
-              borderColor: '#14192d',
-              color: '#fff',
-              backgroundColor: 'rgb(130,130,130)',
-              whiteSpace: 'nowrap', // Ensure text stays on a single line
-              '&&:hover': {
-                backgroundColor: 'rgb(166,166,166)',
-              },
-              '&&:focus': {
-                backgroundColor: 'rgb(130,130,130)',
-              },
-            }}
+        <div className="mt-12 flex flex-row space-x-4">
+          <Link
+            href="/select-detail"
+            className="rounded-xl bg-gray-400 px-8 py-4 font-semibold text-white hover:bg-gray-500"
           >
             Company Details
-          </Button>
-          <Button
-            component={Link}
-            href={'/table5'}
-            variant="outlined"
-            sx={{
-              px: 4,
-              py: 1,
-              fontSize: '0.9rem',
-              textTransform: 'capitalize',
-              borderRadius: 3,
-              color: '#fff',
-              backgroundColor: 'transparent',
-              borderColor: '#fff',
-              whiteSpace: 'nowrap', // Ensure text stays on a single line
-              '&&:hover': {
-                color: 'rgb(130,130,130)',
-                borderColor: 'rgb(130,130,130)',
-              },
-              '&&:focus': {
-                color: 'rgb(130,130,130)',
-                borderColor: 'rgb(130,130,130)',
-              },
-            }}
+          </Link>
+          <Link
+            href="/easy-table"
+            className="rounded-xl border border-white bg-black px-8 py-4 font-semibold text-white hover:bg-white hover:text-black"
           >
             Easy Comparator
-          </Button>
-        </ButtonContainer>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-      </BoxText>
-    </CustomBox>
+          </Link>
+        </div>
+      </ContentArea>
+    </div>
   )
 }
 

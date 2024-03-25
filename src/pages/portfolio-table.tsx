@@ -1,8 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import ContentArea from '@/components/ContentArea'
+import StatsBox from '@/components/StatsBox'
 import NavBar from '@/components/navbar'
-import { Box, Grid } from '@mui/material'
 import { MaterialReactTable } from 'material-react-table'
 import { useEffect, useMemo, useState } from 'react'
+
+const KpiCard = ({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) => {
+  return (
+    <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <div className="truncate text-sm font-medium text-gray-500">{title}</div>
+      <div className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+        {children}
+      </div>
+    </div>
+  )
+}
 
 const PortfolioTable = () => {
   const [portfolio, setPortfolio] = useState([])
@@ -50,20 +68,7 @@ const PortfolioTable = () => {
         accessorKey: 'Potential',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          return (
-            <Box
-              sx={{
-                borderRadius: '0.25rem',
-                color: 'rgba(0, 0, 0, 0.87)',
-                maxWidth: '9ch',
-                p: '0.25rem',
-                textAlign: 'center',
-                fontWeight: 'light',
-              }}
-            >
-              {Math.round(cell.getValue() * 100)} %
-            </Box>
-          )
+          return <StatsBox>{Math.round(cell.getValue() * 100)} %</StatsBox>
         },
       },
       {
@@ -71,15 +76,7 @@ const PortfolioTable = () => {
         accessorKey: 'CurrentPrice',
         size: 30,
         Cell: ({ cell }: { cell: any }) => {
-          return (
-            <Box
-              sx={{
-                textAlign: 'left',
-              }}
-            >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </Box>
-          )
+          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
         },
       },
       {
@@ -87,15 +84,7 @@ const PortfolioTable = () => {
         accessorKey: 'MeanBuyPrice',
         size: 30,
         Cell: ({ cell }: { cell: any }) => {
-          return (
-            <Box
-              sx={{
-                textAlign: 'left',
-              }}
-            >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </Box>
-          )
+          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
         },
       },
       {
@@ -109,20 +98,7 @@ const PortfolioTable = () => {
         accessorKey: 'PercentualMargin',
         size: 10,
         Cell: ({ cell }: { cell: any }) => {
-          return (
-            <Box
-              sx={{
-                borderRadius: '0.25rem',
-                color: 'rgba(0, 0, 0, 0.87)',
-                maxWidth: '9ch',
-                p: '0.25rem',
-                textAlign: 'center',
-                fontWeight: 'light',
-              }}
-            >
-              {Math.round(cell.getValue() * 100)} %
-            </Box>
-          )
+          return <StatsBox>{Math.round(cell.getValue() * 100)} %</StatsBox>
         },
       },
       {
@@ -130,15 +106,7 @@ const PortfolioTable = () => {
         accessorKey: 'MarginUSD',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          return (
-            <Box
-              sx={{
-                textAlign: 'left',
-              }}
-            >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </Box>
-          )
+          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
         },
       },
       {
@@ -146,15 +114,7 @@ const PortfolioTable = () => {
         accessorKey: 'CurrentPortfolioValueUSD',
         size: 30,
         Cell: ({ cell }: { cell: any }) => {
-          return (
-            <Box
-              sx={{
-                textAlign: 'left',
-              }}
-            >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </Box>
-          )
+          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
         },
       },
       {
@@ -162,19 +122,7 @@ const PortfolioTable = () => {
         accessorKey: 'ProportionOfPortfolio',
         size: 20,
         Cell: ({ cell }: { cell: any }) => {
-          return (
-            <Box
-              sx={{
-                borderRadius: '0.25rem',
-                maxWidth: '9ch',
-                p: '0.25rem',
-                textAlign: 'center',
-                fontWeight: 'light',
-              }}
-            >
-              {Math.round(cell.getValue() * 100)} %
-            </Box>
-          )
+          return <StatsBox>{Math.round(cell.getValue() * 100)} %</StatsBox>
         },
       },
 
@@ -183,15 +131,7 @@ const PortfolioTable = () => {
         accessorKey: 'MeanSellPrice',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          return (
-            <Box
-              sx={{
-                textAlign: 'left',
-              }}
-            >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </Box>
-          )
+          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
         },
       },
     ],
@@ -201,69 +141,27 @@ const PortfolioTable = () => {
   return (
     <>
       <NavBar />
-      <Grid container justifyContent="center" alignItems="center">
-        <Grid item md>
-          <Box
-            sx={{
-              bgcolor: 'background.paper',
-              boxShadow: 1,
-              borderRadius: 2,
-              p: 2,
-              minWidth: 300,
-              maxWidth: 300,
-            }}
-          >
-            <Box sx={{ color: 'text.secondary' }}>
-              Total Current Portfolio Value :
-            </Box>
-            <Box
-              sx={{
-                color: 'black',
-                fontSize: 24,
-                fontWeight: 'medium',
-              }}
-            >
-              {Math.round(totalCurrentPortfolioValueUSD)} $
-            </Box>
-          </Box>
-        </Grid>
-        <Grid item md>
-          <Box
-            sx={{
-              bgcolor: 'background.paper',
-              boxShadow: 1,
-              borderRadius: 2,
-              p: 2,
-              minWidth: 300,
-              maxWidth: 300,
-            }}
-          >
-            <Box sx={{ color: 'text.secondary' }}>Total Earnings/Losses :</Box>
-            <Box
-              sx={{
-                color: 'black',
-                fontSize: 24,
-                fontWeight: 'medium',
-              }}
-            >
-              {Math.round(totalMarginUSD)} $
-            </Box>
-          </Box>
-        </Grid>
+      <ContentArea>
+        <div className="flex flex-col space-y-4 sm:flex-row sm:justify-between sm:space-x-4 sm:space-y-0">
+          <KpiCard title="Total Current Portfolio Value">
+            {Math.round(totalCurrentPortfolioValueUSD)} $
+          </KpiCard>
+          <KpiCard title="Total Earnings/Losses">
+            {Math.round(totalMarginUSD)} $
+          </KpiCard>
+        </div>
+      </ContentArea>
 
-        <Grid item md>
-          <MaterialReactTable
-            columns={columns}
-            data={portfolio}
-            enableColumnPinning={true}
-            enableStickyHeader={true}
-            initialState={{
-              density: 'compact',
-              columnPinning: { left: ['CompanyName'] },
-            }}
-          />
-        </Grid>
-      </Grid>
+      <MaterialReactTable
+        columns={columns}
+        data={portfolio}
+        enableColumnPinning={true}
+        enableStickyHeader={true}
+        initialState={{
+          density: 'compact',
+          columnPinning: { left: ['CompanyName'] },
+        }}
+      />
     </>
   )
 }

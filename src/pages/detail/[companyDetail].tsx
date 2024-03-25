@@ -1,7 +1,8 @@
+import BasicCompanyTable from '@/components/BasicCompanyTable'
+import ContentArea from '@/components/ContentArea'
+import TailSpinIcon from '@/components/Icons/TailSpinIcon'
 import Navbar from '@/components/navbar'
 import Radar from '@/components/radar'
-import BasicTable from '@/components/table'
-import { Box, CircularProgress, Grid, Stack } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -24,33 +25,47 @@ interface CompanyData {
   netdebttoebitda: number
 }
 
+const KpiCard = ({
+  title,
+  children,
+}: {
+  title: string
+  children: React.ReactNode
+}) => {
+  return (
+    <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+      <div className="truncate text-sm font-medium text-gray-500">{title}</div>
+      <div className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+        {children}
+      </div>
+    </div>
+  )
+}
+
 const Post = () => {
-  //Get the current path in company detail page
   const router = useRouter()
   const cleanPath = router.asPath.split('#')[0].split('?')[0].split('l/')[1]
   const company_name = cleanPath.toUpperCase()
-  //Filter the json data to get the company detail
   const [isLoading, setIsLoading] = useState(true) // Add loading state
   const [companyData, setCompanyData] = useState<CompanyData | null>(null)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
           `/api/get-specific-company?ticker=${company_name}`
         )
+
         if (!response.ok) {
           throw new Error('Failed to fetch company data')
         }
+
         const companyData = await response.json()
-        //const company = Object.values(dataJson)
-        //const company = data.filter((item) => item.Ticker === company_name)[0]
         setCompanyData(companyData)
-        // const tickers = data.map((item) => item.Ticker)
-        ///console.log(String(company_name))
       } catch (error) {
         console.error('Error fetching company data:', error)
       } finally {
-        setIsLoading(false) // Set loading state to false when done
+        setIsLoading(false)
       }
     }
 
@@ -72,166 +87,58 @@ const Post = () => {
     <>
       <Navbar></Navbar>
       {isLoading ? (
-        <CircularProgress />
+        <div className="flex h-96 items-center justify-center">
+          <TailSpinIcon />
+        </div>
       ) : (
-        <Grid container spacing={2}>
-          <Grid item md>
-            <Stack spacing={2} sx={{ alignItems: 'center' }}>
-              <Box
-                sx={{
-                  bgcolor: 'background.paper',
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                  maxWidth: 300,
-                }}
-              >
-                <Box sx={{ color: 'text.secondary' }}>Company:</Box>
-                <Box
-                  sx={{
-                    color: 'black',
-                    fontSize: 24,
-                    fontWeight: 'medium',
-                  }}
-                >
-                  {company.companyname}
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  bgcolor: 'background.paper',
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                  maxWidth: 300,
-                }}
-              >
-                <Box sx={{ color: 'text.secondary' }}>Sector:</Box>
-                <Box
-                  sx={{
-                    color: 'black',
-                    fontSize: 18,
-                    fontWeight: 'medium',
-                  }}
-                >
-                  {company.sector}
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  bgcolor: 'background.paper',
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                  maxWidth: 300,
-                }}
-              >
-                <Box sx={{ color: 'text.secondary' }}>Target price:</Box>
-                <Box
-                  sx={{
-                    color: 'black',
-                    fontSize: 24,
-                    fontWeight: 'medium',
-                  }}
-                >
-                  {company.targetprice?.toFixed(1)} {company.currency}
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  bgcolor: 'background.paper',
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                  maxWidth: 300,
-                }}
-              >
-                <Box sx={{ color: 'text.secondary' }}>Current price:</Box>
-                <Box
-                  sx={{
-                    color: 'black',
-                    fontSize: 24,
-                    fontWeight: 'medium',
-                  }}
-                >
-                  {company.price?.toFixed(1)} {company.currency}
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  bgcolor: 'background.paper',
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                  maxWidth: 300,
-                }}
-              >
-                <Box sx={{ color: 'text.secondary' }}>Potential:</Box>
-                <Box
-                  sx={{
+        <ContentArea>
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
+            <div className="flex flex-col space-y-4">
+              <KpiCard title="Company">{company.companyname}</KpiCard>
+              <KpiCard title="Sector">{company.sector}</KpiCard>
+              <KpiCard title="Target price">
+                {company.targetprice?.toFixed(1)} {company.currency}
+              </KpiCard>
+              <KpiCard title="Current price">
+                {company.price?.toFixed(1)} {company.currency}
+              </KpiCard>
+              <KpiCard title="Potential">
+                <span
+                  style={{
                     color:
                       company.potential > 0.3
                         ? 'green'
                         : company.potential >= -0.1
                           ? 'black'
                           : 'red',
-                    fontSize: 34,
-                    fontWeight: 'medium',
                   }}
                 >
                   {Math.round(company.potential * 100)} %
-                </Box>
-              </Box>
-            </Stack>
-          </Grid>
-          <Grid item md>
-            <Radar company={company} />
-          </Grid>
-          <Grid item md>
-            <Stack spacing={2} sx={{ alignItems: 'center' }}>
-              <Box
-                sx={{
-                  bgcolor: 'background.paper',
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                  maxWidth: 500,
-                }}
-              >
-                <Box sx={{ color: 'text.primary' }}>Company Details:</Box>
-                <Box
-                  sx={{
-                    color: 'black',
-                    fontSize: 12,
-                    fontWeight: 'light',
-                  }}
-                >
-                  {company.longdescription}
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  bgcolor: 'background.paper',
-                  boxShadow: 1,
-                  borderRadius: 2,
-                  p: 2,
-                  minWidth: 300,
-                  maxWidth: 500,
-                }}
-              >
-                <Box>
-                  <BasicTable company={companyData}></BasicTable>
-                </Box>
-              </Box>
-            </Stack>
-          </Grid>
-        </Grid>
+                </span>
+              </KpiCard>
+            </div>
+
+            <div>
+              <Radar company={company} />
+            </div>
+
+            <div>
+              <div className="flex flex-col">
+                <div>
+                  <KpiCard title="Company Details">
+                    <p className="text-sm font-thin">
+                      {company.longdescription}
+                    </p>
+                  </KpiCard>
+                </div>
+
+                <div className="mt-4">
+                  <BasicCompanyTable company={companyData} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </ContentArea>
       )}
     </>
   )

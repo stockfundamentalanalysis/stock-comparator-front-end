@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import StatsBox from '@/components/StatsBox'
 import NavBar from '@/components/navbar'
-import { Box } from '@mui/material'
 import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
@@ -92,19 +92,9 @@ const EasyTable = () => {
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
-            <Box
-              sx={{
-                backgroundColor: color,
-                borderRadius: '0.25rem',
-
-                maxWidth: '9ch',
-                p: '0.25rem',
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}
-            >
+            <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
-            </Box>
+            </StatsBox>
           )
         },
       },
@@ -113,15 +103,7 @@ const EasyTable = () => {
         accessorKey: 'targetprice',
         size: 50,
         Cell: ({ cell }: { cell: any }) => {
-          return (
-            <Box
-              sx={{
-                textAlign: 'left',
-              }}
-            >
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </Box>
-          )
+          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
         },
       },
       {
@@ -140,19 +122,9 @@ const EasyTable = () => {
 
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
-            <Box
-              sx={{
-                backgroundColor: color,
-                borderRadius: '0.25rem',
-                color: 'rgba(0, 0, 0, 0.87)',
-                maxWidth: '9ch',
-                p: '0.25rem',
-                textAlign: 'center',
-                fontWeight: 'light',
-              }}
-            >
+            <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
-            </Box>
+            </StatsBox>
           )
         },
       },
@@ -166,19 +138,9 @@ const EasyTable = () => {
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
-            <Box
-              sx={{
-                backgroundColor: color,
-                borderRadius: '0.25rem',
-                color: 'rgba(0, 0, 0, 0.87)',
-                maxWidth: '9ch',
-                p: '0.25rem',
-                textAlign: 'center',
-                fontWeight: 'light',
-              }}
-            >
+            <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
-            </Box>
+            </StatsBox>
           )
         },
       },
@@ -192,19 +154,9 @@ const EasyTable = () => {
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
-            <Box
-              sx={{
-                backgroundColor: color,
-                borderRadius: '0.25rem',
-                color: 'rgba(0, 0, 0, 0.87)',
-                maxWidth: '9ch',
-                p: '0.25rem',
-                textAlign: 'center',
-                fontWeight: 'light',
-              }}
-            >
+            <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
-            </Box>
+            </StatsBox>
           )
         },
       },
@@ -218,19 +170,9 @@ const EasyTable = () => {
           const rgb = pickHex(red, green, white, weight)
           const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
-            <Box
-              sx={{
-                backgroundColor: color,
-                borderRadius: '0.25rem',
-                color: 'rgba(0, 0, 0, 0.87)',
-                maxWidth: '9ch',
-                p: '0.25rem',
-                textAlign: 'center',
-                fontWeight: 'light',
-              }}
-            >
+            <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
-            </Box>
+            </StatsBox>
           )
         },
       },

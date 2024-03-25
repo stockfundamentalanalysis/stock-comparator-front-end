@@ -1,193 +1,136 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import ContentArea from '@/components/ContentArea'
 import Navbar from '@/components/navbar'
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Chip,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-} from '@mui/material'
-import Link from 'next/link'
-import React, { useEffect, useMemo, useState } from 'react'
+import { isNotNull } from '@/lib/helpers'
+import prisma from '@/lib/prisma/client'
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import Select from 'react-select'
 
-type TickerDictionary = Record<string, string>
+interface Props {
+  companies: string[]
+  sectors: string[]
+  data: Record<string, { ticker: string; sector: string | null }>
+}
 
-const Post = () => {
-  const [simpleAnalysis, setSimpleAnalysis] = useState<
-    {
-      ticker: string
-      companyname: string
-      sector: string
-    }[]
-  >([])
-  const [tickerDictionary, setTickerDictionary] = useState<TickerDictionary>({}) // Provide an initial value with the correct type
+const Post = ({
+  data,
+  companies,
+  sectors,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter()
 
-  useEffect(() => {
-    async function fetchCompanyData() {
-      try {
-        const dataResponse = await fetch('/api/get-sectors-and-companies')
-        if (!dataResponse.ok) {
-          throw new Error('Failed to fetch company data')
-        }
-        const companyData = await dataResponse.json()
-        setSimpleAnalysis(companyData)
+  const [, setSectorName] = useState<string[]>([])
+  const [ticker, setTicker] = useState<string>('')
 
-        // Build a ticker dictionary for later use
-        const dictionary: TickerDictionary = {}
-        companyData.forEach((item: any) => {
-          dictionary[item.companyname] = item.ticker
-        })
-        setTickerDictionary(dictionary)
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      }
+  const handleChangeSector = (value: string | null) => {
+    if (!value) {
+      return
     }
 
-    fetchCompanyData()
-  }, [])
-
-  const data = Object.values(simpleAnalysis)
-
-  // Filter the json data to get the company detail
-  let companies = data.map((item) => item.companyname)
-  let sectors = data.map((item) => item.sector)
-
-  // Sort companies alphabetically
-  companies = companies.sort((a, b) => a.localeCompare(b))
-
-  // Sort sectors alphabetically
-  sectors = Array.from(new Set(sectors)).sort((a, b) => {
-    // Provide default values for null or undefined
-    const sectorA = a || ''
-    const sectorB = b || ''
-    return sectorA.localeCompare(sectorB)
-  })
-
-  const ITEM_HEIGHT = 48
-  const ITEM_PADDING_TOP = 8
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
+    setSectorName([value])
   }
 
-  const [sectorName, setSectorName] = React.useState<string[]>([])
-  const [companyName, setCompanyName] = React.useState<string[]>([])
-
-  const handleChangeSector = (event: SelectChangeEvent<typeof sectorName>) => {
-    const {
-      target: { value },
-    } = event
-    setSectorName(
-      // On autofill, we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value
-    )
-  }
-
-  const filteredCompanies = useMemo(() => {
-    if (sectorName.length > 0) {
-      return data
-        .filter((item) => sectorName.includes(item.sector))
-        .map((item) => item.companyname)
+  const handleCompanyChange = (value: string | null) => {
+    if (!value) {
+      return
     }
-    return companies
-  }, [companies, data, sectorName])
+
+    const companyValue = value.split(',')[0]
+
+    setTicker(data[companyValue].ticker)
+  }
 
   const companyDetailLink = () => {
-    const company = companyName[0]
-    if (company !== undefined) {
-      return `/detail/${tickerDictionary[company]}`
-    } else {
-      return `/select_detail/`
+    if (!ticker) {
+      return `/select-detail`
     }
+
+    router.push(`/detail/${ticker}`)
   }
 
   return (
     <>
-      <Navbar></Navbar>
-      <Grid container spacing={3}>
-        <Grid item md>
-          <Stack spacing={2} sx={{ alignItems: 'center', marginTop: '50px' }}>
-            <FormControl sx={{ m: 1, width: 300 }}>
-              <InputLabel id="demo-multiple-name-label">Sector</InputLabel>
-              <Select
-                labelId="demo-multiple-chip-label"
-                id="demo-multiple-chip"
-                multiple
-                value={sectorName}
-                onChange={handleChangeSector}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip key={value} label={value} />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-              >
-                {sectors.map((name) => (
-                  <MenuItem key={name} value={name}>
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ m: 1, width: 300 }}>
-              <Autocomplete
-                id="demo-multiple-chip"
-                options={filteredCompanies}
-                onChange={(_, newValue) => {
-                  setCompanyName(
-                    typeof newValue === 'string' ? newValue.split(',') : []
-                  )
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Company" />
-                )}
-              />
-            </FormControl>
-            <Button
-              component={Link}
-              href={companyDetailLink()}
-              variant="contained"
-              size="medium"
-              sx={{
-                fontSize: '0.9rem',
-                textTransform: 'capitalize',
-                py: 2,
-                px: 4,
-                mt: 3,
-                mb: 2,
-                borderRadius: 0,
-                color: '#fff',
-                backgroundColor: 'rgb(130,130,130)',
-                '&&:hover': {
-                  backgroundColor: 'rgb(165,165,165)',
-                },
-                '&&:focus': {
-                  backgroundColor: 'rgb(165,165,165)',
-                },
-              }}
-            >
-              Details
-            </Button>
-          </Stack>
-        </Grid>
-      </Grid>
+      <Navbar />
+      <ContentArea>
+        <div className="mx-auto flex max-w-sm flex-col">
+          <div>
+            <Select
+              name="sectors"
+              options={sectors.map((name) => ({ value: name, label: name }))}
+              className="basic-select"
+              classNamePrefix="select"
+              onChange={(newValue) =>
+                handleChangeSector(newValue?.value ?? null)
+              }
+            />
+          </div>
+          <div className="mt-4">
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              isClearable
+              isSearchable
+              name="companies"
+              options={companies.map((name) => ({ value: name, label: name }))}
+              onChange={(newValue) =>
+                handleCompanyChange(newValue?.value ?? null)
+              }
+            />
+          </div>
+          <button
+            onClick={() => companyDetailLink()}
+            className="mt-4 rounded-xl bg-gray-600 px-8 py-4 font-semibold text-white hover:bg-gray-500"
+          >
+            Details
+          </button>
+        </div>
+      </ContentArea>
     </>
   )
 }
+
+export const getServerSideProps = (async () => {
+  const simpleanalysis = await prisma.simpleanalysis.findMany({
+    select: {
+      ticker: true,
+      companyname: true,
+      sector: true,
+    },
+  })
+
+  const companies = simpleanalysis
+    .map((item) => item.companyname)
+    .filter(isNotNull)
+    .sort()
+
+  const sectors = simpleanalysis
+    .map((item) => item.sector)
+    .filter(isNotNull)
+    .sort()
+
+  const data: Record<string, { ticker: string; sector: string | null }> = {}
+
+  for (const company of companies) {
+    const item = simpleanalysis.find((item) => item.companyname === company)
+
+    if (!item?.ticker) {
+      continue
+    }
+
+    data[company] = {
+      ticker: item.ticker,
+      sector: item.sector,
+    }
+  }
+
+  return {
+    props: {
+      data,
+      companies: Array.from(new Set(companies)),
+      sectors: Array.from(new Set(sectors)),
+    },
+  }
+}) satisfies GetServerSideProps<Props>
 
 export default Post

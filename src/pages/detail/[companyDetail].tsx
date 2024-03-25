@@ -1,8 +1,8 @@
+import BasicCompanyTable from '@/components/BasicCompanyTable'
 import ContentArea from '@/components/ContentArea'
 import TailSpinIcon from '@/components/Icons/TailSpinIcon'
 import Navbar from '@/components/navbar'
 import Radar from '@/components/radar'
-import BasicTable from '@/components/table'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -133,7 +133,7 @@ const Post = () => {
                 </div>
 
                 <div className="mt-4">
-                  <BasicTable company={companyData}></BasicTable>
+                  <BasicCompanyTable company={companyData} />
                 </div>
               </div>
             </div>

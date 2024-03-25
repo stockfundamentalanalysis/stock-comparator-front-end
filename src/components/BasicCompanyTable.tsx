@@ -12,7 +12,7 @@ interface Props {
   }
 }
 
-const BasicTable = ({ company }: Props) => {
+const BasicCompanyTable = ({ company }: Props) => {
   const {
     currentper,
     currentevebitda,
@@ -70,4 +70,4 @@ const BasicTable = ({ company }: Props) => {
   )
 }
 
-export default BasicTable
+export default BasicCompanyTable

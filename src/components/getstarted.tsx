@@ -68,10 +68,13 @@ const GetStarted = () => {
         The Approach
       </Heading>
 
-      <div className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
+      <div className="mx-auto mt-12 flex max-w-5xl flex-col space-y-12">
         {data.map((item) => {
           return (
-            <div key={item.id} className="flex flex-col items-center">
+            <div
+              key={item.id}
+              className="flex flex-col items-center md:flex-row"
+            >
               <Image
                 src={item.image.src}
                 alt={item.image.alt}
@@ -79,11 +82,11 @@ const GetStarted = () => {
                 height={200}
                 className="rounded-full"
               />
-              <div className="mt-6">
-                <Heading as="h3" size="small" className="text-center">
+              <div className="mt-6 text-center md:ml-12 md:mt-0 md:text-left">
+                <Heading as="h3" size="small">
                   {item.title}
                 </Heading>
-                <Paragraph size="sm" className="mt-2 text-center">
+                <Paragraph size="sm" className="mt-2">
                   {item.description}
                 </Paragraph>
               </div>

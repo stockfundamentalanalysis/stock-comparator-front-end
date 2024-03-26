@@ -1,3 +1,4 @@
+import Navbar from '@/components/Layout/Navbar'
 import { cn } from '@/lib/classNames'
 import { DEFAULT_SEO_DESCRIPTION, SITE_NAME, WEB_URL } from '@/lib/constants'
 import type { Metadata, Viewport } from 'next'
@@ -57,6 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={cn(inter.variable, 'font-sans antialiased')}>
+        <Navbar />
         {children}
       </body>
     </html>

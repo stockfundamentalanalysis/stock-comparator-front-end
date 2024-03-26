@@ -4,7 +4,7 @@ import imgFundamentals from '@/images/fundamentals.png'
 import imgPotential from '@/images/potential.png'
 import Image from 'next/image'
 
-const BigImage = () => {
+const Method = () => {
   return (
     <ContentArea>
       <Heading as="h2" color="black" className="text-center">
@@ -28,4 +28,4 @@ const BigImage = () => {
   )
 }
 
-export default BigImage
+export default Method

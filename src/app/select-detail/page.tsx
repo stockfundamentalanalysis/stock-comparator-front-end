@@ -1,6 +1,20 @@
 import CompanySelector from '@/components/Pages/SelectDetail/CompanySelector'
-import { isNotNull } from '@/lib/helpers'
+import { sharedMetadata } from '@/lib/constants'
+import { canonicalBuilder, isNotNull } from '@/lib/helpers'
 import prisma from '@/lib/prisma/client'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Company Details',
+  alternates: {
+    canonical: canonicalBuilder('select-detail'),
+  },
+  openGraph: {
+    ...sharedMetadata.openGraph,
+    title: 'Company Details',
+    url: canonicalBuilder('select-detail'),
+  },
+}
 
 type Data = Record<string, { ticker: string; sector: string | null }>
 

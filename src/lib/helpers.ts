@@ -13,3 +13,7 @@ export const formatNumberUSD = (number: number | bigint) => {
 
   return formatter.format(number)
 }
+
+export function canonicalBuilder(...slugs: string[]): string {
+  return ['/'].concat(slugs).filter(Boolean).join('/')
+}

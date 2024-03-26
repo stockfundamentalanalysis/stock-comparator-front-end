@@ -2,10 +2,48 @@ import ContentArea from '@/components/ContentArea'
 import KpiCard from '@/components/Pages/Company/KpiCard'
 import Radar from '@/components/Pages/Company/Radar'
 import Table from '@/components/Pages/Company/Table'
+import { sharedMetadata } from '@/lib/constants'
+import { canonicalBuilder } from '@/lib/helpers'
+import prisma from '@/lib/prisma/client'
 import { getCompanyDetails } from '@/lib/prisma/company'
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-export default async function Post({ params }: { params: { ticker: string } }) {
+interface Props {
+  params: { ticker: string }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const company = await prisma.companies.findFirst({
+    where: {
+      ticker: {
+        contains: params.ticker,
+        mode: 'insensitive',
+      },
+    },
+    select: {
+      companyname: true,
+    },
+  })
+
+  if (!company?.companyname) {
+    notFound()
+  }
+
+  return {
+    title: company.companyname,
+    alternates: {
+      canonical: canonicalBuilder('detail', params.ticker),
+    },
+    openGraph: {
+      ...sharedMetadata.openGraph,
+      title: company.companyname,
+      url: canonicalBuilder('blog', params.ticker),
+    },
+  }
+}
+
+export default async function Page({ params }: { params: { ticker: string } }) {
   const company = await getCompanyDetails(params.ticker)
 
   if (!company) {

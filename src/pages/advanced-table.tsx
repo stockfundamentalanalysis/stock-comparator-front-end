@@ -8,7 +8,7 @@ import {
   calculateWeightReverse,
   pickColor,
 } from '@/lib/colorPicker'
-import { formatNumberUSD } from '@/utils/user_table_tools'
+import { formatNumberUSD } from '@/lib/helpers'
 import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
 import { useEffect, useMemo, useState } from 'react'
 

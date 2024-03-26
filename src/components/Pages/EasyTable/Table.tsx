@@ -1,12 +1,9 @@
+'use client'
+
 import DataTable from '@/components/DataTable'
 import StatsBox from '@/components/StatsBox'
-import NavBar from '@/components/navbar'
 import { calculateWeight, pickColor } from '@/lib/colorPicker'
-import prisma from '@/lib/prisma/client'
-import {
-  SimpleAnalysis,
-  simpleAnalysisSelect,
-} from '@/lib/prisma/simpleAnalysis'
+import { SimpleAnalysis } from '@/lib/prisma/simpleAnalysis'
 import {
   SortingState,
   createColumnHelper,
@@ -16,19 +13,16 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+
+const columnHelper = createColumnHelper<SimpleAnalysis>()
 
 interface Props {
   data: SimpleAnalysis[]
 }
 
-const columnHelper = createColumnHelper<SimpleAnalysis>()
-
-const EasyTable = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Table = ({ data }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const columns = useMemo(
@@ -171,23 +165,7 @@ const EasyTable = ({
     getPaginationRowModel: getPaginationRowModel(),
   })
 
-  return (
-    <>
-      <NavBar />
-      <DataTable table={table} />
-    </>
-  )
+  return <DataTable table={table} />
 }
 
-export const getServerSideProps = (async () => {
-  const data = await prisma.simpleanalysis.findMany({
-    select: simpleAnalysisSelect,
-  })
-  return {
-    props: {
-      data,
-    },
-  }
-}) satisfies GetServerSideProps<Props>
-
-export default EasyTable
+export default Table

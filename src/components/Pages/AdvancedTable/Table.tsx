@@ -1,6 +1,7 @@
+'use client'
+
 import DataTable from '@/components/DataTable'
 import StatsBox from '@/components/StatsBox'
-import NavBar from '@/components/navbar'
 import {
   COLOR_GREEN,
   COLOR_RED,
@@ -9,11 +10,7 @@ import {
   pickColor,
 } from '@/lib/colorPicker'
 import { formatNumberUSD } from '@/lib/helpers'
-import prisma from '@/lib/prisma/client'
-import {
-  FundamentalAnalysis,
-  fundamentalAnalysisSelect,
-} from '@/lib/prisma/fundamentalAnalysis'
+import { FundamentalAnalysis } from '@/lib/prisma/fundamentalAnalysis'
 import {
   SortingState,
   createColumnHelper,
@@ -23,19 +20,16 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+
+const columnHelper = createColumnHelper<FundamentalAnalysis>()
 
 interface Props {
   data: FundamentalAnalysis[]
 }
 
-const columnHelper = createColumnHelper<FundamentalAnalysis>()
-
-const AdvancedTable = ({
-  data,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Table = ({ data }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const columns = useMemo(
@@ -671,24 +665,7 @@ const AdvancedTable = ({
     getPaginationRowModel: getPaginationRowModel(),
   })
 
-  return (
-    <>
-      <NavBar />
-      <DataTable table={table} />
-    </>
-  )
+  return <DataTable table={table} />
 }
 
-export const getServerSideProps = (async () => {
-  const data = await prisma.fundamentalanalysis.findMany({
-    select: fundamentalAnalysisSelect,
-  })
-
-  return {
-    props: {
-      data,
-    },
-  }
-}) satisfies GetServerSideProps<Props>
-
-export default AdvancedTable
+export default Table

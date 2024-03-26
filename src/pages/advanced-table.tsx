@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import StatsBox from '@/components/StatsBox'
 import NavBar from '@/components/navbar'
+import {
+  COLOR_GREEN,
+  COLOR_RED,
+  calculateWeight,
+  calculateWeightReverse,
+  pickColor,
+} from '@/lib/colorPicker'
 import { formatNumberUSD } from '@/utils/user_table_tools'
 import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
 import { useEffect, useMemo, useState } from 'react'
@@ -26,46 +33,7 @@ const AdvancedTable = () => {
   }, [])
 
   const data = Object.values(fundamentalAnalysis)
-  function pickHex(
-    color_bad: number[],
-    color_good: number[],
-    color_intermediate: number[],
-    weight: number
-  ) {
-    let color1 = color_intermediate
-    let color2 = color_bad
-    let w1 = weight * 2
-    let w2 = 1 - w1
-    if (weight > 0.5) {
-      color2 = color_intermediate
-      color1 = color_good
-      w1 = (weight - 0.5) * 2
-      w2 = 1 - w1
-    }
-    const rgb = [
-      Math.round(color1[0] * w1 + color2[0] * w2),
-      Math.round(color1[1] * w1 + color2[1] * w2),
-      Math.round(color1[2] * w1 + color2[2] * w2),
-    ]
-    return rgb
-  }
 
-  function calculateWeight(value: number, min: number, max: number) {
-    const weight = Math.max(0, Math.min((value - min) / (max - min), 1))
-    return weight
-  }
-
-  function calculateWeightReverse(value: number, min: number, max: number) {
-    //The higher the better
-    const weight = Math.max(0, 1 - Math.min((value - min) / (max - min), 1))
-    return weight
-  }
-
-  const green = useMemo(() => [0, 255, 0], [])
-  const white = useMemo(() => [255, 255, 255], [])
-  const red = useMemo(() => [255, 0, 0], [])
-
-  //should be memoized or stable
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
@@ -91,8 +59,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1.5)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -107,8 +75,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1.5)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -156,8 +124,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -172,8 +140,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -188,8 +156,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 2, 15)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -204,8 +172,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 2, 15)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -220,8 +188,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 3, 20)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -236,8 +204,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0.5, 3)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -252,8 +220,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0.5, 3)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -268,8 +236,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -284,8 +252,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 5, 30)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -300,8 +268,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -316,8 +284,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -332,8 +300,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -348,8 +316,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -364,8 +332,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -389,8 +357,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 0.3)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -405,8 +373,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 0.3)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -421,8 +389,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -437,8 +405,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 4)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -453,8 +421,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeightReverse(value, 0, 4)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100) / 100}{' '}
@@ -469,8 +437,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 0.6)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -492,8 +460,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -508,8 +476,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -524,8 +492,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -540,8 +508,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -556,8 +524,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -572,8 +540,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -596,8 +564,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 0.5)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -612,8 +580,8 @@ const AdvancedTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 0.3)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -655,7 +623,7 @@ const AdvancedTable = () => {
         accessorKey: 'firstyearreport',
       },
     ],
-    [green, red, white]
+    []
   )
 
   return (

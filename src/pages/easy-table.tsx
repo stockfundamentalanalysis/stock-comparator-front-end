@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import StatsBox from '@/components/StatsBox'
 import NavBar from '@/components/navbar'
+import { calculateWeight, pickColor } from '@/lib/colorPicker'
 import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
@@ -27,42 +28,6 @@ const EasyTable = () => {
 
   const data = Object.values(simpleAnalysis)
 
-  function pickHex(
-    color_bad: number[],
-    color_good: number[],
-    color_intermediate: number[],
-    weight: number
-  ) {
-    let color1 = color_intermediate
-    let color2 = color_bad
-    let w1 = weight * 2
-    let w2 = 1 - w1
-    if (weight > 0.5) {
-      color2 = color_intermediate
-      color1 = color_good
-      w1 = (weight - 0.5) * 2
-      w2 = 1 - w1
-    }
-    const rgb = [
-      Math.round(color1[0] * w1 + color2[0] * w2),
-      Math.round(color1[1] * w1 + color2[1] * w2),
-      Math.round(color1[2] * w1 + color2[2] * w2),
-    ]
-    return rgb
-  }
-
-  function calculateWeight(value: number, min: number, max: number) {
-    const weight = Math.max(0, Math.min((value - min) / (max - min), 1))
-    return weight
-  }
-
-  const green = useMemo(() => [0, 255, 0], [])
-  const white = useMemo(() => [255, 255, 255], [])
-  const red = useMemo(() => [255, 0, 0], [])
-
-  //should be memoized or stable
-  //
-  //should be memoized or stable
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
       {
@@ -89,8 +54,8 @@ const EasyTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, -1, 1.5)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -118,9 +83,8 @@ const EasyTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
+          const color = pickColor(weight)
 
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -135,8 +99,8 @@ const EasyTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -151,8 +115,8 @@ const EasyTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -167,8 +131,8 @@ const EasyTable = () => {
         Cell: ({ cell }: { cell: any }) => {
           const value = cell.getValue()
           const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight)
+
           return (
             <StatsBox backgroundColor={color}>
               {Math.round(cell.getValue() * 100)} %
@@ -177,7 +141,7 @@ const EasyTable = () => {
         },
       },
     ],
-    [green, red, white]
+    []
   )
 
   return (

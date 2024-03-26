@@ -1,4 +1,4 @@
-import ContactForm from '@/components/Pages/Contact/ContactForm'
+import ContactForm from '@/app/contact/_components/ContactForm'
 import { sharedMetadata } from '@/lib/constants'
 import { canonicalBuilder } from '@/lib/helpers'
 import { Metadata } from 'next'

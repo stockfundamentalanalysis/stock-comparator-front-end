@@ -1,4 +1,4 @@
-import Table from '@/components/Pages/AdvancedTable/Table'
+import Table from '@/app/advanced-table/_components/Table'
 import { sharedMetadata } from '@/lib/constants'
 import { canonicalBuilder } from '@/lib/helpers'
 import prisma from '@/lib/prisma/client'

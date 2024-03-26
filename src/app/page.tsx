@@ -1,7 +1,7 @@
-import Approach from '@/components/Pages/Home/Approach'
-import GetInTouch from '@/components/Pages/Home/GetInTouch'
-import HeroHeader from '@/components/Pages/Home/HeroHeader'
-import Method from '@/components/Pages/Home/Method'
+import Approach from '@/app/_components/Approach'
+import GetInTouch from '@/app/_components/GetInTouch'
+import HeroHeader from '@/app/_components/HeroHeader'
+import Method from '@/app/_components/Method'
 
 export default function Page() {
   return (

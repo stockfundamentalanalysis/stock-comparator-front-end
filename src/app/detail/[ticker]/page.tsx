@@ -43,6 +43,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page({ params }: { params: { ticker: string } }) {
   const company = await getCompanyDetails(params.ticker)
 

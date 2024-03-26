@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   },
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page() {
   const data = await prisma.fundamentalanalysis.findMany({
     select: fundamentalAnalysisSelect,

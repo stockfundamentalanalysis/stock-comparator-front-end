@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   },
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page() {
   const data = await getPortfolio()
   const totalCurrentPortfolioValueUSD = data.reduce(

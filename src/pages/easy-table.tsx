@@ -4,6 +4,10 @@ import NavBar from '@/components/navbar'
 import { calculateWeight, pickColor } from '@/lib/colorPicker'
 import prisma from '@/lib/prisma/client'
 import {
+  SimpleAnalysis,
+  simpleAnalysisSelect,
+} from '@/lib/prisma/simpleAnalysis'
+import {
   SortingState,
   createColumnHelper,
   getCoreRowModel,
@@ -15,20 +19,6 @@ import {
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
-
-interface SimpleAnalysis {
-  ticker: string | null
-  companyname: string | null
-  potential: number | null
-  targetprice: number | null
-  currency: string | null
-  debtqualityscore: number | null
-  earningsscore: number | null
-  profitabilityscore: number | null
-  growthscore: number | null
-  sector: string | null
-  id: number
-}
 
 interface Props {
   data: SimpleAnalysis[]
@@ -173,7 +163,7 @@ const EasyTable = ({
     state: {
       sorting,
     },
-    getRowId: (row) => String(row.id),
+    getRowId: (row) => String(row.ticker),
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -190,11 +180,9 @@ const EasyTable = ({
 }
 
 export const getServerSideProps = (async () => {
-  const data = (await prisma.simpleanalysis.findMany()).map((item) => ({
-    ...item,
-    id: Number(item.id),
-  }))
-
+  const data = await prisma.simpleanalysis.findMany({
+    select: simpleAnalysisSelect,
+  })
   return {
     props: {
       data,

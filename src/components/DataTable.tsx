@@ -6,20 +6,6 @@ import ChevronLeftIcon from '@/components/Icons/ChevronLeftIcon'
 import ChevronRightIcon from '@/components/Icons/ChevronRightIcon'
 import { Column, Table, flexRender } from '@tanstack/react-table'
 
-interface SimpleAnalysis {
-  ticker: string | null
-  companyname: string | null
-  potential: number | null
-  targetprice: number | null
-  currency: string | null
-  debtqualityscore: number | null
-  earningsscore: number | null
-  profitabilityscore: number | null
-  growthscore: number | null
-  sector: string | null
-  id: number
-}
-
 interface TextTypes {
   results: string
   page: string
@@ -38,11 +24,11 @@ const TEXTS: TextTypes = {
   search: 'Search',
 }
 
-interface Props {
-  table: Table<SimpleAnalysis>
+interface Props<T> {
+  table: Table<T>
 }
 
-const DataTable = ({ table }: Props): JSX.Element => {
+const DataTable = <T extends object>({ table }: Props<T>) => {
   return (
     <>
       <div className="flex h-full flex-col">
@@ -204,12 +190,12 @@ const DataTable = ({ table }: Props): JSX.Element => {
   )
 }
 
-const Filter = ({
+const Filter = <T extends object>({
   column,
   table,
 }: {
-  column: Column<SimpleAnalysis, unknown>
-  table: Table<SimpleAnalysis>
+  column: Column<T, unknown>
+  table: Table<T>
 }) => {
   const firstValue = table
     .getPreFilteredRowModel()

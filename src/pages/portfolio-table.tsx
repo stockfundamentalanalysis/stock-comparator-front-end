@@ -1,9 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import ContentArea from '@/components/ContentArea'
+import DataTable from '@/components/DataTable'
 import StatsBox from '@/components/StatsBox'
 import NavBar from '@/components/navbar'
-import { MaterialReactTable } from 'material-react-table'
-import { useEffect, useMemo, useState } from 'react'
+import { PortfolioEntry, getPortfolio } from '@/lib/prisma/portfolio'
+import {
+  SortingState,
+  createColumnHelper,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { useMemo, useState } from 'react'
 
 const KpiCard = ({
   title,
@@ -22,121 +32,131 @@ const KpiCard = ({
   )
 }
 
-const PortfolioTable = () => {
-  const [portfolio, setPortfolio] = useState([])
-  const [totalCurrentPortfolioValueUSD, setTotalCurrentPortfolioValueUSD] =
-    useState(0)
-  const [totalMarginUSD, setTotalMarginUSD] = useState(0)
+interface Props {
+  data: PortfolioEntry[]
+  totalCurrentPortfolioValueUSD: number
+  totalMarginUSD: number
+}
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch('/api/get-portfolio')
-        if (!response.ok) {
-          throw new Error('Failed to fetch portfolio data')
-        }
-        const data = await response.json()
-        setPortfolio(data)
+const columnHelper = createColumnHelper<PortfolioEntry>()
 
-        // Calculate totalCurrentPortfolioValueUSD
-        const totalValue = data.reduce(
-          (acc: any, entry: any) => acc + entry.CurrentPortfolioValueUSD,
-          0
-        )
-        setTotalCurrentPortfolioValueUSD(totalValue)
-
-        const totalMargin = data.reduce(
-          (acc: any, entry: any) => acc + entry.MarginUSD,
-          0
-        )
-        setTotalMarginUSD(totalMargin)
-      } catch (error) {
-        console.error('Error fetching portfolio data:', error)
-      }
-    }
-    fetchData()
-  }, [])
+const PortfolioTable = ({
+  data,
+  totalCurrentPortfolioValueUSD,
+  totalMarginUSD,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [sorting, setSorting] = useState<SortingState>([])
 
   const columns = useMemo(
     () => [
-      {
-        header: 'Company Name',
-        accessorKey: 'CompanyName',
-      },
-      {
-        header: 'Potential',
-        accessorKey: 'Potential',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100)} %</StatsBox>
-        },
-      },
-      {
-        header: 'Current Price',
-        accessorKey: 'CurrentPrice',
-        size: 30,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
-        },
-      },
-      {
-        header: 'Mean Buy Price',
-        accessorKey: 'MeanBuyPrice',
-        size: 30,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
-        },
-      },
-      {
-        header: 'Stocks Owned',
-        accessorKey: 'StocksOwned',
-        size: 20,
-      },
+      columnHelper.accessor('CompanyName', {
+        cell: (info) => info.getValue(),
+        header: () => 'Company Name',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('Potential', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
 
-      {
-        header: 'Percentual Margin',
-        accessorKey: 'PercentualMargin',
+          return <StatsBox>{Math.round(value * 100)} %</StatsBox>
+        },
+        size: 50,
+        header: () => 'Potential',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('CurrentPrice', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 30,
+        header: () => 'Current Price',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('MeanBuyPrice', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 30,
+        header: () => 'Mean Buy Price',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('StocksOwned', {
+        cell: (info) => info.getValue(),
+        size: 20,
+        header: () => 'Stocks Owned',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('PercentualMargin', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100)} %</StatsBox>
+        },
         size: 10,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100)} %</StatsBox>
-        },
-      },
-      {
-        header: 'Margin USD',
-        accessorKey: 'MarginUSD',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
-        },
-      },
-      {
-        header: 'Current Value USD',
-        accessorKey: 'CurrentPortfolioValueUSD',
-        size: 30,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
-        },
-      },
-      {
-        header: 'Proportion Of Portfolio',
-        accessorKey: 'ProportionOfPortfolio',
-        size: 20,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100)} %</StatsBox>
-        },
-      },
+        header: () => 'Percentual Margin',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('MarginUSD', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
 
-      {
-        header: 'Mean Sell Price',
-        accessorKey: 'MeanSellPrice',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
         },
-      },
+        size: 50,
+        header: () => 'Margin USD',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('CurrentPortfolioValueUSD', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 30,
+        header: () => 'Current Value USD',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('ProportionOfPortfolio', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100)} %</StatsBox>
+        },
+        size: 20,
+        header: () => 'Proportion Of Portfolio',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('MeanSellPrice', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 50,
+        header: () => 'Mean Sell Price',
+        footer: (props) => props.column.id,
+      }),
     ],
     []
   )
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
+    },
+    getRowId: (row) => String(row.CompanyName),
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  })
 
   return (
     <>
@@ -152,18 +172,26 @@ const PortfolioTable = () => {
         </div>
       </ContentArea>
 
-      <MaterialReactTable
-        columns={columns}
-        data={portfolio}
-        enableColumnPinning={true}
-        enableStickyHeader={true}
-        initialState={{
-          density: 'compact',
-          columnPinning: { left: ['CompanyName'] },
-        }}
-      />
+      <DataTable table={table} />
     </>
   )
 }
+
+export const getServerSideProps = (async () => {
+  const data = await getPortfolio()
+  const totalCurrentPortfolioValueUSD = data.reduce(
+    (acc, entry) => acc + entry.CurrentPortfolioValueUSD,
+    0
+  )
+  const totalMarginUSD = data.reduce((acc, entry) => acc + entry.MarginUSD, 0)
+
+  return {
+    props: {
+      data,
+      totalCurrentPortfolioValueUSD,
+      totalMarginUSD,
+    },
+  }
+}) satisfies GetServerSideProps<Props>
 
 export default PortfolioTable

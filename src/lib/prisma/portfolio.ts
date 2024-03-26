@@ -1,7 +1,6 @@
 import { isNotNull } from '@/lib/helpers'
 import prisma from '@/lib/prisma/client'
 import { Prisma } from '@prisma/client'
-import type { NextApiRequest, NextApiResponse } from 'next'
 
 const transactionsSelect = {
   ticker: true,
@@ -30,7 +29,7 @@ type FundamentalAnalysysPayload = Prisma.fundamentalanalysisGetPayload<{
 
 type FundamentalAnalysisMap = Record<string, FundamentalAnalysysPayload>
 
-interface PortfolioEntry {
+export interface PortfolioEntry {
   Ticker: string
   StockMargin: number
   StocksOwned: number
@@ -46,7 +45,7 @@ interface PortfolioEntry {
   ProportionOfPortfolio: number | null
 }
 
-export default async function handler(_: NextApiRequest, res: NextApiResponse) {
+export const getPortfolio = async (): Promise<PortfolioEntry[]> => {
   try {
     const transactions = await prisma.transactions.findMany({
       where: {
@@ -183,9 +182,9 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
         entry.CurrentPortfolioValueUSD / totalCurrentPortfolioValueUSD
     })
 
-    res.status(200).json(portfolio)
-  } catch (error) {
-    console.error('Error fetching portfolio data:', error)
-    res.status(500).json({ error: 'An error occurred while fetching data' })
+    return portfolio
+  } catch (e) {
+    console.error(e)
+    return []
   }
 }

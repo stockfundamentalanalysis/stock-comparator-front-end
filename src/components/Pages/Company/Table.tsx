@@ -1,18 +1,16 @@
-function createData(key: string, value: number, unit: string) {
-  return { key, value, unit }
+import { cn } from '@/lib/classNames'
+import { CompanyDetails } from '@/lib/prisma/company'
+
+function createData(key: string, value: number | null, unit: string) {
+  return { key, value: value ?? '-', unit }
 }
 
 interface Props {
-  company: {
-    currentper: number
-    currentevebitda: number
-    currentpricetofreecashflowrate: number
-    roic: number
-    netdebttoebitda: number
-  }
+  company: CompanyDetails
+  className?: string
 }
 
-const BasicCompanyTable = ({ company }: Props) => {
+const Table = ({ company, className = '' }: Props) => {
   const {
     currentper,
     currentevebitda,
@@ -25,12 +23,12 @@ const BasicCompanyTable = ({ company }: Props) => {
     createData('PER', currentper, ''),
     createData('EV/EBITDA', currentevebitda, ''),
     createData('Price/Free Cash Flow', currentpricetofreecashflowrate, ''),
-    createData('ROIC', roic * 100, '%'),
+    createData('ROIC', roic ? roic * 100 : null, '%'),
     createData('Net Debt/EBITDA', netdebttoebitda, ''),
   ]
 
   return (
-    <div className="flow-root">
+    <div className={cn('flow-root', className)}>
       <div className="overflow-hidden rounded-lg ring-1 ring-black ring-opacity-5">
         <table className="min-w-full divide-y divide-gray-300">
           <thead className="bg-gray-50">
@@ -58,7 +56,7 @@ const BasicCompanyTable = ({ company }: Props) => {
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   {typeof row.value === 'number'
                     ? row.value.toFixed(1)
-                    : row.value}{' '}
+                    : row.value}
                   {row.unit}
                 </td>
               </tr>
@@ -70,4 +68,4 @@ const BasicCompanyTable = ({ company }: Props) => {
   )
 }
 
-export default BasicCompanyTable
+export default Table

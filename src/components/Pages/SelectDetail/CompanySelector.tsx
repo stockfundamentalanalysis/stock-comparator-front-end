@@ -61,7 +61,7 @@ const CompanySelector = ({ data, companies, sectors }: Props) => {
           />
         </div>
         <button
-          onClick={() => router.push(`/detail/${ticker}`)}
+          onClick={() => router.push(`/detail/${ticker.toLowerCase()}`)}
           disabled={!ticker}
           className="mt-4 rounded-xl bg-gray-600 px-8 py-4 font-semibold text-white hover:bg-gray-500"
         >

@@ -1,678 +1,694 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import DataTable from '@/components/DataTable'
 import StatsBox from '@/components/StatsBox'
 import NavBar from '@/components/navbar'
-import { formatNumberUSD } from '@/utils/user_table_tools'
-import { MRT_ColumnDef, MaterialReactTable } from 'material-react-table'
-import { useEffect, useMemo, useState } from 'react'
+import {
+  COLOR_GREEN,
+  COLOR_RED,
+  calculateWeight,
+  calculateWeightReverse,
+  pickColor,
+} from '@/lib/colorPicker'
+import { formatNumberUSD } from '@/lib/helpers'
+import prisma from '@/lib/prisma/client'
+import {
+  FundamentalAnalysis,
+  fundamentalAnalysisSelect,
+} from '@/lib/prisma/fundamentalAnalysis'
+import {
+  SortingState,
+  createColumnHelper,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import Link from 'next/link'
+import { useMemo, useState } from 'react'
 
-const AdvancedTable = () => {
-  const [fundamentalAnalysis, setfundamentalAnalysis] = useState([])
+interface Props {
+  data: FundamentalAnalysis[]
+}
 
-  useEffect(() => {
-    async function fetchCompanyData() {
-      try {
-        const companyResponse = await fetch('/api/fundamental-analysis')
-        if (!companyResponse.ok) {
-          throw new Error('Failed to fetch company data')
-        }
-        const companyData = await companyResponse.json()
-        setfundamentalAnalysis(companyData)
-      } catch (error) {
-        console.error('Error fetching company data:', error)
-      }
-    }
+const columnHelper = createColumnHelper<FundamentalAnalysis>()
 
-    fetchCompanyData()
-  }, [])
+const AdvancedTable = ({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [sorting, setSorting] = useState<SortingState>([])
 
-  const data = Object.values(fundamentalAnalysis)
-  function pickHex(
-    color_bad: number[],
-    color_good: number[],
-    color_intermediate: number[],
-    weight: number
-  ) {
-    let color1 = color_intermediate
-    let color2 = color_bad
-    let w1 = weight * 2
-    let w2 = 1 - w1
-    if (weight > 0.5) {
-      color2 = color_intermediate
-      color1 = color_good
-      w1 = (weight - 0.5) * 2
-      w2 = 1 - w1
-    }
-    const rgb = [
-      Math.round(color1[0] * w1 + color2[0] * w2),
-      Math.round(color1[1] * w1 + color2[1] * w2),
-      Math.round(color1[2] * w1 + color2[2] * w2),
-    ]
-    return rgb
-  }
-
-  function calculateWeight(value: number, min: number, max: number) {
-    const weight = Math.max(0, Math.min((value - min) / (max - min), 1))
-    return weight
-  }
-
-  function calculateWeightReverse(value: number, min: number, max: number) {
-    //The higher the better
-    const weight = Math.max(0, 1 - Math.min((value - min) / (max - min), 1))
-    return weight
-  }
-
-  const green = useMemo(() => [0, 255, 0], [])
-  const white = useMemo(() => [255, 255, 255], [])
-  const red = useMemo(() => [255, 0, 0], [])
-
-  //should be memoized or stable
-  const columns = useMemo<MRT_ColumnDef<any>[]>(
+  const columns = useMemo(
     () => [
-      {
-        header: 'Ticker',
-        accessorKey: 'ticker',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <a>{cell.getValue()}</a>
-        },
-      },
-      {
-        header: 'Company Name',
-        accessorKey: 'companyname',
-      },
-      {
-        header: 'Sector',
-        accessorKey: 'sector',
-      },
-      {
-        header: 'Potential',
-        accessorKey: 'dcfpotential',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, -1, 1.5)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Worst Case Potential',
-        accessorKey: 'dcfworstpotential',
-        size: 150,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, -1, 1.5)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Current Price',
-        accessorKey: 'currentprice',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
-        },
-      },
-      {
-        header: 'Target Price',
-        accessorKey: 'targetprice',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
-        },
-      },
+      columnHelper.accessor('ticker', {
+        cell: ({ cell }) => {
+          const route = '/detail/' + cell.getValue()?.toLowerCase()
 
-      {
-        header: 'Country',
-        accessorKey: 'country',
-      },
-      {
-        header: 'Stock Currency',
-        accessorKey: 'stockcurrency',
-      },
-      {
-        header: 'Report Currency',
-        accessorKey: 'reportcurrency',
-      },
-      {
-        header: 'Last Report Date',
-        accessorKey: 'lastreportdate',
-      },
-      {
-        header: 'Current PER',
-        accessorKey: 'currentper',
+          return (
+            <Link href={route} className="font-semibold underline">
+              {cell.getValue()}
+            </Link>
+          )
+        },
         size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
+        header: () => 'Ticker',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('companyname', {
+        cell: (info) => info.getValue(),
+        header: () => 'CompanyName',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('sector', {
+        cell: (info) => info.getValue(),
+        header: () => 'Sector',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('dcfpotential', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1.5)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 50,
+        header: () => 'Potential',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('dcfworstpotential', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1.5)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 150,
+        header: () => 'Worst Case Potential',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('currentprice', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 50,
+        header: () => 'Current Price',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('targetprice', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 50,
+        header: () => 'Target Price',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('country', {
+        cell: (info) => info.getValue(),
+        header: () => 'Country',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('stockcurrency', {
+        cell: (info) => info.getValue(),
+        header: () => 'Stock Currency',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('reportcurrency', {
+        cell: (info) => info.getValue(),
+        header: () => 'Report Currency',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('lastreportdate', {
+        cell: (info) => info.getValue(),
+        header: () => 'Last Report Date',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('currentper', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
           const weight = calculateWeight(value, 5, 30)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(value * 100) / 100}
             </StatsBox>
           )
         },
-      },
-      {
-        header: 'Mean PER',
-        accessorKey: 'meanper',
         size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
+        header: () => 'Current PER',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('meanper', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
           const weight = calculateWeight(value, 5, 30)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(value * 100) / 100}
             </StatsBox>
           )
         },
-      },
-      {
-        header: 'Current EV/EBITDA',
-        accessorKey: 'currentevebitda',
         size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
+        header: () => 'Mean PER',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('currentevebitda', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
           const weight = calculateWeight(value, 2, 15)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(value * 100) / 100}
             </StatsBox>
           )
         },
-      },
-      {
-        header: 'Mean EV/EBITDA',
-        accessorKey: 'meanevebitda',
         size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
+        header: () => 'Current EV/EBITDA',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('meanevebitda', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
           const weight = calculateWeight(value, 2, 15)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
+              {Math.round(value * 100) / 100}
             </StatsBox>
           )
         },
-      },
-      {
-        header: 'Current EV/EBIT',
-        accessorKey: 'currentevebit',
         size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
+        header: () => 'Mean EV/EBITDA',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('currentevebit', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
           const weight = calculateWeight(value, 3, 20)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Current Price/ Book Value',
-        accessorKey: 'currentpricetobook',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0.5, 3)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Mean Price/ Book Value',
-        accessorKey: 'meanpricetobook',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0.5, 3)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Current Price / Free Cash Flow',
-        accessorKey: 'currentpricetofreecashflowrate',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 5, 30)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Mean Price / Free Cash Flow',
-        accessorKey: 'meanpricetofreecashflowrate',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 5, 30)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'ROE',
-        accessorKey: 'roe',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'ROIC',
-        accessorKey: 'roic',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Mean ROIC',
-        accessorKey: 'meanroic',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'ROCE',
-        accessorKey: 'roce',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'ROA',
-        accessorKey: 'roa',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeightReverse(value, 0, 0.2)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
 
-      {
-        header: 'Beta',
-        accessorKey: 'beta',
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100) / 100}
+            </StatsBox>
+          )
+        },
         size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
+        header: () => 'Current EV/EBIT',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('currentpricetobook', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, 0.5, 3)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100) / 100}
+            </StatsBox>
+          )
         },
-      },
-      {
-        header: 'Total Cash / Total Assets',
-        accessorKey: 'cashtototalassets',
+        size: 200,
+        header: () => 'Current Price/ Book Value',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('meanpricetobook', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, 0.5, 3)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100) / 100}
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'Mean Price/ Book Value',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('currentpricetofreecashflowrate', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, 5, 30)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100) / 100}
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'Current Price / Free Cash Flow',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('meanpricetofreecashflowrate', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, 5, 30)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100) / 100}
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'Mean Price / Free Cash Flow',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('roe', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeightReverse(value, 0, 0.2)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 50,
+        header: () => 'ROE',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('roic', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeightReverse(value, 0, 0.2)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 50,
+        header: () => 'ROIC',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('meanroic', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeightReverse(value, 0, 0.2)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 50,
+        header: () => 'Mean ROIC',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('roce', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeightReverse(value, 0, 0.2)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100) / 100} %
+            </StatsBox>
+          )
+        },
+        size: 50,
+        header: () => 'ROCE',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('roa', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeightReverse(value, 0, 0.2)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 50,
+        header: () => 'ROA',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('beta', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 50,
+        header: () => 'Beta',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('cashtototalassets', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeightReverse(value, 0, 0.3)
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
         size: 150,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
+        header: () => 'Total Cash / Total Assets',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('cashoverstockprice', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
           const weight = calculateWeightReverse(value, 0, 0.3)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
+          const color = pickColor(weight, COLOR_GREEN, COLOR_RED)
+
           return (
             <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
+              {Math.round(value * 100) / 100}
             </StatsBox>
           )
         },
-      },
-      {
-        header: 'Cash / Stock Price',
-        accessorKey: 'cashoverstockprice',
         size: 100,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeightReverse(value, 0, 0.3)
-          const rgb = pickHex(green, red, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Liabilities / Equity',
-        accessorKey: 'liabilitiestoequityratio',
-        size: 100,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
+        header: () => 'Cash / Stock Price',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('liabilitiestoequityratio', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
           const weight = calculateWeight(value, 0, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Net Debt / EBITDA',
-        accessorKey: 'netdebttoebitda',
-        size: 150,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeightReverse(value, 0, 4)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Mean Net Debt / EBITDA',
-        accessorKey: 'meannetdebttoebitda',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeightReverse(value, 0, 4)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100) / 100}{' '}
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Interest Expense / EBIT',
-        accessorKey: 'interestexpensetoebit',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 0.6)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Entreprise Value in USD',
-        accessorKey: 'entreprisevalueusd',
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{formatNumberUSD(cell.getValue())}</StatsBox>
-        },
-      },
-      {
-        header: 'EBITDA Tendency',
-        accessorKey: 'ebitdatendency',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Free Cash Flow Tendency',
-        accessorKey: 'freecashflowtendency',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Operating Cash Flow Tendency',
-        accessorKey: 'operatingcashflowtendency',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Net Income Tendency',
-        accessorKey: 'netincometendency',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Equity Tendency',
-        accessorKey: 'equitytendency',
-        size: 200,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'ROIC Tendency',
-        accessorKey: 'roictendency',
-        size: 100,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, -1, 1)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Dividend Yield',
-        accessorKey: 'dividendyield',
-        size: 100,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100)} %</StatsBox>
-        },
-      },
-      {
-        header: 'EBITDA Margin',
-        accessorKey: 'ebitdamargin',
-        size: 100,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 0.5)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'Net Income Margin',
-        accessorKey: 'netincomemargin',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          const value = cell.getValue()
-          const weight = calculateWeight(value, 0, 0.3)
-          const rgb = pickHex(red, green, white, weight)
-          const color = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(cell.getValue() * 100)} %
-            </StatsBox>
-          )
-        },
-      },
-      {
-        header: 'WACC',
-        accessorKey: 'wacc',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
-        },
-      },
-      {
-        header: 'PFFO',
-        accessorKey: 'pffo',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
-        },
-      },
-      {
-        header: 'Mean PFFO',
-        accessorKey: 'meanpffo',
-        size: 50,
-        Cell: ({ cell }: { cell: any }) => {
-          return <StatsBox>{Math.round(cell.getValue() * 100) / 100} </StatsBox>
-        },
-      },
-      {
-        header: 'Last Update',
-        accessorKey: 'lastupdate',
-      },
+          const color = pickColor(weight)
 
-      {
-        header: 'First Year Report',
-        accessorKey: 'firstyearreport',
-      },
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100) / 100}
+            </StatsBox>
+          )
+        },
+        size: 100,
+        header: () => 'Liabilities / Equity',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('netdebttoebitda', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeightReverse(value, 0, 4)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100) / 100}
+            </StatsBox>
+          )
+        },
+        size: 150,
+        header: () => 'Net Debt / EBITDA',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('meannetdebttoebitda', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeightReverse(value, 0, 4)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100) / 100}
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'Mean Net Debt / EBITDA',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('interestexpensetoebit', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, 0, 0.6)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'Interest Expense / EBIT',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('entreprisevalueusd', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{formatNumberUSD(value)}</StatsBox>
+        },
+        header: () => 'Entreprise Value in USD',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('ebitdatendency', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'EBITDA Tendency',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('freecashflowtendency', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'Free Cash Flow Tendency',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('operatingcashflowtendency', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'Operating Cash Flow Tendency',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('netincometendency', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'Net Income Tendency',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('equitytendency', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 200,
+        header: () => 'Equity Tendency',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('roictendency', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 100,
+        header: () => 'ROIC Tendency',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('dividendyield', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100)} %</StatsBox>
+        },
+        size: 100,
+        header: () => 'Dividend Yield',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('ebitdamargin', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, 0, 0.5)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 100,
+        header: () => 'EBITDA Margin',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('netincomemargin', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, 0, 0.3)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 50,
+        header: () => 'Net Income Margin',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('wacc', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 50,
+        header: () => 'WACC',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('pffo', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 50,
+        header: () => 'PFFO',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('meanpffo', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 50,
+        header: () => 'Mean PFFO',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('lastupdate', {
+        cell: (info) => info.getValue(),
+        header: () => 'Last Update',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('firstyearreport', {
+        cell: (info) => info.getValue(),
+        header: () => 'First Year Report',
+        footer: (props) => props.column.id,
+      }),
     ],
-    [green, red, white]
+    []
   )
+
+  const table = useReactTable({
+    data,
+    columns,
+    state: {
+      sorting,
+    },
+    getRowId: (row) => String(row.ticker),
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  })
 
   return (
     <>
       <NavBar />
-      <MaterialReactTable
-        columns={columns}
-        data={data}
-        enableColumnPinning={true}
-        enableStickyHeader={true}
-        initialState={{
-          density: 'compact',
-          columnPinning: { left: ['CompanyName'] },
-        }}
-      />
+      <DataTable table={table} />
     </>
   )
 }
+
+export const getServerSideProps = (async () => {
+  const data = await prisma.fundamentalanalysis.findMany({
+    select: fundamentalAnalysisSelect,
+  })
+
+  return {
+    props: {
+      data,
+    },
+  }
+}) satisfies GetServerSideProps<Props>
 
 export default AdvancedTable

@@ -1,3 +1,5 @@
+'use client'
+
 import Heading from '@/components/Heading'
 import Paragraph from '@/components/Paragraph'
 import { useForm } from '@formspree/react'

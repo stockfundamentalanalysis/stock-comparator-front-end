@@ -1,5 +1,11 @@
+import Navbar from '@/components/Layout/Navbar'
 import { cn } from '@/lib/classNames'
-import { DEFAULT_SEO_DESCRIPTION, SITE_NAME, WEB_URL } from '@/lib/constants'
+import {
+  DEFAULT_SEO_DESCRIPTION,
+  SITE_NAME,
+  WEB_URL,
+  sharedMetadata,
+} from '@/lib/constants'
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 
@@ -22,12 +28,9 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
+    ...sharedMetadata.openGraph,
     title: SITE_NAME,
-    description: DEFAULT_SEO_DESCRIPTION,
     url: WEB_URL,
-    siteName: SITE_NAME,
-    locale: 'en',
-    type: 'website',
   },
   applicationName: SITE_NAME,
   referrer: 'strict-origin-when-cross-origin',
@@ -57,6 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={cn(inter.variable, 'font-sans antialiased')}>
+        <Navbar />
         {children}
       </body>
     </html>

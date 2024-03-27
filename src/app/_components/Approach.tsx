@@ -61,7 +61,7 @@ const data = [
   },
 ]
 
-const GetStarted = () => {
+const Approach = () => {
   return (
     <ContentArea>
       <Heading as="h2" className="mt-12 text-center">
@@ -98,4 +98,4 @@ const GetStarted = () => {
   )
 }
 
-export default GetStarted
+export default Approach

@@ -1,8 +1,8 @@
-import ContentArea from '@/components/ContentArea'
+'use client'
+
 import DataTable from '@/components/DataTable'
 import StatsBox from '@/components/StatsBox'
-import NavBar from '@/components/navbar'
-import { PortfolioEntry, getPortfolio } from '@/lib/prisma/portfolio'
+import { PortfolioEntry } from '@/lib/prisma/portfolio'
 import {
   SortingState,
   createColumnHelper,
@@ -12,39 +12,15 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useMemo, useState } from 'react'
-
-const KpiCard = ({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) => {
-  return (
-    <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-      <div className="truncate text-sm font-medium text-gray-500">{title}</div>
-      <div className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-        {children}
-      </div>
-    </div>
-  )
-}
-
-interface Props {
-  data: PortfolioEntry[]
-  totalCurrentPortfolioValueUSD: number
-  totalMarginUSD: number
-}
 
 const columnHelper = createColumnHelper<PortfolioEntry>()
 
-const PortfolioTable = ({
-  data,
-  totalCurrentPortfolioValueUSD,
-  totalMarginUSD,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+interface Props {
+  data: PortfolioEntry[]
+}
+
+const Table = ({ data }: Props) => {
   const [sorting, setSorting] = useState<SortingState>([])
 
   const columns = useMemo(
@@ -158,40 +134,7 @@ const PortfolioTable = ({
     getPaginationRowModel: getPaginationRowModel(),
   })
 
-  return (
-    <>
-      <NavBar />
-      <ContentArea>
-        <div className="flex flex-col space-y-4 sm:flex-row sm:justify-between sm:space-x-4 sm:space-y-0">
-          <KpiCard title="Total Current Portfolio Value">
-            {Math.round(totalCurrentPortfolioValueUSD)} $
-          </KpiCard>
-          <KpiCard title="Total Earnings/Losses">
-            {Math.round(totalMarginUSD)} $
-          </KpiCard>
-        </div>
-      </ContentArea>
-
-      <DataTable table={table} />
-    </>
-  )
+  return <DataTable table={table} />
 }
 
-export const getServerSideProps = (async () => {
-  const data = await getPortfolio()
-  const totalCurrentPortfolioValueUSD = data.reduce(
-    (acc, entry) => acc + entry.CurrentPortfolioValueUSD,
-    0
-  )
-  const totalMarginUSD = data.reduce((acc, entry) => acc + entry.MarginUSD, 0)
-
-  return {
-    props: {
-      data,
-      totalCurrentPortfolioValueUSD,
-      totalMarginUSD,
-    },
-  }
-}) satisfies GetServerSideProps<Props>
-
-export default PortfolioTable
+export default Table

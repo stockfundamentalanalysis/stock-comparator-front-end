@@ -3,7 +3,7 @@ import Heading from '@/components/Heading'
 import Paragraph from '@/components/Paragraph'
 import Link from 'next/link'
 
-const Header = () => {
+const HeroHeader = () => {
   return (
     <div className="min-h-[80vh] bg-black">
       <ContentArea>
@@ -43,4 +43,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default HeroHeader

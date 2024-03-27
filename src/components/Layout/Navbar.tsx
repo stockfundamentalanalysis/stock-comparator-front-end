@@ -1,3 +1,5 @@
+'use client'
+
 import AdjustmentsVerticalIcon from '@/components/Icons/AdjustmentsVerticalIcon'
 import Bars3Icon from '@/components/Icons/Bars3Icon'
 import BoltIcon from '@/components/Icons/BoltIcon'

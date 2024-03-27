@@ -3,6 +3,7 @@ import { sharedMetadata } from '@/lib/constants'
 import { canonicalBuilder } from '@/lib/helpers'
 import prisma from '@/lib/prisma/client'
 import { fundamentalAnalysisSelect } from '@/lib/prisma/fundamentalAnalysis'
+import { Prisma } from '@prisma/client'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -19,8 +20,18 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic'
 
+const where = {
+  ebitdamargin: {
+    gte: -1000,
+  },
+  netincomemargin: {
+    gte: -1000,
+  },
+} satisfies Prisma.fundamentalanalysisWhereInput
+
 export default async function Page() {
   const data = await prisma.fundamentalanalysis.findMany({
+    where,
     select: fundamentalAnalysisSelect,
   })
 

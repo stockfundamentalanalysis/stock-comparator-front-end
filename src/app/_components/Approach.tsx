@@ -33,7 +33,7 @@ const data = [
     id: 'fundamental-analysis',
     title: 'Fundamental Analysis',
     description:
-      "A in depth analysis of a company's fundamental state involves computing key historical financial metrics, including net income, Total Net Debt, Free Cash Flow, EBITDA, ROIC, Liabilities, Cash available, and interest expenses, among others.",
+      "An in depth analysis of a company's fundamental state involves computing key historical financial metrics, including net income, Total Net Debt, Free Cash Flow, EBITDA, ROIC, Liabilities, Cash available, and interest expenses, among others.",
     image: {
       src: imgDetail,
       alt: 'Fundamental Analysis',

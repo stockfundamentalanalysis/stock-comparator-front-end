@@ -27,7 +27,7 @@ const GetInTouch = () => {
             </div>
             <div className="mt-4">
               <p className="text-center text-lg font-semibold text-white">
-                Manage your ouwn real or demo portfolio. Get the overall vision
+                Manage your own real or demo portfolio. Get the overall vision
                 of its performance.
               </p>
             </div>
@@ -51,7 +51,7 @@ const GetInTouch = () => {
             <div className="mt-4">
               <p className="text-center text-lg font-semibold text-white">
                 Recalculate the target price of any stock based on your own
-                company growth estimation.
+                company growth estimates.
               </p>
             </div>
           </div>

@@ -1,8 +1,8 @@
 {
   "recommendations": [
-    "prisma.prisma", // Python extension for Visual Studio Code
+    "Prisma.prisma",
+    "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "rvest.vs-code-prettier-eslint", // Prettier - Code formatter
-    "esbenp.prettier-vscode"
+    "bradlc.vscode-tailwindcss"
   ]
 }

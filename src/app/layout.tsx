@@ -54,9 +54,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={cn(inter.variable, 'font-sans antialiased')}>

@@ -1,5 +1,5 @@
-import { SubmitButton } from '@/app/login/_components/SubmitButton'
-import { logout } from '@/app/login/actions'
+import { logout } from '@/app/auth/actions'
+import { SubmitButton } from '@/app/auth/login/_components/SubmitButton'
 
 interface TextTypes {
   logout: string

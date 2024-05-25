@@ -1,7 +1,7 @@
 'use client'
 
-import { SubmitButton } from '@/app/login/_components/SubmitButton'
-import { login } from '@/app/login/actions'
+import { login } from '@/app/auth/actions'
+import { SubmitButton } from '@/app/auth/login/_components/SubmitButton'
 import { useToast } from '@/app/toast'
 import { useFormStatus } from 'react-dom'
 

@@ -1,4 +1,4 @@
-import Login from '@/app/login/_components/Login'
+import Login from '@/app/auth/login/_components/Login'
 import Logo from '@/components/Logo'
 import SuspenseSkeleton from '@/components/SuspenseSkeleton'
 import loginBackground from '@/images/login.jpg'

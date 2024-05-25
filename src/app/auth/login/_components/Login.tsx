@@ -1,5 +1,5 @@
-import LoginForm from '@/app/login/_components/LoginForm'
-import LogoutForm from '@/app/login/_components/LogoutForm'
+import LoginForm from '@/app/auth/login/_components/LoginForm'
+import LogoutForm from '@/app/auth/login/_components/LogoutForm'
 import { createClient } from '@/lib/supabase/server'
 
 interface TextTypes {

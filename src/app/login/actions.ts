@@ -3,34 +3,27 @@
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { z } from 'zod'
+
+const loginSchema = z.object({
+  email: z.string().email({ message: 'Invalid email address' }),
+})
 
 export async function login(formData: FormData) {
   const supabase = createClient()
 
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
+  const formValues = loginSchema.safeParse({ email: formData.get('email') })
 
-  const { error } = await supabase.auth.signInWithPassword(data)
-
-  if (error) {
+  if (formValues.error) {
     redirect('/error')
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
-}
+  const { data } = formValues
 
-export async function signup(formData: FormData) {
-  const supabase = createClient()
-
-  const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
-
-  const { error } = await supabase.auth.signUp(data)
+  const { error } = await supabase.auth.signInWithOtp({
+    email: data.email,
+    options: { shouldCreateUser: false },
+  })
 
   if (error) {
     redirect('/error')

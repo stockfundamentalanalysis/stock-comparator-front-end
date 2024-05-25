@@ -1,5 +1,5 @@
-import Table from '@/app/portfolio-table/_components/Table'
-import TotalsArea from '@/app/portfolio-table/_components/TotalsArea'
+import Table from '@/app/(marketing)/portfolio-table/_components/Table'
+import TotalsArea from '@/app/(marketing)/portfolio-table/_components/TotalsArea'
 import { sharedMetadata } from '@/lib/constants'
 import { canonicalBuilder } from '@/lib/helpers'
 import { getPortfolio } from '@/lib/prisma/portfolio'

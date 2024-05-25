@@ -24,36 +24,31 @@ const navigation = [
 
 const Header = (): JSX.Element => {
   return (
-    <div className="bg-black">
-      <header className="inset-x-0 top-0 z-50">
-        <div
-          className="flex flex-row items-center space-x-4 p-6 lg:justify-between lg:space-x-12 lg:px-8"
-          aria-label="Global"
-        >
-          <div className="flex flex-1">
-            <Link href="/" className="-m-1.5 p-1.5">
-              <Logo />
-            </Link>
-          </div>
-
-          <nav className="hidden lg:block">
-            <ul className="flex flex-row items-center gap-x-12">
-              {navigation.map((item) => (
-                <li
-                  key={item.name}
-                  className="text-sm font-semibold leading-6 text-white"
-                >
-                  <Link href={item.href}>{item.name}</Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <AuthButton />
-          <MobileMenu />
+    <header className="inset-x-0 top-0 z-50 bg-black">
+      <div className="flex flex-row items-center space-x-4 p-6 lg:justify-between lg:space-x-12 lg:px-8">
+        <div className="flex flex-1">
+          <Link href="/" className="-m-1.5 p-1.5">
+            <Logo />
+          </Link>
         </div>
-      </header>
-    </div>
+
+        <nav className="hidden lg:block">
+          <ul className="flex flex-row items-center gap-x-12">
+            {navigation.map((item) => (
+              <li
+                key={item.name}
+                className="text-sm font-semibold leading-6 text-white"
+              >
+                <Link href={item.href}>{item.name}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <AuthButton />
+        <MobileMenu />
+      </div>
+    </header>
   )
 }
 

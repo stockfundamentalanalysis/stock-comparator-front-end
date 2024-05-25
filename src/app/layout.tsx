@@ -1,4 +1,3 @@
-import Header from '@/components/Layout/Header'
 import { cn } from '@/lib/classNames'
 import {
   DEFAULT_SEO_DESCRIPTION,
@@ -60,7 +59,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={cn(inter.variable, 'font-sans antialiased')}>
-        <Header />
         {children}
       </body>
     </html>

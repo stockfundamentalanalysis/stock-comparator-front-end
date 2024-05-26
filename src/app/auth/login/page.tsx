@@ -1,4 +1,5 @@
-import Login from '@/app/auth/login/_components/Login'
+import LoginArea from '@/app/auth/login/_components/LoginArea'
+import LoginMessage from '@/app/auth/login/_components/LoginMessage'
 import Logo from '@/components/Logo'
 import SuspenseSkeleton from '@/components/SuspenseSkeleton'
 import loginBackground from '@/images/login.jpg'
@@ -26,7 +27,7 @@ const Divider = (): JSX.Element => (
   </div>
 )
 
-export default async function Page() {
+export default async function LoginPage() {
   return (
     <main className="flex min-h-dvh bg-gray-900">
       <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -38,11 +39,10 @@ export default async function Page() {
             </h2>
             <p className="mt-4 text-sm text-gray-400">{TEXTS.description}</p>
           </div>
-
           <Divider />
-
           <Suspense fallback={<SuspenseSkeleton />}>
-            <Login />
+            <LoginArea />
+            <LoginMessage />
           </Suspense>
         </div>
       </div>

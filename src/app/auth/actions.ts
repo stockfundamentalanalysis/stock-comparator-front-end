@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 
@@ -9,18 +8,16 @@ const loginSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
 })
 
-export async function login(formData: FormData): Promise<{ message: string }> {
-  const supabase = createClient()
-
+export async function login(formData: FormData) {
   const formValues = loginSchema.safeParse({ email: formData.get('email') })
 
   if (formValues.error) {
-    return {
-      message: 'Not valid email address.',
-    }
+    redirect('/auth/login?message=INVALID_EMAIL')
   }
 
   const { data } = formValues
+
+  const supabase = createClient()
 
   const { error } = await supabase.auth.signInWithOtp({
     email: data.email,
@@ -28,26 +25,20 @@ export async function login(formData: FormData): Promise<{ message: string }> {
   })
 
   if (error) {
-    return {
-      message: 'There was an error. Please try again.',
-    }
+    redirect('/auth/login?message=SIGN_IN_ERROR')
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/auth/login?message=CHECK_EMAIL')
 }
 
-export async function logout(): Promise<{ message: string }> {
+export async function logout() {
   const supabase = createClient()
 
   const { error } = await supabase.auth.signOut()
 
   if (error) {
-    return {
-      message: 'There was an error. Please try again.',
-    }
+    redirect('/auth/login?message=SIGN_OUT_ERROR')
   }
 
-  revalidatePath('/', 'layout')
   redirect('/')
 }

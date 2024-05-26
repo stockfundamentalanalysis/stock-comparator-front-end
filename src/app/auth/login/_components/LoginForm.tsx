@@ -2,7 +2,6 @@
 
 import { login } from '@/app/auth/actions'
 import { SubmitButton } from '@/app/auth/login/_components/SubmitButton'
-import { useToast } from '@/app/toast'
 import { useFormStatus } from 'react-dom'
 
 interface TextTypes {
@@ -25,18 +24,9 @@ const TEXTS: TextTypes = {
 
 const LoginForm = (): JSX.Element => {
   const { pending } = useFormStatus()
-  const { showToast } = useToast()
-
-  async function clientAction(formData: FormData) {
-    const result = await login(formData)
-
-    if (result.message) {
-      showToast(result.message)
-    }
-  }
 
   return (
-    <form action={clientAction} className="flex flex-col space-y-6">
+    <form action={login} className="flex flex-col space-y-6">
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-white">
           {TEXTS.email.label}

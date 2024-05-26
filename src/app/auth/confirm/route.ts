@@ -26,7 +26,8 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // return the user to an error page with some instructions
-  redirectTo.pathname = '/auth/error'
+  redirectTo.pathname = '/auth/login'
+  redirectTo.searchParams.set('message', 'INVALID_OTP')
+
   return NextResponse.redirect(redirectTo)
 }

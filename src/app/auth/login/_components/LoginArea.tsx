@@ -10,7 +10,7 @@ const TEXTS: TextTypes = {
   isLoggedIn: 'You are logged in as',
 }
 
-const Login = async (): Promise<JSX.Element> => {
+const LoginArea = async (): Promise<JSX.Element> => {
   const supabase = createClient()
 
   const { data } = await supabase.auth.getUser()
@@ -18,7 +18,7 @@ const Login = async (): Promise<JSX.Element> => {
   if (data.user) {
     return (
       <div className="flex flex-col space-y-6">
-        <p className="text-sm">
+        <p className="text-sm text-white">
           {TEXTS.isLoggedIn}{' '}
           <span className="font-semibold">{data.user.email}</span>
         </p>
@@ -30,4 +30,4 @@ const Login = async (): Promise<JSX.Element> => {
   return <LoginForm />
 }
 
-export default Login
+export default LoginArea

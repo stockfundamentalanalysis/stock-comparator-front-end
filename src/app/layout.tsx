@@ -1,4 +1,3 @@
-import Navbar from '@/components/Layout/Navbar'
 import { cn } from '@/lib/classNames'
 import {
   DEFAULT_SEO_DESCRIPTION,
@@ -10,6 +9,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 
 import './globals.css'
+import { ToastProvider } from './toast'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -54,14 +54,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={cn(inter.variable, 'font-sans antialiased')}>
-        <Navbar />
-        {children}
+        <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
   )

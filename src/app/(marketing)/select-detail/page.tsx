@@ -1,4 +1,4 @@
-import CompanySelector from '@/app/select-detail/_components/CompanySelector'
+import CompanySelector from '@/app/(marketing)/select-detail/_components/CompanySelector'
 import { sharedMetadata } from '@/lib/constants'
 import { canonicalBuilder } from '@/lib/helpers'
 import { getCompanySelector } from '@/lib/prisma/company'

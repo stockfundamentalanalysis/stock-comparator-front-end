@@ -1,4 +1,4 @@
-import Table from '@/app/easy-table/_components/Table'
+import Table from '@/app/(marketing)/easy-table/_components/Table'
 import { sharedMetadata } from '@/lib/constants'
 import { canonicalBuilder } from '@/lib/helpers'
 import prisma from '@/lib/prisma/client'

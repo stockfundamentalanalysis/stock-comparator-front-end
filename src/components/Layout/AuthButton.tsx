@@ -1,15 +1,14 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 
 interface TextTypes {
   signIn: string
-  signOut: string
+  dashboard: string
 }
 
 const TEXTS: TextTypes = {
   signIn: 'Sign In',
-  signOut: 'Sign Out',
+  dashboard: 'Dashboard',
 }
 
 export default async function AuthButton() {
@@ -18,14 +17,6 @@ export default async function AuthButton() {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-
-  const signOut = async () => {
-    'use server'
-
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    return redirect('/')
-  }
 
   if (!user) {
     return (
@@ -39,10 +30,11 @@ export default async function AuthButton() {
   }
 
   return (
-    <form action={signOut}>
-      <button className="inline-flex items-center rounded-md bg-red-500/30 px-3 py-2 text-xs font-medium text-red-400 no-underline ring-1 ring-inset ring-red-500/20 hover:bg-red-500/20">
-        {TEXTS.signOut}
-      </button>
-    </form>
+    <Link
+      href="/dashboard"
+      className="inline-flex items-center rounded-md bg-blue-500/30 px-3 py-2 text-xs font-medium text-blue-400 no-underline ring-1 ring-inset ring-blue-500/20 hover:bg-blue-500/20"
+    >
+      {TEXTS.dashboard}
+    </Link>
   )
 }

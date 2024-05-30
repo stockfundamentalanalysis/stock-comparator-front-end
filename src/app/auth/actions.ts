@@ -25,6 +25,7 @@ export async function login(formData: FormData) {
   })
 
   if (error) {
+    console.log(error)
     redirect('/auth/login?message=SIGN_IN_ERROR')
   }
 

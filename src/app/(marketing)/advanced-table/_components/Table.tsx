@@ -617,6 +617,26 @@ const Table = ({ data }: Props) => {
         header: () => 'WACC',
         footer: (props) => props.column.id,
       }),
+      columnHelper.accessor('tendency', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 50,
+        header: () => 'PFFO',
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor('tendencyauto', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+
+          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+        },
+        size: 50,
+        header: () => 'Mean PFFO',
+        footer: (props) => props.column.id,
+      }),
       columnHelper.accessor('lastupdate', {
         cell: (info) => info.getValue(),
         header: () => 'Last Update',

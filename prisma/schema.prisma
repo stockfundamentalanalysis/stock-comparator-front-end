@@ -45,22 +45,28 @@ model companies {
   lastyearreport          Int?
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model currencies {
   currency            String?
   usdconversionfactor Float?
-  id                  BigInt?
-
-  @@ignore
+  id                  BigInt  @id
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model currentprices {
   ticker String?
   price  Float?
-  id     BigInt?
+  id     BigInt  @id
+}
 
-  @@ignore
+model dcfintermediates {
+  id                      BigInt  @id @default(autoincrement())
+  ticker                  String
+  dcfstartvalue           Float?  @db.Real
+  dcfexitvalue            Float?  @db.Real
+  wacc                    Float?  @db.Real
+  netdebt                 Float?  @db.Real
+  dcfconditionsmultiplier Float?  @db.Real
+  autotendency            Float?  @db.Real
+  numberofstocks          BigInt?
 }
 
 model expectedgrowth {
@@ -179,18 +185,6 @@ model transactions {
   price           Decimal?  @db.Decimal
   numberofstocks  Int?
   username        String?
-}
-
-model dcfintermediates {
-  id                      BigInt  @id @default(autoincrement())
-  ticker                  String
-  dcfstartvalue           Float?  @db.Real
-  dcfexitvalue            Float?  @db.Real
-  wacc                    Float?  @db.Real
-  netdebt                 Float?  @db.Real
-  dcfconditionsmultiplier Float?  @db.Real
-  autotendency            Float?  @db.Real
-  numberofstocks          BigInt?
 }
 
 model useranalyses {

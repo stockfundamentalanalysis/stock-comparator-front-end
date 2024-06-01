@@ -3,6 +3,7 @@
 Next.js app for stock comparator.
 
 ## How to use
+
 - Install : `pnpm install`
 - Start server in dev mode: `pnpm dev`
 - Build project: `pnpm build`

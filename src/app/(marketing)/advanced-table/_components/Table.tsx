@@ -624,7 +624,7 @@ const Table = ({ data }: Props) => {
           return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
         },
         size: 50,
-        header: () => 'PFFO',
+        header: () => 'Tendency',
         footer: (props) => props.column.id,
       }),
       columnHelper.accessor('tendencyauto', {
@@ -634,7 +634,7 @@ const Table = ({ data }: Props) => {
           return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
         },
         size: 50,
-        header: () => 'Mean PFFO',
+        header: () => 'Tendency Auto',
         footer: (props) => props.column.id,
       }),
       columnHelper.accessor('lastupdate', {

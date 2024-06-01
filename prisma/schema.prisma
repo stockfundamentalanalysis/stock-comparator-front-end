@@ -9,19 +9,20 @@ datasource db {
 }
 
 model annualreports {
-  id     BigInt  @id(map: "annualreports_duplicate_pkey") @default(autoincrement())
   ticker String? @db.VarChar
   year   BigInt?
   kpi    String? @db.VarChar
   value  Float?  @db.Real
+  id     BigInt  @id @unique @default(autoincrement())
 
   @@unique([year, ticker, kpi], map: "annualreports_duplicate_year_ticker_kpi_key")
 }
 
 model comments {
-  id      BigInt  @id(map: "comment_pkey") @default(autoincrement())
-  ticker  String  @db.VarChar
-  comment String?
+  id       BigInt  @id(map: "comment_pkey") @default(autoincrement())
+  ticker   String  @db.VarChar
+  comment  String?
+  username String?
 }
 
 model companies {
@@ -44,22 +45,28 @@ model companies {
   lastyearreport          Int?
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model currencies {
-  id                  BigInt @id @default(autoincrement())
-  currency            String
-  usdconversionfactor Float? @db.Real
+  currency            String?
+  usdconversionfactor Float?
+  id                  BigInt?
+
+  @@ignore
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 model currentprices {
-  id     BigInt  @id @default(autoincrement())
   ticker String?
   price  Float?
+  id     BigInt?
+
+  @@ignore
 }
 
 model expectedgrowth {
-  id             BigInt @id @default(autoincrement())
   ticker         String @unique @db.VarChar
   expectedgrowth Float? @db.Real
+  id             Int    @id @default(autoincrement())
 }
 
 model fundamentalanalysis {
@@ -108,11 +115,11 @@ model fundamentalanalysis {
   ebitdamargin                   Float?
   netincomemargin                Float?
   wacc                           Float?
-  pffo                           Float?
-  meanpffo                       Float?
+  tendency                       Float?
   lastupdate                     String?
   firstyearreport                String?
   id                             BigInt  @id @unique
+  tendencyauto                   Float?
 }
 
 model historicalprices {
@@ -171,4 +178,37 @@ model transactions {
   transactiontype String?   @db.VarChar(255)
   price           Decimal?  @db.Decimal
   numberofstocks  Int?
+  username        String?
+}
+
+model dcfintermediates {
+  id                      BigInt  @id @default(autoincrement())
+  ticker                  String
+  dcfstartvalue           Float?  @db.Real
+  dcfexitvalue            Float?  @db.Real
+  wacc                    Float?  @db.Real
+  netdebt                 Float?  @db.Real
+  dcfconditionsmultiplier Float?  @db.Real
+  autotendency            Float?  @db.Real
+  numberofstocks          BigInt?
+}
+
+model useranalyses {
+  id                          BigInt @id @default(autoincrement())
+  ticker                      String
+  userdcfpotential            Float? @db.Real
+  userexpectedgrowth          Float? @db.Real
+  userworstcasepotential      Float? @db.Real
+  userworstcaseexpectedgrowth Float? @db.Real
+  username                    String
+  usertargetprice             Float? @db.Real
+  userworstcasetargetprice    Float? @db.Real
+}
+
+model users {
+  id        BigInt @id @default(autoincrement())
+  username  String @unique
+  email     String @unique
+  surname   String
+  firstname String
 }

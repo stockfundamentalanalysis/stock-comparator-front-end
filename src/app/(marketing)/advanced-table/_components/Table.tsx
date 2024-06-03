@@ -617,24 +617,24 @@ const Table = ({ data }: Props) => {
         header: () => 'WACC',
         footer: (props) => props.column.id,
       }),
-      columnHelper.accessor('pffo', {
+      columnHelper.accessor('tendency', {
         cell: ({ cell }) => {
           const value = cell.getValue() ?? 0
 
           return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
         },
         size: 50,
-        header: () => 'PFFO',
+        header: () => 'Tendency',
         footer: (props) => props.column.id,
       }),
-      columnHelper.accessor('meanpffo', {
+      columnHelper.accessor('tendencyauto', {
         cell: ({ cell }) => {
           const value = cell.getValue() ?? 0
 
           return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
         },
         size: 50,
-        header: () => 'Mean PFFO',
+        header: () => 'Tendency Auto',
         footer: (props) => props.column.id,
       }),
       columnHelper.accessor('lastupdate', {

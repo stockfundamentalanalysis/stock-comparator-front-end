@@ -46,8 +46,8 @@ export const fundamentalAnalysisSelect = {
   ebitdamargin: true,
   netincomemargin: true,
   wacc: true,
-  pffo: true,
-  meanpffo: true,
+  tendency: true,
+  tendencyauto: true,
   lastupdate: true,
   firstyearreport: true,
 } satisfies Prisma.fundamentalanalysisSelect

@@ -62,7 +62,7 @@ export default async function Page({ params }: { params: { ticker: string } }) {
             {company.targetprice?.toFixed(1) ?? '-'} {company.currency}
           </KpiCard>
           <KpiCard title="Current price">
-            {company.price?.toFixed(1) ?? '-'} {company.currency}
+            {company.currentprice?.toFixed(1) ?? '-'} {company.currency}
           </KpiCard>
           {company.potential && (
             <KpiCard title="Potential">

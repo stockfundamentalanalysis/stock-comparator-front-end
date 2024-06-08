@@ -43,18 +43,12 @@ model companies {
   sharesoutstanding       BigInt?
   forwardeps              Float?  @db.Real
   lastyearreport          Int?
+  currentprice            Float?
 }
 
 model currencies {
   currency            String @id @unique
-  usdconversionfactor Float?
-  id                  BigInt
-}
-
-model currentprices {
-  ticker String @id @unique
-  price  Float?
-  id     BigInt @default(autoincrement())
+  usdconversionfactor Float
 }
 
 model dcfintermediates {

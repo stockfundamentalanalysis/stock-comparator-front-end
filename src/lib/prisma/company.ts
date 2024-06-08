@@ -6,6 +6,7 @@ const companiesSelect = {
   companyname: true,
   sector: true,
   longdescription: true,
+  currentprice: true,
 } satisfies Prisma.companiesSelect
 
 type CompaniesPayload = Prisma.companiesGetPayload<{
@@ -26,14 +27,6 @@ type SimpleAnalysisPayload = Prisma.simpleanalysisGetPayload<{
   select: typeof simpleAnalysisSelect
 }>
 
-const currentPricesSelect = {
-  price: true,
-} satisfies Prisma.currentpricesSelect
-
-type CurrentPricesPayload = Prisma.currentpricesGetPayload<{
-  select: typeof currentPricesSelect
-}>
-
 const fundamentalAnalysisSelect = {
   targetprice: true,
   currentper: true,
@@ -49,7 +42,6 @@ type FundamentalAnalysisPayload = Prisma.fundamentalanalysisGetPayload<{
 
 export type CompanyDetails = CompaniesPayload &
   SimpleAnalysisPayload &
-  CurrentPricesPayload &
   FundamentalAnalysisPayload
 
 export const getCompanyDetails = async (
@@ -76,16 +68,6 @@ export const getCompanyDetails = async (
       select: simpleAnalysisSelect,
     })
 
-    const currentprice = await prisma.currentprices.findFirst({
-      where: {
-        ticker: {
-          contains: ticker,
-          mode: 'insensitive',
-        },
-      },
-      select: currentPricesSelect,
-    })
-
     const fundamentalanalysis = await prisma.fundamentalanalysis.findFirst({
       where: {
         ticker: {
@@ -96,14 +78,13 @@ export const getCompanyDetails = async (
       select: fundamentalAnalysisSelect,
     })
 
-    if (!company || !simpleanalysis || !currentprice || !fundamentalanalysis) {
+    if (!company || !simpleanalysis || !fundamentalanalysis) {
       return null
     }
 
     return {
       ...company,
       ...simpleanalysis,
-      ...currentprice,
       ...fundamentalanalysis,
     }
   } catch (e) {

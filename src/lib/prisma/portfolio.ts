@@ -84,9 +84,6 @@ export const getPortfolio = async (): Promise<PortfolioEntry[]> => {
         currency: {
           in: stockCurrencies,
         },
-        usdconversionfactor: {
-          not: null,
-        },
       },
       select: currenciesSelect,
     })

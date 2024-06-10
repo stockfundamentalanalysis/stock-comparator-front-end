@@ -8,6 +8,9 @@ const config = {
       colors: {
         gray: neutral,
       },
+      fontFamily: {
+        sans: ['var(--font-geist-sans)'],
+      },
     },
   },
   plugins: [require('@tailwindcss/forms')],

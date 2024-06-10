@@ -9,6 +9,8 @@ const ArrowUturnLeft = ({ className }: Props) => (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
+    data-slot="icon"
+    aria-hidden="true"
     className={className}
   >
     <path

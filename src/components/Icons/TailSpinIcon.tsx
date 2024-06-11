@@ -9,6 +9,8 @@ const TailSpinIcon = ({
     <svg
       className={className}
       viewBox="0 0 38 38"
+      data-slot="icon"
+      aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>

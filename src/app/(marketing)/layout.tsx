@@ -1,4 +1,4 @@
-import Header from '@/components/Layout/Header'
+import Header from '@/components/layouts/marketing/Header'
 
 export default function MarketingLayout({
   children,

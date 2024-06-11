@@ -1,3 +1,4 @@
+import { ToastProvider } from '@/app/toast'
 import { cn } from '@/lib/classNames'
 import {
   DEFAULT_SEO_DESCRIPTION,
@@ -5,17 +6,10 @@ import {
   WEB_URL,
   sharedMetadata,
 } from '@/lib/constants'
+import { GeistSans } from 'geist/font/sans'
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
 
 import './globals.css'
-import { ToastProvider } from './toast'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL(WEB_URL),
@@ -58,8 +52,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={cn(inter.variable, 'font-sans antialiased')}>
+    <html lang="en" className={cn(GeistSans.variable, 'scroll-smooth')}>
+      <body className="font-sans text-gray-950 antialiased lg:bg-gray-100 dark:bg-gray-900 dark:text-white dark:lg:bg-gray-950">
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

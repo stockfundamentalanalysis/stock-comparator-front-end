@@ -7,6 +7,10 @@ const config = {
     extend: {
       colors: {
         gray: neutral,
+        zinc: neutral,
+      },
+      fontFamily: {
+        sans: ['var(--font-geist-sans)'],
       },
     },
   },

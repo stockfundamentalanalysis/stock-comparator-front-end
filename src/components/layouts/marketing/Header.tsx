@@ -1,7 +1,7 @@
 import Logo from '@/components/Logo'
+import AuthButton from '@/components/layouts/marketing/AuthButton'
+import MobileMenu from '@/components/layouts/marketing/MobileMenu'
 import Link from 'next/link'
-import AuthButton from './AuthButton'
-import MobileMenu from './MobileMenu'
 
 const navigation = [
   {

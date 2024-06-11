@@ -53,7 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn(GeistSans.variable, 'scroll-smooth')}>
-      <body className="font-sans antialiased">
+      <body className="font-sans text-gray-950 antialiased lg:bg-gray-100 dark:bg-gray-900 dark:text-white dark:lg:bg-gray-950">
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

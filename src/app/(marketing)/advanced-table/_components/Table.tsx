@@ -277,8 +277,14 @@ const Table = ({ data }: Props) => {
       columnHelper.accessor('tendency', {
         cell: ({ cell }) => {
           const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1)
+          const color = pickColor(weight)
 
-          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
         },
         size: 50,
         header: () => 'Tendency',

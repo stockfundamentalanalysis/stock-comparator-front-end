@@ -338,22 +338,6 @@ const Table = ({ data }: Props) => {
         header: () => 'Mean ROIC',
         footer: (props) => props.column.id,
       }),
-      columnHelper.accessor('roictendency', {
-        cell: ({ cell }) => {
-          const value = cell.getValue() ?? 0
-          const weight = calculateWeight(value, -1, 1)
-          const color = pickColor(weight)
-
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(value * 100)} %
-            </StatsBox>
-          )
-        },
-        size: 100,
-        header: () => 'ROIC Tendency',
-        footer: (props) => props.column.id,
-      }),
       columnHelper.accessor('roce', {
         cell: ({ cell }) => {
           const value = cell.getValue() ?? 0

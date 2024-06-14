@@ -274,6 +274,22 @@ const Table = ({ data }: Props) => {
         header: () => 'Mean Price / Free Cash Flow',
         footer: (props) => props.column.id,
       }),
+      columnHelper.accessor('tendency', {
+        cell: ({ cell }) => {
+          const value = cell.getValue() ?? 0
+          const weight = calculateWeight(value, -1, 1)
+          const color = pickColor(weight)
+
+          return (
+            <StatsBox backgroundColor={color}>
+              {Math.round(value * 100)} %
+            </StatsBox>
+          )
+        },
+        size: 50,
+        header: () => 'Tendency',
+        footer: (props) => props.column.id,
+      }),
       columnHelper.accessor('roe', {
         cell: ({ cell }) => {
           const value = cell.getValue() ?? 0
@@ -469,102 +485,6 @@ const Table = ({ data }: Props) => {
         header: () => 'Entreprise Value in USD',
         footer: (props) => props.column.id,
       }),
-      columnHelper.accessor('ebitdatendency', {
-        cell: ({ cell }) => {
-          const value = cell.getValue() ?? 0
-          const weight = calculateWeight(value, -1, 1)
-          const color = pickColor(weight)
-
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(value * 100)} %
-            </StatsBox>
-          )
-        },
-        size: 200,
-        header: () => 'EBITDA Tendency',
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor('freecashflowtendency', {
-        cell: ({ cell }) => {
-          const value = cell.getValue() ?? 0
-          const weight = calculateWeight(value, -1, 1)
-          const color = pickColor(weight)
-
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(value * 100)} %
-            </StatsBox>
-          )
-        },
-        size: 200,
-        header: () => 'Free Cash Flow Tendency',
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor('operatingcashflowtendency', {
-        cell: ({ cell }) => {
-          const value = cell.getValue() ?? 0
-          const weight = calculateWeight(value, -1, 1)
-          const color = pickColor(weight)
-
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(value * 100)} %
-            </StatsBox>
-          )
-        },
-        size: 200,
-        header: () => 'Operating Cash Flow Tendency',
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor('netincometendency', {
-        cell: ({ cell }) => {
-          const value = cell.getValue() ?? 0
-          const weight = calculateWeight(value, -1, 1)
-          const color = pickColor(weight)
-
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(value * 100)} %
-            </StatsBox>
-          )
-        },
-        size: 200,
-        header: () => 'Net Income Tendency',
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor('equitytendency', {
-        cell: ({ cell }) => {
-          const value = cell.getValue() ?? 0
-          const weight = calculateWeight(value, -1, 1)
-          const color = pickColor(weight)
-
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(value * 100)} %
-            </StatsBox>
-          )
-        },
-        size: 200,
-        header: () => 'Equity Tendency',
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor('roictendency', {
-        cell: ({ cell }) => {
-          const value = cell.getValue() ?? 0
-          const weight = calculateWeight(value, -1, 1)
-          const color = pickColor(weight)
-
-          return (
-            <StatsBox backgroundColor={color}>
-              {Math.round(value * 100)} %
-            </StatsBox>
-          )
-        },
-        size: 100,
-        header: () => 'ROIC Tendency',
-        footer: (props) => props.column.id,
-      }),
       columnHelper.accessor('dividendyield', {
         cell: ({ cell }) => {
           const value = cell.getValue() ?? 0
@@ -615,26 +535,6 @@ const Table = ({ data }: Props) => {
         },
         size: 50,
         header: () => 'WACC',
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor('tendency', {
-        cell: ({ cell }) => {
-          const value = cell.getValue() ?? 0
-
-          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
-        },
-        size: 50,
-        header: () => 'Tendency',
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor('tendencyauto', {
-        cell: ({ cell }) => {
-          const value = cell.getValue() ?? 0
-
-          return <StatsBox>{Math.round(value * 100) / 100}</StatsBox>
-        },
-        size: 50,
-        header: () => 'Tendency Auto',
         footer: (props) => props.column.id,
       }),
       columnHelper.accessor('lastupdate', {

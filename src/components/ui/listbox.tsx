@@ -91,11 +91,7 @@ export function Listbox<T>({
           </svg>
         </span>
       </Headless.ListboxButton>
-      <Headless.Transition
-        leave="transition-opacity duration-100 ease-in pointer-events-none"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
+      <Headless.Transition>
         <Headless.ListboxOptions
           anchor="selection start"
           className={cn(
@@ -110,7 +106,9 @@ export function Listbox<T>({
             // Popover background
             'bg-white/75 backdrop-blur-xl dark:bg-zinc-800/75',
             // Shadows
-            'shadow-lg ring-1 ring-zinc-950/10 dark:ring-inset dark:ring-white/10'
+            'shadow-lg ring-1 ring-zinc-950/10 dark:ring-inset dark:ring-white/10',
+            // Transitions
+            'transition-opacity duration-100 ease-in data-[transition]:pointer-events-none data-[closed]:data-[leave]:opacity-0'
           )}
         >
           {options}

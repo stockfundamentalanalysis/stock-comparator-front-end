@@ -135,7 +135,7 @@ model industries {
   industry         String? @db.VarChar
   sector           String? @db.VarChar
   evebitdamultiple String? @db.VarChar
-  cyclical         Float?  @db.Real
+  cyclicalfactor   Float?  @db.Real
   category         String? @db.VarChar
   sectorid         String? @db.VarChar
 }

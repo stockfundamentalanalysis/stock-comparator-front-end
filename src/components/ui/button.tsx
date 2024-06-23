@@ -1,6 +1,6 @@
 import { cn } from '@/lib/classNames'
 import * as Headless from '@headlessui/react'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { Link } from './link'
 
 const styles = {
@@ -167,7 +167,7 @@ type ButtonProps = (
     | Omit<React.ComponentPropsWithoutRef<typeof Link>, 'className'>
   )
 
-export const Button = React.forwardRef(function Button(
+export const Button = forwardRef(function Button(
   { color, outline, plain, className, children, ...props }: ButtonProps,
   ref: React.ForwardedRef<HTMLElement>
 ) {

@@ -1,6 +1,6 @@
 import { cn } from '@/lib/classNames'
 import * as Headless from '@headlessui/react'
-import { forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 
 export const Textarea = forwardRef(function Textarea(
   {

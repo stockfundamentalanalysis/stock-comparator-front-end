@@ -1,6 +1,6 @@
 import { cn } from '@/lib/classNames'
 import * as Headless from '@headlessui/react'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { TouchTarget } from './button'
 import { Link } from './link'
 
@@ -60,7 +60,7 @@ export function Avatar({
   )
 }
 
-export const AvatarButton = React.forwardRef(function AvatarButton(
+export const AvatarButton = forwardRef(function AvatarButton(
   {
     src,
     square = false,

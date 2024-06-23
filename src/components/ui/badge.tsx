@@ -1,6 +1,6 @@
 import { cn } from '@/lib/classNames'
 import * as Headless from '@headlessui/react'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { TouchTarget } from './button'
 import { Link } from './link'
 
@@ -55,7 +55,7 @@ export function Badge({
   )
 }
 
-export const BadgeButton = React.forwardRef(function BadgeButton(
+export const BadgeButton = forwardRef(function BadgeButton(
   {
     color = 'zinc',
     className,

@@ -3,7 +3,7 @@
 import { cn } from '@/lib/classNames'
 import * as Headless from '@headlessui/react'
 import { LayoutGroup, motion } from 'framer-motion'
-import React, { useId } from 'react'
+import React, { forwardRef, useId } from 'react'
 import { TouchTarget } from './button'
 import { Link } from './link'
 
@@ -58,7 +58,7 @@ export function NavbarSpacer({
   )
 }
 
-export const NavbarItem = React.forwardRef(function NavbarItem(
+export const NavbarItem = forwardRef(function NavbarItem(
   {
     current,
     className,

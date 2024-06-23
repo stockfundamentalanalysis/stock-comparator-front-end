@@ -3,7 +3,7 @@
 import { cn } from '@/lib/classNames'
 import * as Headless from '@headlessui/react'
 import { LayoutGroup, motion } from 'framer-motion'
-import React, { Fragment, useId } from 'react'
+import React, { Fragment, forwardRef, useId } from 'react'
 import { TouchTarget } from './button'
 import { Link } from './link'
 
@@ -11,7 +11,9 @@ export function Sidebar({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'nav'>) {
-  return <nav {...props} className={cn(className, 'flex h-full flex-col')} />
+  return (
+    <nav {...props} className={cn(className, 'flex h-full min-h-0 flex-col')} />
+  )
 }
 
 export function SidebarHeader({
@@ -119,7 +121,7 @@ export function SidebarHeading({
   )
 }
 
-export const SidebarItem = React.forwardRef(function SidebarItem(
+export const SidebarItem = forwardRef(function SidebarItem(
   {
     current,
     className,
